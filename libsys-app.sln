@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-web-api", "libsys-we
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "libsys-data", "libsys-data\libsys-data.sqlproj", "{FB7C94BA-C189-499B-A6C9-6940AF7CCF21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-desktop-ui", "libsys-desktop-ui\libsys-desktop-ui.csproj", "{C7B93176-4E71-4FF8-BF25-019A6EE33D44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{FB7C94BA-C189-499B-A6C9-6940AF7CCF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB7C94BA-C189-499B-A6C9-6940AF7CCF21}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB7C94BA-C189-499B-A6C9-6940AF7CCF21}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C7B93176-4E71-4FF8-BF25-019A6EE33D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B93176-4E71-4FF8-BF25-019A6EE33D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B93176-4E71-4FF8-BF25-019A6EE33D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B93176-4E71-4FF8-BF25-019A6EE33D44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
