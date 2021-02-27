@@ -5,8 +5,5 @@
     [LastName] NVARCHAR(50) NOT NULL, 
     [UserType] NVARCHAR(50) NOT NULL, 
     [EmailAddress] NVARCHAR(128) NOT NULL, 
-    [UserName] NVARCHAR(250) NOT NULL, 
-    [Password] NVARCHAR(MAX) NOT NULL, 
-    [SecretQuestion] NVARCHAR(MAX) NOT NULL, 
-    [SecretAnswer] NVARCHAR(50) NOT NULL
+    [CreatedAt] DATETIME2 NULL DEFAULT getutcdate() 
 )
