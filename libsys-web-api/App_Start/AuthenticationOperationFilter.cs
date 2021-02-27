@@ -22,7 +22,8 @@ namespace libsys_web_api.App_Start
                 @in = "header",
                 description = "access token",
                 required = false,
-                type = "string"
+                type = "string",
+                @default = "Bearer "
             });
         }
     }

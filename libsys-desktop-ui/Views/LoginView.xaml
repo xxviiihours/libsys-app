@@ -19,6 +19,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -35,8 +36,8 @@
                    HorizontalAlignment="Right">
             Email:
         </TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="2" Margin="0 0 0 20"
-                 HorizontalAlignment="Left" Width="250" x:Name="EmailAddress">
+        <TextBox x:Name="EmailAddress" Grid.Row="2" Grid.Column="2" Margin="0 0 0 20"
+                 HorizontalAlignment="Left" Width="250">
 
         </TextBox>
         
@@ -44,14 +45,20 @@
                    HorizontalAlignment="Right">
             Password:
         </TextBlock>
-        <PasswordBox Grid.Row="3" Grid.Column="2" Margin="0 0 0 20"
-                     HorizontalAlignment="Left" Width="250" x:Name="Password">
+        <PasswordBox x:Name="Password" Grid.Row="3" Grid.Column="2" Margin="0 0 0 20"
+                     HorizontalAlignment="Left" Width="250" >
 
         </PasswordBox>
 
-        <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
-                HorizontalAlignment="Center" Margin="0 30 0 0" 
-                Width="280" FontSize="28" x:Name="Login">
+        <TextBlock x:Name="ErrorMessage" Visibility="{Binding IsErrorVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                   Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 20"
+                   HorizontalAlignment="Center" Foreground="#FFF90000" TextWrapping="Wrap">
+            Invalid Username or password
+        </TextBlock>
+
+        <Button x:Name="Login" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
+                HorizontalAlignment="Center" Margin="0 0 0 30" 
+                Width="280" FontSize="28" Foreground="White" Background="#FF1565C0">
             Login
         </Button>
     </Grid>

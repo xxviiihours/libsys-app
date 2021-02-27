@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using libsys_desktop_ui.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +12,22 @@ namespace libsys_desktop_ui.ViewModels
     public class LoginViewModel : Screen
     {
 
+        private IAPIHelper _apiHelper;
+
         private string _emailAddress;
         private string _password;
-        public LoginViewModel()
-        {
 
+        private string _errorMessage;
+
+
+        public LoginViewModel(IAPIHelper aPIHelper)
+        {
+            _apiHelper = aPIHelper;
         }
 
         public string EmailAddress
         {
-            get
-            {
-                return _emailAddress;
-            }
+            get { return _emailAddress; }
             set
             {
                 _emailAddress = value;
@@ -34,10 +38,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public string Password
         {
-            get
-            {
-                return _password;
-            }
+            get { return _password; }
             set
             {
                 _password = value;
@@ -45,6 +46,33 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanLogin);
             }
         }
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                NotifyOfPropertyChange(() => ErrorMessage);
+                NotifyOfPropertyChange(() => IsErrorVisible);
+
+            }
+        }
+
+        public bool IsErrorVisible
+        {
+            get 
+            {
+                bool output = false;
+                if(ErrorMessage?.Length > 0)
+                {
+                    output = true;
+                    return output;
+                }
+                return output; 
+            }
+        }
+
+
 
         public bool CanLogin 
         {
@@ -61,9 +89,18 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        public void Login()
+        public async Task Login()
         {
-            Console.WriteLine("");
+            try
+            {
+                var result = await _apiHelper.Authenticate(EmailAddress, Password);
+                ErrorMessage = "";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                ErrorMessage = ex.Message + ": " + "Invalid Username or password.";
+            }
         }
     }
 }
