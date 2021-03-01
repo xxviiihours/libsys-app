@@ -69,13 +69,6 @@ namespace libsys_desktop_ui_library.Helpers
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var result = await responseMessage.Content.ReadAsAsync<UserLoggedInModel>();
-                    _userLoggedIn.Id = result.Id;
-                    _userLoggedIn.FirstName = result.FirstName;
-                    _userLoggedIn.LastName = result.LastName;
-                    _userLoggedIn.UserType = result.UserType;
-                    _userLoggedIn.EmailAddress = result.EmailAddress;
-                    _userLoggedIn.CreatedAt = result.CreatedAt;
-
                 }
                 else
                 {
