@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using libsys_desktop_ui.Helpers;
+using libsys_desktop_ui_library.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,8 +93,10 @@ namespace libsys_desktop_ui.ViewModels
         {
             try
             {
-                var result = await _apiHelper.Authenticate(EmailAddress, Password);
                 ErrorMessage = "";
+                var result = await _apiHelper.Authenticate(EmailAddress, Password);
+
+                await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
             }
             catch (Exception ex)
             {

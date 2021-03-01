@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Catalogue]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [BookInformationId] INT NOT NULL, 
+    [CallNumber] NVARCHAR(128) NOT NULL, 
     [Copies] INT NOT NULL DEFAULT 1
 )

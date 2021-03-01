@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-api-library", "libsy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-api", "libsys-api\libsys-api.csproj", "{C572AA3B-8474-498E-8312-3A00EC055938}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-desktop-ui-library", "libsys-desktop-ui-library\libsys-desktop-ui-library.csproj", "{5796CBAF-F1DE-457C-A1A4-A228D1760B5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{C572AA3B-8474-498E-8312-3A00EC055938}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C572AA3B-8474-498E-8312-3A00EC055938}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C572AA3B-8474-498E-8312-3A00EC055938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5796CBAF-F1DE-457C-A1A4-A228D1760B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5796CBAF-F1DE-457C-A1A4-A228D1760B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5796CBAF-F1DE-457C-A1A4-A228D1760B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5796CBAF-F1DE-457C-A1A4-A228D1760B5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

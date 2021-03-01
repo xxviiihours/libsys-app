@@ -1,4 +1,5 @@
-﻿using libsys_desktop_ui.Models;
+﻿using libsys_desktop_ui_library.Interfaces;
+using libsys_desktop_ui_library.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,14 +9,16 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace libsys_desktop_ui.Helpers
+namespace libsys_desktop_ui_library.Helpers
 {
     public class APIHelper : IAPIHelper
     {
         private HttpClient httpClient;
-        public APIHelper()
+        private IUserLoggedInModel _userLoggedIn;
+        public APIHelper(IUserLoggedInModel userLoggedIn)
         {
             InitializeClient();
+            _userLoggedIn = userLoggedIn;
         }
 
         public void InitializeClient()
@@ -46,6 +49,33 @@ namespace libsys_desktop_ui.Helpers
                 {
                     var result = await responseMessage.Content.ReadAsAsync<AuthenticatedUser>();
                     return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task GetLoggedInUserInfo(string token)
+        {
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
+
+            using (HttpResponseMessage responseMessage = await httpClient.GetAsync("/api/user"))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<UserLoggedInModel>();
+                    _userLoggedIn.Id = result.Id;
+                    _userLoggedIn.FirstName = result.FirstName;
+                    _userLoggedIn.LastName = result.LastName;
+                    _userLoggedIn.UserType = result.UserType;
+                    _userLoggedIn.EmailAddress = result.EmailAddress;
+                    _userLoggedIn.CreatedAt = result.CreatedAt;
+
                 }
                 else
                 {

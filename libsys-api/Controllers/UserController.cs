@@ -15,17 +15,17 @@ namespace libsys_api.Controllers
     public class UserController : ApiController
     {
         // GET: api/User
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        public IEnumerable<UserModel> Get()
+        {
+            return null;
+        }
 
         // GET: api/User/5
-        public List<UserModel> GetById()
+        public UserModel GetById(string Id)
         {
             string id = RequestContext.Principal.Identity.GetUserId();
             UserData userData = new UserData();
-            return userData.GetUserById(id);
+            return userData.GetUserById(id).First();
         }
 
         // POST api/values

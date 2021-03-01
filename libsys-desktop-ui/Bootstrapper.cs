@@ -1,6 +1,9 @@
 ﻿using Caliburn.Micro;
 using libsys_desktop_ui.Helpers;
 using libsys_desktop_ui.ViewModels;
+using libsys_desktop_ui_library.Helpers;
+using libsys_desktop_ui_library.Interfaces;
+using libsys_desktop_ui_library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +32,7 @@ namespace libsys_desktop_ui
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<IUserLoggedInModel, UserLoggedInModel>()
                 .Singleton<IAPIHelper, APIHelper>();
             
             GetType().Assembly.GetTypes()

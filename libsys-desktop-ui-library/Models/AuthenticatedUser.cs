@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace libsys_desktop_ui.Models
+namespace libsys_desktop_ui_library.Models
 {
     public class AuthenticatedUser
     {
