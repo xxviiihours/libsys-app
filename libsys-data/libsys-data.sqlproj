@@ -75,6 +75,9 @@
     <Build Include="dbo\Stored Procedures\spUserLookup.sql" />
     <Build Include="dbo\Stored Procedures\spBookInfoLookup.sql" />
     <Build Include="dbo\Stored Procedures\spInsertBookInfo.sql" />
+    <Build Include="dbo\Stored Procedures\spGetAllBookInfo.sql" />
+    <Build Include="dbo\Stored Procedures\spUpdateBookInfo.sql" />
+    <Build Include="dbo\Stored Procedures\spDeleteBookInfo.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="libsys-data.refactorlog" />

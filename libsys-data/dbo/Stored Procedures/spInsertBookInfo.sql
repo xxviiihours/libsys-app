@@ -41,7 +41,7 @@ BEGIN
 	ELSE
 	BEGIN
 		UPDATE dbo.Catalogue
-		SET copies = copies + 1
+		SET Copies = Copies + 1
 		WHERE CallNumber = @CallNumber;
 	END
 END

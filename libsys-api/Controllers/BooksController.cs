@@ -14,16 +14,27 @@ namespace libsys_api.Controllers
     public class BooksController : ApiController
     {
         // GET: api/Books
-        public IEnumerable<BookDetailModel> Get()
+        public IHttpActionResult Get()
         {
-            return null;
+            BookData data = new BookData();
+            var result = data.GetAllBooks();
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         // GET: api/Books/5
-        public BookDetailModel GetById(string Id)
+        public IHttpActionResult GetById(string Id)
         {
             BookData data = new BookData();
-            return data.GetBookById(Id).First();
+            var result = data.GetBookById(Id);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         [Authorize]
@@ -32,19 +43,22 @@ namespace libsys_api.Controllers
         {
             BookData data = new BookData();
             data.SaveBookInfo(bookDetails);
-            Ok();
         }
 
         // PUT: api/Books/5
         [Authorize]
-        public void Put(int id, [FromBody]string value)
+        public void Put(string id, [FromBody]BookDetailModel bookDetails)
         {
+            BookData data = new BookData();
+            data.UpdateBookInfo(id, bookDetails);
         }
 
         // DELETE: api/Books/5
         [Authorize]
-        public void Delete(int id)
+        public void Delete(string id)
         {
+            BookData data = new BookData();
+            data.DeleteBookInfo(id);
         }
     }
 }
