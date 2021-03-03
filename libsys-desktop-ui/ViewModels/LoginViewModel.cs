@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using libsys_desktop_ui.EventHandlers;
 using libsys_desktop_ui_library.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace libsys_desktop_ui.ViewModels
     {
 
         private IAPIHelper _apiHelper;
+        IEventAggregator _events;
 
         private string _emailAddress;
         private string _password;
@@ -20,9 +22,10 @@ namespace libsys_desktop_ui.ViewModels
         private string _errorMessage;
 
 
-        public LoginViewModel(IAPIHelper aPIHelper)
+        public LoginViewModel(IAPIHelper aPIHelper, IEventAggregator events)
         {
             _apiHelper = aPIHelper;
+            _events = events;
         }
 
         public string EmailAddress
@@ -94,9 +97,10 @@ namespace libsys_desktop_ui.ViewModels
             try
             {
                 ErrorMessage = "";
-                var result = await _apiHelper.Authenticate(EmailAddress, Password);
+                var userAuth = await _apiHelper.Authenticate(EmailAddress, Password);
+                await _apiHelper.GetLoggedInUserInfo(userAuth.Access_Token);
 
-                await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
+                _events.PublishOnUIThread(new LogOnEvent());
             }
             catch (Exception ex)
             {

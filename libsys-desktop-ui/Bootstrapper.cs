@@ -4,6 +4,7 @@ using libsys_desktop_ui.ViewModels;
 using libsys_desktop_ui_library.Helpers;
 using libsys_desktop_ui_library.Interfaces;
 using libsys_desktop_ui_library.Models;
+using libsys_desktop_ui_library.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace libsys_desktop_ui
 
         protected override void Configure()
         {
-            _container.Instance(_container);
+            _container.Instance(_container)
+                .PerRequest<IBookService, BookService>();
 
             _container
                 .Singleton<IWindowManager, WindowManager>()

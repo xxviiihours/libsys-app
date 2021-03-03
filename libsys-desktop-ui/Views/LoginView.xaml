@@ -23,37 +23,35 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-                   HorizontalAlignment="Center" Margin="30" FontSize="48">
-            Colegio De San Gabriel Arcangel
+        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" 
+                   HorizontalAlignment="Center" Margin="0 0 0 20" FontSize="48"
+                   Text="Name of the School">
         </TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                   HorizontalAlignment="Center" Margin="0 0 0 50" FontSize="28">
-            Online Library System
+                   HorizontalAlignment="Center" Margin="0 0 0 50" FontSize="28"
+                   Text="Online Library System">
         </TextBlock>
 
-        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0 0 10 20"
-                   HorizontalAlignment="Right">
-            Email:
+        <TextBlock Text="Email Address:" Grid.Row="2" Grid.Column="1" 
+                   HorizontalAlignment="Right" Margin="0 0 20 20">
         </TextBlock>
-        <TextBox x:Name="EmailAddress" Grid.Row="2" Grid.Column="2" Margin="0 0 0 20"
-                 HorizontalAlignment="Left" Width="250">
+        <TextBox x:Name="EmailAddress" Grid.Row="2" Grid.Column="2" 
+                 HorizontalAlignment="Left" Margin="0 0 0 20" Width="250">
 
         </TextBox>
-        
-        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0 0 10 20"
-                   HorizontalAlignment="Right">
-            Password:
+
+        <TextBlock Text="Password:" Grid.Row="3" Grid.Column="1" 
+                   HorizontalAlignment="Right" Margin="0 0 20 20">
         </TextBlock>
-        <PasswordBox x:Name="Password" Grid.Row="3" Grid.Column="2" Margin="0 0 0 20"
-                     HorizontalAlignment="Left" Width="250" >
+        <PasswordBox x:Name="Password" Grid.Row="3" Grid.Column="2" 
+                     HorizontalAlignment="Left" Margin="0 0 0 20" Width="250" >
 
         </PasswordBox>
 
         <TextBlock x:Name="ErrorMessage" Visibility="{Binding IsErrorVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
                    Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 20"
-                   HorizontalAlignment="Center" Foreground="#FFF90000" TextWrapping="Wrap">
-            Invalid Username or password
+                   HorizontalAlignment="Center" Foreground="#FFF90000" TextWrapping="Wrap"
+                   Text="Invalid Username or password">
         </TextBlock>
 
         <Button x:Name="Login" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"
