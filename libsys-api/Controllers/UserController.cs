@@ -15,13 +15,13 @@ namespace libsys_api.Controllers
     public class UserController : ApiController
     {
         // GET: api/User
-        public IEnumerable<UserModel> Get()
-        {
-            return null;
-        }
+        //public IEnumerable<UserModel> Get()
+        //{
+        //    return null;
+        //}
 
         // GET: api/User/5
-        public UserModel GetById(string Id)
+        public UserModel GetById()
         {
             string id = RequestContext.Principal.Identity.GetUserId();
             UserData userData = new UserData();

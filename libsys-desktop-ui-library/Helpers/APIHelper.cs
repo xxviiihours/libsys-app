@@ -13,8 +13,16 @@ namespace libsys_desktop_ui_library.Helpers
 {
     public class APIHelper : IAPIHelper
     {
-        private HttpClient httpClient;
+        private HttpClient _httpClient;
         private IUserLoggedInModel _userLoggedIn;
+        
+        public HttpClient HttpClient 
+        { 
+            get 
+            { 
+                return _httpClient; 
+            } 
+        }
         public APIHelper(IUserLoggedInModel userLoggedIn)
         {
             InitializeClient();
@@ -25,11 +33,11 @@ namespace libsys_desktop_ui_library.Helpers
         {
             string BASE_URL = ConfigurationManager.AppSettings["api"];
 
-            httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(BASE_URL);
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri(BASE_URL);
 
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         }
 
@@ -43,7 +51,7 @@ namespace libsys_desktop_ui_library.Helpers
 
             });
 
-            using (HttpResponseMessage responseMessage = await httpClient.PostAsync("/token", data))
+            using (HttpResponseMessage responseMessage = await _httpClient.PostAsync("/token", data))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -59,16 +67,22 @@ namespace libsys_desktop_ui_library.Helpers
 
         public async Task GetLoggedInUserInfo(string token)
         {
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
 
-            using (HttpResponseMessage responseMessage = await httpClient.GetAsync("/api/user"))
+            using (HttpResponseMessage responseMessage = await _httpClient.GetAsync("/api/user"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var result = await responseMessage.Content.ReadAsAsync<UserLoggedInModel>();
+                    _userLoggedIn.Id = result.Id;
+                    _userLoggedIn.FirstName = result.FirstName;
+                    _userLoggedIn.LastName = result.LastName;
+                    _userLoggedIn.UserType = result.UserType;
+                    _userLoggedIn.EmailAddress = result.EmailAddress;
+
                 }
                 else
                 {
