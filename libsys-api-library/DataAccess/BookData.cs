@@ -43,7 +43,7 @@ namespace libsys_api_library.DataAccess
             return null;
         }
 
-        public void UpdateBookInfo(string Id, BookDetailModel bookModel)
+        public void UpdateBookInfo(int Id, BookDetailModel bookModel)
         {
             SqlDataAccess sql = new SqlDataAccess();
             var param = new
@@ -72,7 +72,7 @@ namespace libsys_api_library.DataAccess
             sql.UpdateData<BookDetailModel, dynamic>("dbo.spUpdateBookInfo", param, "libsys-data");
         }
 
-        public void DeleteBookInfo(string Id)
+        public void DeleteBookInfo(int Id)
         {
             SqlDataAccess sql = new SqlDataAccess();
             var param = new { Id = Id };

@@ -47,7 +47,7 @@ namespace libsys_api.Controllers
 
         // PUT: api/Books/5
         [Authorize]
-        public void Put(string id, [FromBody]BookDetailModel bookDetails)
+        public void Put(int id, [FromBody]BookDetailModel bookDetails)
         {
             BookData data = new BookData();
             data.UpdateBookInfo(id, bookDetails);
@@ -55,7 +55,7 @@ namespace libsys_api.Controllers
 
         // DELETE: api/Books/5
         [Authorize]
-        public void Delete(string id)
+        public void Delete(int id)
         {
             BookData data = new BookData();
             data.DeleteBookInfo(id);

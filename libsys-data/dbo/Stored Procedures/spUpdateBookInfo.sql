@@ -21,24 +21,23 @@
 AS
 BEGIN
 	UPDATE dbo.BookInformations
-	SET  
-	CallNumber = @CallNumber, 
-	[Classification] = @Classification, 
-	Title = @Title, 
-	[Description] = @Description, 
-	Edition = @Edition,
-	Volumes = @Volumes, 
-	Pages = @Pages, 
-	[Source] = @Source, 
-	Price = @Price, 
-	Publisher = @Publisher, 
-	[Location] = @Location, 
-	[Year] = @Year,
-	Author = @Author, 
-	[Status] = @Status, 
-	CreatedBy = @CreatedBy, 
-	CreatedAt = @CreatedAt, 
-	ModifiedBy = @ModifiedBy, 
-	LastModified = @LastModified
+	SET CallNumber = @CallNumber, 
+		[Classification] = @Classification, 
+		Title = @Title, 
+		[Description] = @Description, 
+		Edition = @Edition,
+		Volumes = @Volumes, 
+		Pages = @Pages, 
+		[Source] = @Source, 
+		Price = @Price, 
+		Publisher = @Publisher, 
+		[Location] = @Location, 
+		[Year] = @Year,
+		Author = @Author, 
+		[Status] = @Status, 
+		CreatedBy = @CreatedBy, 
+		CreatedAt = @CreatedAt, 
+		ModifiedBy = @ModifiedBy, 
+		LastModified = @LastModified
 	WHERE Id = @Id;
 END

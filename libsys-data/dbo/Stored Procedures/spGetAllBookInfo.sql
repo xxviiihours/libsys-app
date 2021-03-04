@@ -7,4 +7,5 @@ BEGIN
 	SELECT *
 	FROM dbo.BookInformations
 	ORDER BY CreatedAt
+	DESC
 END

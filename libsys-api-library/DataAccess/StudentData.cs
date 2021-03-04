@@ -1,0 +1,71 @@
+﻿using libsys_api_library.Internal.DataAccess;
+using libsys_api_library.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace libsys_api_library.DataAccess
+{
+    public class StudentData
+    {
+        public List<StudentModel> GetAllStudents()
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var output = sql.LoadData<StudentModel, dynamic>("dbo.spGetAllStudentInfo", new { }, "libsys-data");
+            return output;
+        }
+
+        public void SaveStudentInfo(StudentModel studentModel)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+            sql.SaveData("dbo.spInsertStudentInfo", studentModel, "libsys-data");
+        }
+
+        public StudentModel GetStudentById(string studentId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+            StudentModel studentModel = new StudentModel();
+            var param = new { studentId = studentId };
+
+            var output = sql.LoadData<StudentModel, dynamic>("dbo.spStudentInfoLookup", param, "libsys-data");
+            if (output.Count > 0)
+            {
+                foreach (var item in output)
+                {
+                    studentModel = item;
+                }
+                return studentModel;
+            }
+            return null;
+        }
+
+        public void UpdateStudentInfo(int Id, StudentModel studentModel)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+            var param = new
+            {
+                StudentId = studentModel.StudentId,
+                FirstName = studentModel.FirstName,
+                LastName = studentModel.LastName,
+                Gender = studentModel.Gender,
+                Course = studentModel.Course,
+                YearLevel = studentModel.YearLevel,
+                Department = studentModel.Department,
+                PhoneNumber = studentModel.PhoneNumber,
+                EmailAddress = studentModel.EmailAddress,
+                Id = Id
+            };
+            sql.UpdateData<StudentModel, dynamic>("dbo.spUpdateStudentInfo", param, "libsys-data");
+        }
+
+        public void DeleteStudentInfo(int Id)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+            var param = new { Id = Id };
+            sql.DeleteData("dbo.spDeleteStudentInfo", param, "libsys-data");
+        }
+    }
+}
