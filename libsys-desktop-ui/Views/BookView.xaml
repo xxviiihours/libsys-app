@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="libsys_desktop_ui.Views.BookView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:libsys_desktop_ui.Views"
+             mc:Ignorable="d" Background="White" FontSize="18"
+             d:DesignHeight="700" d:DesignWidth="1240">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
+                    Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="Book Registration Form" FontSize="48"
+                   Margin="0 30">
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1"
+                    Orientation="Vertical" Margin="0 20 0 0" MinWidth="250">
+            <TextBlock Text="Classifications:"></TextBlock>
+            <ComboBox x:Name="Classifications">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Classification}">
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Call Number:"></TextBlock>
+            <TextBox x:Name="CallNumber"></TextBox>
+            <TextBlock Text="Book Title:"></TextBlock>
+            <TextBox x:Name="BookTitle"></TextBox>
+            <TextBlock Text="Author:"></TextBlock>
+            <TextBox x:Name="Author"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2"
+                    Orientation="Vertical" Margin="20 20 20 0" Width="270">
+            <TextBlock Text="Publisher:"></TextBlock>
+            <TextBox x:Name="Publisher"></TextBox>
+            <TextBlock Text="Edition:"></TextBlock>
+            <TextBox x:Name="Edition"></TextBox>
+            <TextBlock Text="Volume:"></TextBlock>
+            <TextBox x:Name="Volume"></TextBox>
+            <TextBlock Text="Year:"></TextBlock>
+            <TextBox x:Name="Year"></TextBox>
+            <TextBlock Text="No. of Pages:"></TextBlock>
+            <TextBox x:Name="Pages"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="3"
+                    Orientation="Vertical" Margin="0 20 0 0" Width="270">
+            <TextBlock Text="Location:"></TextBlock>
+            <TextBox x:Name="Location"></TextBox>
+            <TextBlock Text="Source of Funds:"></TextBlock>
+            <TextBox x:Name="Source"></TextBox>
+            <TextBlock Text="Price:"></TextBlock>
+            <TextBox x:Name="Price"></TextBox>
+            <TextBlock Text="Description:"></TextBlock>
+            <TextBox x:Name="Description" Height="75"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="4" Width="130"
+                    Orientation="Vertical" Margin="20 20 0 0">
+            <TextBlock Text="Controls" Margin="0 0 0 20"></TextBlock>
+            <Button x:Name="Save" Content="Save"
+                    Margin="0 5"></Button>
+            <Button Margin="0 5" x:Name="Update" Content="Update"></Button>
+            <Button Margin="0 5" x:Name="Delete" Content="Delete"></Button>
+            <Button Margin="0 5" x:Name="Clear" Content="Clear"></Button>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="1"
+                    Orientation="Horizontal" Margin="0 20">
+            <TextBlock Text="Search:" Margin="0 0 20 0"></TextBlock>
+            <TextBox x:Name="Search" MinWidth="190"></TextBox>
+        </StackPanel>
+        <DataGrid x:Name="DataBookInfo" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBookItem}"
+                  Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4"
+                  MaxHeight="170" MaxWidth="980" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -11,14 +11,16 @@ namespace libsys_desktop_ui.ViewModels
     public class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>
     {
         private MainViewModel _mainViewModel;
+        private BookViewModel _bookViewModel;
         private SimpleContainer _container;
 
         private IEventAggregator _events;
-        public ShellViewModel(IEventAggregator events, MainViewModel mainViewModel, 
+        public ShellViewModel(IEventAggregator events, MainViewModel mainViewModel, BookViewModel bookViewModel,
             SimpleContainer container)
         {
             _events = events;
             _mainViewModel = mainViewModel;
+            _bookViewModel = bookViewModel;
             _container = container;
 
             _events.Subscribe(this);
@@ -28,7 +30,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public void Handle(LogOnEvent message)
         {
-            ActivateItem(_mainViewModel);
+            ActivateItem(_bookViewModel);
         }
     }
 }

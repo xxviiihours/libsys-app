@@ -29,7 +29,8 @@ namespace libsys_desktop_ui
         protected override void Configure()
         {
             _container.Instance(_container)
-                .PerRequest<IBookService, BookService>();
+                .PerRequest<IBookService, BookService>()
+                .PerRequest<IBookClassificationService, BookClassificationService>();
 
             _container
                 .Singleton<IWindowManager, WindowManager>()

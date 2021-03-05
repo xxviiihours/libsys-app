@@ -83,6 +83,8 @@
     <Build Include="dbo\Stored Procedures\spUpdateStudentInfo.sql" />
     <Build Include="dbo\Stored Procedures\spDeleteStudentInfo.sql" />
     <Build Include="dbo\Stored Procedures\spGetAllStudentInfo.sql" />
+    <Build Include="dbo\Tables\BookClassifications.sql" />
+    <Build Include="dbo\Stored Procedures\spGetAllBookClassification.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="libsys-data.refactorlog" />

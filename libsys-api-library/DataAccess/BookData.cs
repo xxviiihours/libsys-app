@@ -61,7 +61,7 @@ namespace libsys_api_library.DataAccess
                 Location = bookModel.Location,
                 Year = bookModel.Year,
                 Author = bookModel.Author,
-                Status = bookModel.Status,
+                //Status = bookModel.Status,
                 CreatedBy = bookModel.CreatedBy,
                 CreatedAt = bookModel.CreatedAt,
                 ModifiedBy = bookModel.ModifiedBy,

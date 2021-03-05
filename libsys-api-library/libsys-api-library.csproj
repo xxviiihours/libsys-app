@@ -45,8 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\BookClassificationData.cs" />
     <Compile Include="DataAccess\BookData.cs" />
     <Compile Include="DataAccess\StudentData.cs" />
+    <Compile Include="Models\BookClassificationModel.cs" />
     <Compile Include="Models\BookDetailModel.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\StudentModel.cs" />

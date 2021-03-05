@@ -79,7 +79,11 @@
     <Compile Include="Helpers\PasswordBoxHelper.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\BookView.xaml.cs">
+      <DependentUpon>BookView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -93,6 +97,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\BookView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -134,6 +142,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\libsys-api-library\libsys-api-library.csproj">
+      <Project>{81647A63-DAD3-4834-AC8E-B075E661A768}</Project>
+      <Name>libsys-api-library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\libsys-desktop-ui-library\libsys-desktop-ui-library.csproj">
       <Project>{5796cbaf-f1de-457c-a1a4-a228d1760b5c}</Project>
       <Name>libsys-desktop-ui-library</Name>

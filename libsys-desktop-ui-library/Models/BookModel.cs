@@ -14,7 +14,7 @@ namespace libsys_desktop_ui_library.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Edition { get; set; }
-        public int Volumes { get; set; }
+        public string Volumes { get; set; }
         public int Pages { get; set; }
         public string Source { get; set; }
         public double Price { get; set; }

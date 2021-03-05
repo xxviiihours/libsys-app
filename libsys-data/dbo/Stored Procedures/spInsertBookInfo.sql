@@ -5,7 +5,7 @@
 	@Title NVARCHAR(MAX),
 	@Description NVARCHAR(MAX),
 	@Edition NVARCHAR(50),
-	@Volumes INT,
+	@Volumes NVARCHAR(50),
 	@Pages INT,
 	@Source NVARCHAR(50),
 	@Price MONEY,
@@ -22,11 +22,27 @@
 AS
 BEGIN
 	SET NOCOUNT ON;
+	--DECLARE @Status AS NVARCHAR(50);
+	
+	IF NOT EXISTS(
+	SELECT @CallNumber
+	FROM dbo.BookInformations
+	WHERE CallNumber = @CallNumber)
+	BEGIN
+	SET @Status = 'ORIGINAL';
+		INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], CreatedBy, CreatedAt, ModifiedBy, LastModified)
+		VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @CreatedBy, @CreatedAt, @ModifiedBy, @LastModified)
 
-	INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], CreatedBy, CreatedAt, ModifiedBy, LastModified)
-	VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @CreatedBy, @CreatedAt, @ModifiedBy, @LastModified)
+		SELECT @Id = @@IDENTITY;
+	END
+	ELSE
+	BEGIN
+		SET @Status = 'AVAILABLE';
+		INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], CreatedBy, CreatedAt, ModifiedBy, LastModified)
+		VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @CreatedBy, @CreatedAt, @ModifiedBy, @LastModified)
 
-	SELECT @Id = @@IDENTITY;
+		SELECT @Id = @@IDENTITY;
+	END
 
 	IF NOT EXISTS(
 	SELECT CallNumber 

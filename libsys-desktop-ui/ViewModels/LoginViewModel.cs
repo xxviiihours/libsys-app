@@ -36,6 +36,7 @@ namespace libsys_desktop_ui.ViewModels
                 _emailAddress = value;
                 NotifyOfPropertyChange(() => EmailAddress);
                 NotifyOfPropertyChange(() => CanLogin);
+                NotifyOfPropertyChange(() => IsDisabled);
             }
         }
 
@@ -47,6 +48,7 @@ namespace libsys_desktop_ui.ViewModels
                 _password = value;
                 NotifyOfPropertyChange(() => Password);
                 NotifyOfPropertyChange(() => CanLogin);
+                NotifyOfPropertyChange(() => IsDisabled);
             }
         }
         public string ErrorMessage
@@ -57,7 +59,7 @@ namespace libsys_desktop_ui.ViewModels
                 _errorMessage = value;
                 NotifyOfPropertyChange(() => ErrorMessage);
                 NotifyOfPropertyChange(() => IsErrorVisible);
-
+                NotifyOfPropertyChange(() => IsDisabled);
             }
         }
 
@@ -72,6 +74,19 @@ namespace libsys_desktop_ui.ViewModels
                     return output;
                 }
                 return output; 
+            }
+        }
+
+        public string IsDisabled 
+        {
+            get 
+            {
+                if (CanLogin)
+                {
+                    return "White";
+                }
+
+                return "Black";
             }
         }
 
