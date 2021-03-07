@@ -16,8 +16,8 @@ namespace libsys_desktop_ui.ViewModels
         private IAPIHelper _apiHelper;
         IEventAggregator _events;
 
-        private string _emailAddress;
-        private string _password;
+        private string _emailAddress = "admin@libsysapp.com";
+        private string _password = "@Dmin123";
 
         private string _errorMessage;
 
