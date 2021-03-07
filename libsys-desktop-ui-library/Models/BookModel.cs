@@ -26,6 +26,6 @@ namespace libsys_desktop_ui_library.Models
         public string CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
         public string ModifiedBy { get; set; }
-        public DateTime LastModified { get; set; }
+        public DateTime LastModified { get; set; } = DateTime.UtcNow;
     }
 }
