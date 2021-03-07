@@ -63,7 +63,7 @@ namespace libsys_api_library.DataAccess
                 Author = bookModel.Author,
                 //Status = bookModel.Status,
                 CreatedBy = bookModel.CreatedBy,
-                CreatedAt = bookModel.CreatedAt,
+                //CreatedAt = bookModel.CreatedAt,
                 ModifiedBy = bookModel.ModifiedBy,
                 LastModified = bookModel.LastModified,
 

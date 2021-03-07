@@ -10,5 +10,7 @@ namespace libsys_desktop_ui_library.Interfaces
     public interface IBookService
     {
         Task<List<BookModel>> GetAll();
+
+        Task Save(BookModel bookModel);
     }
 }

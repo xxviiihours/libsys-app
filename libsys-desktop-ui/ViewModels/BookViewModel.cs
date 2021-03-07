@@ -17,6 +17,10 @@ namespace libsys_desktop_ui.ViewModels
         private IBookService _bookService;
         private IBookClassificationService _bookClassificationService;
 
+
+
+        private string _classificationItem;
+
         private string _callNumber;
         private string _bookTitle;
         private string _author;
@@ -35,9 +39,17 @@ namespace libsys_desktop_ui.ViewModels
 
         private string _search;
 
+        private bool IsBookSelected;
+        private bool IsClassificationSelected;
+
+        private bool _canSave;
+        private bool _canUpdate;
+
         private BindingList<BookClassificationModel> _bookClassification;
         private BindingList<BookModel> _books;
 
+
+        private BookClassificationModel _selectedClassification;
         private BookModel _selectedBookItem;
 
         protected override async void OnViewLoaded(object view)
@@ -79,161 +91,182 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => Classifications);
             } 
         }
+
+        public BookClassificationModel SelectedClassification
+        {
+            get { return _selectedClassification; }
+            set 
+            {
+                if (_selectedClassification == value) return;
+                _selectedClassification = value;
+                IsClassificationSelected = true;
+                //IsBookSelected = true;
+                FillClassificationItem();
+                NotifyOfPropertyChange(() => SelectedClassification);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
+            }
+        }
+
+        public void FillClassificationItem()
+        {
+            if (SelectedClassification == null) return;
+            ClassificationItem = _selectedClassification.Classification;
+        }
+        public string ClassificationItem
+        {
+            get { return _classificationItem; }
+            set
+            {
+                _classificationItem = value;
+                //_classificationItem = SelectedClassificationItem.Classification;
+                NotifyOfPropertyChange(() => ClassificationItem);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
+            }
+        }
         public string CallNumber
         {
-            get
-            {
-                return _callNumber;
-            }
+            get { return _callNumber; }
             set
             {
                 _callNumber = value;
                 NotifyOfPropertyChange(() => CallNumber);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public string BookTitle
         {
-            get
-            {
-                return _bookTitle;
-            }
+            get { return _bookTitle; }
             set
             {
                 _bookTitle = value;
                 NotifyOfPropertyChange(() => BookTitle);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public string Author
         {
-            get
-            {
-                return _author;
-            }
+            get { return _author; }
             set
             {
                 _author = value;
                 NotifyOfPropertyChange(() => Author);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
 
         public string Publisher
         {
-            get
-            {
-                return _publisher;
-            }
+            get { return _publisher; }
             set
             {
                 _publisher = value;
                 NotifyOfPropertyChange(() => Publisher);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public string Edition
         {
-            get
-            {
-                return _edition;
-            }
+            get { return _edition; }
             set
             {
                 _edition = value;
                 NotifyOfPropertyChange(() => Edition);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public string Volume
         {
-            get
-            {
-                return _volume;
-            }
+            get { return _volume; }
             set
             {
                 _volume = value;
                 NotifyOfPropertyChange(() => Volume);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public int Year
         {
-            get 
-            { 
-                return _year; 
-            }
+            get { return _year; }
             set 
             { 
                 _year = value;
                 NotifyOfPropertyChange(() => Year);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public int Pages
         {
-            get
-            {
-                return _pages;
-            }
+            get { return _pages; }
             set
             {
                 _pages = value;
                 NotifyOfPropertyChange(() => Pages);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public string Location
         {
-            get
-            {
-                return _location;
-            }
+            get { return _location; }
             set
             {
                 _location = value;
                 NotifyOfPropertyChange(() => Location);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public string Source
         {
-            get
-            {
-                return _source;
-            }
+            get { return _source; }
             set
             {
                 _source = value;
                 NotifyOfPropertyChange(() => Source);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public double Price
         {
-            get
-            {
-                return _price;
-            }
+            get { return _price; }
             set
             {
                 _price = value;
                 NotifyOfPropertyChange(() => Price);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public string Description
         {
-            get
-            {
-                return _description;
-            }
+            get { return _description; }
             set
             {
                 _description = value;
                 NotifyOfPropertyChange(() => Description);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public string Search
         {
-            get
-            {
-                return _search;
-            }
+            get { return _search; }
             set
             {
                 _search = value;
                 NotifyOfPropertyChange(() => Search);
+                NotifyOfPropertyChange(() => CanSave);
+                NotifyOfPropertyChange(() => CanUpdate);
             }
         }
         public BindingList<BookModel> Books 
@@ -256,23 +289,161 @@ namespace libsys_desktop_ui.ViewModels
             }
             set
             {
-                if (_selectedBookItem == value) return;
+                //if (_selectedBookItem == value) return;
                 _selectedBookItem = value;
+                SelectedClassification = null;
+                IsBookSelected = true;
+                //IsClassificationSelected = false;
+                FillData();
                 NotifyOfPropertyChange(() => SelectedBookItem);
-                CallNumber = _selectedBookItem.CallNumber;
-                BookTitle = _selectedBookItem.Title;
-                Description = _selectedBookItem.Description;
-                Edition = _selectedBookItem.Edition;
-                Volume = _selectedBookItem.Volumes;
-                Pages = _selectedBookItem.Pages;
-                Source = _selectedBookItem.Source;
-                Price = _selectedBookItem.Price;
-                Publisher = _selectedBookItem.Publisher;
-                Location = _selectedBookItem.Location;
-                Year = _selectedBookItem.Year;
-                Author = _selectedBookItem.Author;
-
+                NotifyOfPropertyChange(() => CanUpdate);
             }
+        }
+
+        public void FillData()
+        {
+            if (SelectedBookItem == null) return;
+            ClassificationItem = SelectedBookItem.Classification;
+            CallNumber = SelectedBookItem.CallNumber;
+            BookTitle = SelectedBookItem.Title;
+            Description = SelectedBookItem.Description;
+            Edition = SelectedBookItem.Edition;
+            Volume = SelectedBookItem.Volumes;
+            Pages = SelectedBookItem.Pages;
+            Source = SelectedBookItem.Source;
+            Price = SelectedBookItem.Price;
+            Publisher = SelectedBookItem.Publisher;
+            Location = SelectedBookItem.Location;
+            Year = SelectedBookItem.Year;
+            Author = SelectedBookItem.Author;
+        }
+        public bool CanSave
+        {
+            get
+            {
+                bool option = false;
+                if (IsClassificationSelected &&
+                    //!IsBookSelected &&
+                    SelectedBookItem == null &&
+                    CallNumber?.Length > 0 &&
+                    BookTitle?.Length > 0 &&
+                    Description?.Length > 0 &&
+                    Edition?.Length > 0 &&
+                    Volume?.Length > 0 &&
+                    Pages > 0 &&
+                    Source?.Length > 0 &&
+                    Price > 0 &&
+                    Publisher?.Length > 0 &&
+                    Location?.Length > 0 &&
+                    Year > 0 &&
+                    Author?.Length > 0)
+                {
+                    option = true;
+                    return option;
+                }
+
+                return option;
+            }
+            //set
+            //{
+            //    _canSave = value;
+            //}
+        }
+
+        public bool CanUpdate
+        {
+            get
+            {
+                bool option = false;
+                if (IsBookSelected &&
+                    SelectedBookItem != null &&
+                    ClassificationItem?.Length > 0 &&
+                    CallNumber?.Length > 0 &&
+                    BookTitle?.Length > 0 &&
+                    Description?.Length > 0 &&
+                    Edition?.Length > 0 &&
+                    Volume?.Length > 0 &&
+                    Pages > 0 &&
+                    Source?.Length > 0 &&
+                    Price > 0 &&
+                    Publisher?.Length > 0 &&
+                    Location?.Length > 0 &&
+                    Year > 0 &&
+                    Author?.Length > 0)
+                {
+                    option = true;
+                    return option;
+                }
+            
+                return option;
+            }
+        }
+
+        public async Task Save()
+        {
+            BookModel book = new BookModel();
+            book.Classification = ClassificationItem;
+            book.CallNumber = CallNumber;
+            book.Title = BookTitle;
+            book.Description = Description;
+            book.Edition = Edition;
+            book.Volumes = Volume;
+            book.Pages = Pages;
+            book.Source = Source;
+            book.Price = Price;
+            book.Publisher = Publisher;
+            book.Location = Location;
+            book.Year = Year;
+            book.Author = Author;
+            book.CreatedBy = _userLoggedIn.FirstName;
+            book.CreatedAt = DateTime.UtcNow;
+            Console.WriteLine();
+            await _bookService.Save(book);
+            await LoadBooks();
+            Clear();
+        }
+
+        public void Update()
+        {
+            //ClassificationItem = SelectedBookItem.Classification;
+            BookModel book = new BookModel();
+            book.Classification = ClassificationItem;
+            book.CallNumber = CallNumber;
+            book.Title = BookTitle;
+            book.Description = Description;
+            book.Edition = Edition;
+            book.Volumes = Volume;
+            book.Pages = Pages;
+            book.Source = Source;
+            book.Price = Price;
+            book.Publisher = Publisher;
+            book.Location = Location;
+            book.Year = Year;
+            book.Author = Author;
+            book.ModifiedBy = _userLoggedIn.FirstName;
+            book.LastModified = DateTime.UtcNow;
+            Clear();
+        }
+
+        public void Clear()
+        {
+            IsClassificationSelected = false;
+            IsBookSelected = false;
+            SelectedClassification = null;
+            SelectedBookItem = null;
+            ClassificationItem = "";
+            CallNumber = "";
+            BookTitle = "";
+            Description = "";
+            Edition = "";
+            Volume = "";
+            Pages = 0;
+            Source = "";
+            Price = 0;
+            Publisher = "";
+            Location = "";
+            Year = 0;
+            Author = "";
         }
     }
 }

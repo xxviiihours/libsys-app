@@ -34,5 +34,20 @@ namespace libsys_desktop_ui_library.Services
                 }
             }
         }
+
+        public async Task Save(BookModel bookModel)
+        {
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/books", bookModel))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
     }
 }

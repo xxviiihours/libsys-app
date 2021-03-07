@@ -27,21 +27,25 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
                     Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="Book Registration Form" FontSize="48"
+            <TextBlock Text="Book Management Form" FontSize="48"
                    Margin="0 30">
             </TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1"
                     Orientation="Vertical" Margin="0 20 0 0" MinWidth="250">
-            <TextBlock Text="Classifications:"></TextBlock>
-            <ComboBox x:Name="Classifications">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Classification}">
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <StackPanel Orientation="Horizontal" Margin="0 5">
+                <TextBlock Text="Classifications:" Margin="0 0 10 0"></TextBlock>
+                <ComboBox x:Name="Classifications"
+                      SelectedItem="{Binding SelectedClassification}" MinWidth="145">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Classification}">
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <TextBox x:Name="ClassificationItem"></TextBox>
             <TextBlock Text="Call Number:"></TextBlock>
             <TextBox x:Name="CallNumber"></TextBox>
             <TextBlock Text="Book Title:"></TextBlock>
@@ -71,7 +75,8 @@
             <TextBlock Text="Price:"></TextBlock>
             <TextBox x:Name="Price"></TextBox>
             <TextBlock Text="Description:"></TextBlock>
-            <TextBox x:Name="Description" Height="75"></TextBox>
+            <TextBox x:Name="Description" Height="75" 
+                     TextWrapping="Wrap" VerticalScrollBarVisibility="Visible"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="4" Width="130"
                     Orientation="Vertical" Margin="20 20 0 0">
@@ -87,10 +92,18 @@
             <TextBlock Text="Search:" Margin="0 0 20 0"></TextBlock>
             <TextBox x:Name="Search" MinWidth="190"></TextBox>
         </StackPanel>
-        <DataGrid x:Name="DataBookInfo" ItemsSource="{Binding Books}" SelectedItem="{Binding SelectedBookItem}"
+        <DataGrid x:Name="Books" SelectedItem="{Binding SelectedBookItem}"
                   Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4"
                   MaxHeight="170" MaxWidth="980" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
-
+            <!--<DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button>Show/Hide</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>-->
         </DataGrid>
     </Grid>
 </UserControl>
