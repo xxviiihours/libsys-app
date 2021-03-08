@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="libsys_desktop_ui.Views.StudentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:libsys_desktop_ui.Views"
+             mc:Ignorable="d" Background="White" FontSize="14"
+             d:DesignHeight="700" d:DesignWidth="1024">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                   Text="Student Management Form" FontSize="34"
+                   Margin="0 30"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical"
+                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+            <TextBlock Text="Student Number:" Margin="0 5"/>
+            <TextBox x:Name="StudentId"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical"
+                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+            <TextBlock Text="First Name:" Margin="0 5"/>
+            <TextBox x:Name="FirstName"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical"
+                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+            <TextBlock Text="Last Name:" Margin="0 5"/>
+            <TextBox x:Name="LastName"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" 
+                    Margin="0 5" MinWidth="150"
+                    HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Vertical" Margin="0 0 10 0" 
+                            MinWidth="100" HorizontalAlignment="Left">
+                <TextBlock Text="Gender:"/>
+                <TextBox x:Name="Gender"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="10 0 0 0"
+                            MinWidth="100">
+                <TextBlock Text="Year Level:"/>
+                <TextBox x:Name="YearLevel"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Vertical"
+                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+            <TextBlock Text="Course:" Margin="0 5"/>
+            <TextBox x:Name="Course"/>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Vertical"
+                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+            <TextBlock Text="Department:" Margin="0 5"/>
+            <TextBox x:Name="Department"/>
+        </StackPanel>
+        <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Vertical"
+                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+            <TextBlock Text="PhoneNumber:" Margin="0 5"/>
+            <TextBox x:Name="PhoneNumber"/>
+        </StackPanel>
+        <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Vertical"
+                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+            <TextBlock Text="EmailAddress:" Margin="0 5"/>
+            <TextBox x:Name="EmailAddress"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="9" Grid.Column="1" Margin="0"
+                    Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Vertical" Width="100">
+                <Button x:Name="Save" Content="Save" Margin="0 10"/>
+                <Button x:Name="Update" Content="Update"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Width="100" Margin="20 0 0 0">
+                <Button x:Name="Delete" Content="Delete" Margin="0 10"/>
+                <Button x:Name="Clear" Content="Clear"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!--
+        <TextBlock Text="Course:" Margin="0 5"/>
+        <TextBox x:Name="Course"/>
+        <TextBlock Text="Department:" Margin="0 5"/>
+        <TextBox x:Name="Department"/>
+        <TextBlock Text="PhoneNumber:" Margin="0 5"/>
+        <TextBox x:Name="PhoneNumber"/>
+        <TextBlock Text="EmailAddress:" Margin="0 5"/>
+        <TextBox x:Name="EmailAddress"/>-->
+        <Button Grid.Row="0" Grid.Column="5" Height="40" Width="140"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                x:Name="Return" Content="Go Back">
+
+        </Button>
+        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal"
+                  Margin="50 0 0 0">
+            <TextBlock Text="Search:" VerticalAlignment="Center" Margin="0 0 20 0"/>
+            <TextBox x:Name="Search" MinWidth="250" Height="25"/>
+        </StackPanel>
+        <DataGrid Grid.Row="2" Grid.RowSpan="8"
+                  Grid.Column="2" Grid.ColumnSpan="4"
+                  Margin="50 0 0 0"
+                  MinWidth="750" MaxWidth="750"
+                  HorizontalScrollBarVisibility="Visible" 
+                  VerticalScrollBarVisibility="Visible"
+                  x:Name="Students" SelectedItem="{Binding SelectedStudent}">
+            
+        </DataGrid>
+    </Grid>
+</UserControl>

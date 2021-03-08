@@ -30,6 +30,7 @@ namespace libsys_desktop_ui
         {
             _container.Instance(_container)
                 .PerRequest<IBookService, BookService>()
+                .PerRequest<IStudentService, StudentService>()
                 .PerRequest<IBookClassificationService, BookClassificationService>();
 
             _container

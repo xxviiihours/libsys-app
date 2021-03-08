@@ -9,23 +9,22 @@ using System.Threading.Tasks;
 
 namespace libsys_desktop_ui_library.Services
 {
-
-    public class BookService : IBookService
+    public class StudentService : IStudentService
     {
-
         private readonly IAPIHelper _apiHelper;
-        public BookService(IAPIHelper apiHelper)
+
+        public StudentService(IAPIHelper apiHelper)
         {
             _apiHelper = apiHelper;
         }
 
-        public async Task<List<BookModel>> GetAll()
+        public async Task<List<StudentModel>> GetAll()
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/books"))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/student"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var result = await responseMessage.Content.ReadAsAsync<List<BookModel>>();
+                    var result = await responseMessage.Content.ReadAsAsync<List<StudentModel>>();
                     return result;
                 }
                 else
@@ -35,13 +34,13 @@ namespace libsys_desktop_ui_library.Services
             }
         }
 
-        public async Task Save(BookModel bookModel)
+        public async Task Save(StudentModel studentModel)
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/books", bookModel))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/student", studentModel))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
-
+                    //TODO: Create a response message or something.
                 }
                 else
                 {
