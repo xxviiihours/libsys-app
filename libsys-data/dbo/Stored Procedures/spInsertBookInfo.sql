@@ -14,8 +14,8 @@
 	@Year INT,
 	@Author NVARCHAR(128),
 	@Status NVARCHAR(50),
-	@CreatedBy NVARCHAR(50),
-	@CreatedAt DATETIME2,
+	--@CreatedBy NVARCHAR(50),
+	--@CreatedAt DATETIME2,
 	@ModifiedBy NVARCHAR(50),
 	@LastModified DATETIME2
 
@@ -27,19 +27,19 @@ BEGIN
 	IF NOT EXISTS(
 	SELECT @CallNumber
 	FROM dbo.BookInformations
-	WHERE CallNumber = @CallNumber)
+	WHERE CallNumber = @CallNumber AND [Status] = 'ORIGINAL')
 	BEGIN
 	SET @Status = 'ORIGINAL';
-		INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], CreatedBy, CreatedAt, ModifiedBy, LastModified)
-		VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @CreatedBy, @CreatedAt, @ModifiedBy, @LastModified)
+		INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], ModifiedBy, LastModified)
+		VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @ModifiedBy, @LastModified)
 
 		SELECT @Id = @@IDENTITY;
 	END
 	ELSE
 	BEGIN
 		SET @Status = 'AVAILABLE';
-		INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], CreatedBy, CreatedAt, ModifiedBy, LastModified)
-		VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @CreatedBy, @CreatedAt, @ModifiedBy, @LastModified)
+		INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], ModifiedBy, LastModified)
+		VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @ModifiedBy, @LastModified)
 
 		SELECT @Id = @@IDENTITY;
 	END

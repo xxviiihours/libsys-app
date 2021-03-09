@@ -15,8 +15,6 @@
     [Year] INT NOT NULL, 
     [Author] NVARCHAR(128) NOT NULL, 
     [Status] NVARCHAR(50) NULL DEFAULT ('ORIGINAL'), 
-    [CreatedBy] NVARCHAR(50) NOT NULL,
-    [CreatedAt] DATETIME2 NULL DEFAULT getutcdate(),
     [ModifiedBy] NVARCHAR(50) NULL,
-    [LastModified] DATETIME2 NULL DEFAULT getutcdate()  
+    [LastModified] DATETIME2 NOT NULL DEFAULT GETUTCDATE()   
 )

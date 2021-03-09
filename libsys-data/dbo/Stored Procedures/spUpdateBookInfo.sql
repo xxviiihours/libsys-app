@@ -14,8 +14,7 @@
 	@Year INT,
 	@Author NVARCHAR(128),
 	--@Status NVARCHAR(50),
-	@CreatedBy NVARCHAR(50),
-	@CreatedAt DATETIME2,
+	--@CreatedAt DATETIME2,
 	@ModifiedBy NVARCHAR(50),
 	@LastModified DATETIME2
 AS
@@ -35,8 +34,7 @@ BEGIN
 		[Year] = @Year,
 		Author = @Author, 
 		--[Status] = @Status, 
-		CreatedBy = @CreatedBy, 
-		CreatedAt = @CreatedAt, 
+		--CreatedAt = @CreatedAt, 
 		ModifiedBy = @ModifiedBy, 
 		LastModified = @LastModified
 	WHERE Id = @Id;

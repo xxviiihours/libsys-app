@@ -18,6 +18,7 @@ namespace libsys_desktop_ui_library.Models
         public string Department { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
+        public int BorrowLimit { get; set; }
 
     }
 }

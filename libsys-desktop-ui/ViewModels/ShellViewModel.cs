@@ -13,15 +13,17 @@ namespace libsys_desktop_ui.ViewModels
         private MainViewModel _mainViewModel;
         private BookViewModel _bookViewModel;
         private StudentViewModel _studentViewModel;
+        private TransactionViewModel _transactionModel;
 
         private IEventAggregator _events;
-        public ShellViewModel(IEventAggregator events, MainViewModel mainViewModel, 
-            BookViewModel bookViewModel, StudentViewModel studentViewModel)
+        public ShellViewModel(IEventAggregator events, MainViewModel mainViewModel,
+            BookViewModel bookViewModel, StudentViewModel studentViewModel, TransactionViewModel transactionModel)
         {
             _events = events;
             _mainViewModel = mainViewModel;
             _bookViewModel = bookViewModel;
             _studentViewModel = studentViewModel;
+            _transactionModel = transactionModel;
 
             _events.Subscribe(this);
 
@@ -30,7 +32,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public void Handle(LogOnEvent message)
         {
-            ActivateItem(_studentViewModel);
+            ActivateItem(_transactionModel);
         }
     }
 }

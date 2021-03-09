@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="libsys_desktop_ui.Views.TransactionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:libsys_desktop_ui.Views"
+             mc:Ignorable="d" Background="White" FontSize="14"
+             d:DesignHeight="700" d:DesignWidth="1024">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
+                    FontSize="48" Margin="0 50"
+                   Text="Transaction Form"/>
+
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical"
+                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+            <!--<ComboBox x:Name="ClassificationType" 
+                      SelectedItem="{Binding SelectedClassification}">
+                <ComboBoxItem>
+                    <TextBlock Text="Student"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Text="Teacher"/>
+                </ComboBoxItem>
+                <ComboBox />-->
+            <TextBlock Text="Student Number:" Margin="0 5"/>
+            <TextBox x:Name="StudentId"/>
+            <Button x:Name="SearchStudentId" Content="Search ID" 
+                    Margin="0 10 0 30"/>
+            <TextBlock Text="Full Name:" Margin="0 5"/>
+            <TextBox x:Name="FullName" IsReadOnly="True"/>
+            <TextBlock Text="Department" Margin="0 5"/>
+            <TextBox x:Name="Department" IsReadOnly="True"/>
+            <TextBlock Text="Phone Number:" Margin="0 40 0 5"/>
+            <TextBox x:Name="PhoneNumber" IsReadOnly="True"/>
+            <TextBlock Text="Email Address:" Margin="0 5"/>
+            <TextBox x:Name="EmailAddress" IsReadOnly="True"/>
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 20"
+                        HorizontalAlignment="Right">
+                <TextBlock Text="Borrow Limit:" Margin="20 0"/>
+                <TextBlock Text="{Binding BorrowLimit}"
+                           HorizontalAlignment="Right"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="2" 
+                    Grid.RowSpan="2" Grid.ColumnSpan="3"
+                    Orientation="Vertical" Margin="20 0"
+                    HorizontalAlignment="Stretch" MinWidth="400" MaxWidth="400">
+
+            <TextBlock Text="Search book here:" Margin="0 10 0 0"/>
+            <TextBox x:Name="BookSearch" Margin="0 0 0 30"/>
+            <TextBlock Text="List of books:"/>
+            <ListBox x:Name="Books" SelectedItem="{Binding SelectedBook}" IsEnabled="{Binding IsBookListEnabled}"
+                     MinHeight="200" MaxHeight="235"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+            
+            <!--Add books control-->
+            <Button x:Name="AddBooks" Content="Add this book" Margin="0 20"/>
+            <Button x:Name="Refresh" Content="Refresh" />
+        </StackPanel>
+        
+        
+        
+        <StackPanel Grid.Row="1" Grid.Column="5"
+                    Orientation="Vertical" MinWidth="350">
+            <TextBlock Text="Added Books:" FontSize="24" HorizontalAlignment="Center"/>
+            <ListBox x:Name="Transactions"
+                     MinHeight="215" MaxHeight="300"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding BookTitle}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button x:Name="Checkout" Content="Checkout" Margin="0 20"/>
+            <Button x:Name="Remove" Content="Remove" />
+        </StackPanel>
+    </Grid>
+</UserControl>

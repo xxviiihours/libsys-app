@@ -34,6 +34,22 @@ namespace libsys_desktop_ui_library.Services
             }
         }
 
+        public async Task<StudentModel> GetByStudentId(string studentId)
+        {
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync($"/api/student/{studentId}"))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<StudentModel>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
         public async Task Save(StudentModel studentModel)
         {
             using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/student", studentModel))

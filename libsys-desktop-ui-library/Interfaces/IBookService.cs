@@ -9,8 +9,10 @@ namespace libsys_desktop_ui_library.Interfaces
 {
     public interface IBookService
     {
-        Task<List<BookModel>> GetAll();
-
+        Task<List<BookModel>> GetAllBooks();
+        Task<List<BookModel>> GetAllAvailableBooks();
+        Task<BookModel> GetByBookId(string bookId);
+        Task<BookModel> GetByBookTitle(string bookTitle);
         Task Save(BookModel bookModel);
     }
 }

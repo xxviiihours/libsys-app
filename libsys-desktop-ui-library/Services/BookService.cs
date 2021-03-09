@@ -19,7 +19,7 @@ namespace libsys_desktop_ui_library.Services
             _apiHelper = apiHelper;
         }
 
-        public async Task<List<BookModel>> GetAll()
+        public async Task<List<BookModel>> GetAllBooks()
         {
             using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/books"))
             {
@@ -35,9 +35,57 @@ namespace libsys_desktop_ui_library.Services
             }
         }
 
+        public async Task<List<BookModel>> GetAllAvailableBooks()
+        {
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/books/available"))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<List<BookModel>>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<BookModel> GetByBookId(string bookId)
+        {
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync($"/api/books/id/{bookId}"))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<BookModel>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<BookModel> GetByBookTitle(string bookTitle)
+        {
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync($"/api/books/title/{bookTitle}"))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<BookModel>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
         public async Task Save(BookModel bookModel)
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/books", bookModel))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/books/save", bookModel))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {

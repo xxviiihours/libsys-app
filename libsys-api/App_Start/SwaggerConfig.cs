@@ -3,6 +3,7 @@ using WebActivatorEx;
 using libsys_api;
 using Swashbuckle.Application;
 using libsys_api.App_Start;
+using System.Linq;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 

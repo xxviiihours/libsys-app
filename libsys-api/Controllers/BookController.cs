@@ -11,10 +11,12 @@ using System.Web.Http;
 
 namespace libsys_api.Controllers
 {
-    public class BooksController : ApiController
+    public class BookController : ApiController
     {
+        [HttpGet]
         // GET: api/Books
-        public IHttpActionResult Get()
+        [Route("api/books")]
+        public IHttpActionResult GetAll()
         {
             BookData data = new BookData();
             var result = data.GetAllBooks();
@@ -25,12 +27,41 @@ namespace libsys_api.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        // GET: api/Books
+        [Route("api/books/available")]
+        public IHttpActionResult GetAllAvailable()
+        {
+            BookData data = new BookData();
+            var result = data.GetAllAvailableBooks();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
         // GET: api/Books/5
-        public IHttpActionResult GetById(string Id)
+        [Route("api/books/id/")]
+        public IHttpActionResult GetById(int Id)
         {
             BookData data = new BookData();
             var result = data.GetBookById(Id);
-            if(result == null)
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("api/books/title/")]
+        public IHttpActionResult GetByBookTitle(string BookTitle)
+        {
+            BookData data = new BookData();
+            var result = data.GetBookByBookTitle(BookTitle);
+            if (result == null)
             {
                 return NotFound();
             }
@@ -38,6 +69,8 @@ namespace libsys_api.Controllers
         }
 
         [Authorize]
+        [HttpPost]
+        [Route("api/books/save")]
         // POST: api/Books
         public void Post([FromBody]BookDetailModel bookDetails)
         {
@@ -47,6 +80,8 @@ namespace libsys_api.Controllers
 
         // PUT: api/Books/5
         [Authorize]
+        [HttpPut]
+        [Route("api/books/update/")]
         public void Put(int id, [FromBody]BookDetailModel bookDetails)
         {
             BookData data = new BookData();
@@ -55,6 +90,8 @@ namespace libsys_api.Controllers
 
         // DELETE: api/Books/5
         [Authorize]
+        [HttpDelete]
+        [Route("api/books/delete/")]
         public void Delete(int id)
         {
             BookData data = new BookData();

@@ -19,13 +19,21 @@ namespace libsys_api_library.DataAccess
             return output;
         }
 
+        public List<BookDetailModel> GetAllAvailableBooks()
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+
+            var output = sql.LoadData<BookDetailModel, dynamic>("dbo.spGetAllAvailableBookInfo", new { }, "libsys-data");
+            return output;
+        }
+
         public void SaveBookInfo(BookDetailModel bookModel)
         {
             SqlDataAccess sql = new SqlDataAccess();
             sql.SaveData("dbo.spInsertBookInfo", bookModel, "libsys-data");
         }
 
-        public BookDetailModel GetBookById(string Id)
+        public BookDetailModel GetBookById(int Id)
         {
             SqlDataAccess sql = new SqlDataAccess();
             BookDetailModel bookDetail = new BookDetailModel();
@@ -41,6 +49,17 @@ namespace libsys_api_library.DataAccess
                 return bookDetail;
             }
             return null;
+        }
+
+        public List<BookDetailModel> GetBookByBookTitle(string BookTitle)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+            BookDetailModel bookDetail = new BookDetailModel();
+            var param = new { Title = BookTitle };
+
+            var output = sql.LoadData<BookDetailModel, dynamic>("dbo.spAvailableBookInfoLookup", param, "libsys-data");
+            
+            return output;
         }
 
         public void UpdateBookInfo(int Id, BookDetailModel bookModel)
@@ -61,9 +80,6 @@ namespace libsys_api_library.DataAccess
                 Location = bookModel.Location,
                 Year = bookModel.Year,
                 Author = bookModel.Author,
-                //Status = bookModel.Status,
-                CreatedBy = bookModel.CreatedBy,
-                //CreatedAt = bookModel.CreatedAt,
                 ModifiedBy = bookModel.ModifiedBy,
                 LastModified = bookModel.LastModified,
 

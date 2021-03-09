@@ -69,7 +69,7 @@ namespace libsys_desktop_ui.ViewModels
 
         private async Task LoadBooks()
         {
-            var bookList = await _bookService.GetAll();
+            var bookList = await _bookService.GetAllBooks();
             Books = new BindingList<BookModel>(bookList);
         }
 
@@ -383,7 +383,7 @@ namespace libsys_desktop_ui.ViewModels
         {
             BookModel book = new BookModel();
             book.Classification = ClassificationItem;
-            book.CallNumber = CallNumber;
+            book.CallNumber = CallNumber.ToUpper();
             book.Title = BookTitle;
             book.Description = Description;
             book.Edition = Edition;
@@ -395,8 +395,8 @@ namespace libsys_desktop_ui.ViewModels
             book.Location = Location;
             book.Year = Year;
             book.Author = Author;
-            book.CreatedBy = _userLoggedIn.FirstName;
-            book.CreatedAt = DateTime.UtcNow;
+            book.ModifiedBy = _userLoggedIn.FirstName;
+            //book.CreatedAt = DateTime.UtcNow;
             Console.WriteLine();
             await _bookService.Save(book);
             await LoadBooks();

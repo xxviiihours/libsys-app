@@ -23,9 +23,7 @@ namespace libsys_api_library.Models
         public int Year { get; set; }
         public string Author { get; set; }
         public string Status { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string ModifiedBy { get; set; }
-        public DateTime LastModified { get; set; } = DateTime.UtcNow;
+        public DateTime LastModified { get; set; } = DateTime.Now;
     }
 }
