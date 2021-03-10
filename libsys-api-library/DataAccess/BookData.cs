@@ -51,7 +51,7 @@ namespace libsys_api_library.DataAccess
             return null;
         }
 
-        public List<BookDetailModel> GetBookByBookTitle(string BookTitle)
+        public List<BookDetailModel> GetAvailableBooksByTitle(string BookTitle)
         {
             SqlDataAccess sql = new SqlDataAccess();
             BookDetailModel bookDetail = new BookDetailModel();
