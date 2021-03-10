@@ -67,13 +67,13 @@ namespace libsys_desktop_ui_library.Services
             }
         }
 
-        public async Task<BookModel> GetByBookTitle(string bookTitle)
+        public async Task<List<BookModel>> GetByBookTitle(string bookTitle)
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync($"/api/books/title/{bookTitle}"))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync($"/api/books/title?BookTitle={bookTitle}"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var result = await responseMessage.Content.ReadAsAsync<BookModel>();
+                    var result = await responseMessage.Content.ReadAsAsync<List<BookModel>>();
                     return result;
                 }
                 else
