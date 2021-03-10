@@ -57,10 +57,10 @@ namespace libsys_api.Controllers
 
         [HttpGet]
         [Route("api/books/title/")]
-        public IHttpActionResult GetByBookTitle(string BookTitle)
+        public IHttpActionResult GetByBookTitle(string bookTitle)
         {
             BookData data = new BookData();
-            var result = data.GetBookByBookTitle(BookTitle);
+            var result = data.GetBookByBookTitle(bookTitle);
             if (result == null)
             {
                 return NotFound();
