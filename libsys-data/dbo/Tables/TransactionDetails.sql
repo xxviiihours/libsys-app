@@ -8,5 +8,7 @@
     [Status] NVARCHAR(50) NOT NULL, 
     [DateBorrowed] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [DueDate] DATETIME2 NOT NULL, 
-    [CreatedAt] DATETIME2 NOT NULL DEFAULT getutcdate() 
+    [CreatedAt] DATETIME2 NOT NULL DEFAULT getutcdate(), 
+    CONSTRAINT [FK_TransactionDetails_ToBookInformations] FOREIGN KEY (BookId) REFERENCES BookInformations(Id), 
+    CONSTRAINT [FK_TransactionDetails_ToUsers] FOREIGN KEY (UserId) REFERENCES [Users](Id) 
 )
