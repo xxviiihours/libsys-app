@@ -303,19 +303,19 @@ namespace libsys_desktop_ui.ViewModels
         public void FillData()
         {
             if (SelectedBookItem == null) return;
-            ClassificationItem = SelectedBookItem?.Classification;
-            CallNumber = SelectedBookItem?.CallNumber;
-            BookTitle = SelectedBookItem?.Title;
-            Description = SelectedBookItem?.Description;
-            Edition = SelectedBookItem?.Edition;
-            Volume = SelectedBookItem?.Volumes;
+            ClassificationItem = SelectedBookItem.Classification;
+            CallNumber = SelectedBookItem.CallNumber;
+            BookTitle = SelectedBookItem.Title;
+            Description = SelectedBookItem.Description;
+            Edition = SelectedBookItem.Edition;
+            Volume = SelectedBookItem.Volumes;
             Pages = SelectedBookItem.Pages;
-            Source = SelectedBookItem?.Source;
+            Source = SelectedBookItem.Source;
             Price = SelectedBookItem.Price;
-            Publisher = SelectedBookItem?.Publisher;
-            Location = SelectedBookItem?.Location;
+            Publisher = SelectedBookItem.Publisher;
+            Location = SelectedBookItem.Location;
             Year = SelectedBookItem.Year;
-            Author = SelectedBookItem?.Author;
+            Author = SelectedBookItem.Author;
         }
         public bool CanSave
         {
