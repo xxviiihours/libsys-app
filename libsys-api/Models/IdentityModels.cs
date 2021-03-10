@@ -21,7 +21,7 @@ namespace libsys_api.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("EF-libsys-data", throwIfV1Schema: false)
         {
         }
         
