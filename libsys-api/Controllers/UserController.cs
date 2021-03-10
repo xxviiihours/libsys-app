@@ -11,16 +11,17 @@ using System.Web.Http;
 namespace libsys_api.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
         // GET: api/User
-        //public IEnumerable<UserModel> Get()
-        //{
-        //    return null;
-        //}
+        [Route("api/users")]
+        public IEnumerable<UserModel> Get()
+        {
+            return null;
+        }
 
         // GET: api/User/5
+        [Route("api/users/id")]
         public UserModel GetById()
         {
             string id = RequestContext.Principal.Identity.GetUserId();
@@ -29,16 +30,19 @@ namespace libsys_api.Controllers
         }
 
         // POST api/values
+        [Route("api/users/save")]
         public void Post([FromBody] string value)
         {
         }
 
         // PUT api/values/5
+        [Route("api/users/update/")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/values/5
+        [Route("api/users/delete/")]
         public void Delete(int id)
         {
         }

@@ -12,6 +12,7 @@ namespace libsys_api.Controllers
     public class BookClassificationController : ApiController
     {
         // GET: api/BookClassification
+        [Route("api/book-classification")]
         public IHttpActionResult Get()
         {
             BookClassificationData data = new BookClassificationData();
@@ -24,22 +25,26 @@ namespace libsys_api.Controllers
         }
 
         // GET: api/BookClassification/5
-        public string Get(int id)
+        [Route("api/book-classification/id/")]
+        public string GetById(int id)
         {
             return "value";
         }
 
         // POST: api/BookClassification
+        [Route("api/book-classification/save")]
         public void Post([FromBody]string value)
         {
         }
 
         // PUT: api/BookClassification/5
+        [Route("api/book-classification/update/")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
         // DELETE: api/BookClassification/5
+        [Route("api/book-classification/delete/")]
         public void Delete(int id)
         {
         }

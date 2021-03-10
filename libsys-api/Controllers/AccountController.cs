@@ -20,7 +20,7 @@ using libsys_api.Results;
 namespace libsys_api.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/Account")]
+    [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -53,7 +53,7 @@ namespace libsys_api.Controllers
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [Route("UserInfo")]
+        [Route("user-info")]
         public UserInfoViewModel GetUserInfo()
         {
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
@@ -67,7 +67,7 @@ namespace libsys_api.Controllers
         }
 
         // POST api/Account/Logout
-        [Route("Logout")]
+        [Route("logout")]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -75,7 +75,7 @@ namespace libsys_api.Controllers
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
-        [Route("ManageInfo")]
+        [Route("manage-info")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
             IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -115,7 +115,7 @@ namespace libsys_api.Controllers
         }
 
         // POST api/Account/ChangePassword
-        [Route("ChangePassword")]
+        [Route("change-password")]
         public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -135,7 +135,7 @@ namespace libsys_api.Controllers
         }
 
         // POST api/Account/SetPassword
-        [Route("SetPassword")]
+        [Route("set-password")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -154,7 +154,7 @@ namespace libsys_api.Controllers
         }
 
         // POST api/Account/AddExternalLogin
-        [Route("AddExternalLogin")]
+        [Route("add-external-login")]
         public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -192,7 +192,7 @@ namespace libsys_api.Controllers
         }
 
         // POST api/Account/RemoveLogin
-        [Route("RemoveLogin")]
+        [Route("remove-login")]
         public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -224,7 +224,7 @@ namespace libsys_api.Controllers
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
-        [Route("ExternalLogin", Name = "ExternalLogin")]
+        [Route("external-login", Name = "external-login")]
         public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
         {
             if (error != null)
@@ -279,7 +279,7 @@ namespace libsys_api.Controllers
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
         [AllowAnonymous]
-        [Route("ExternalLogins")]
+        [Route("external-logins")]
         public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
         {
             IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
@@ -320,7 +320,7 @@ namespace libsys_api.Controllers
 
         // POST api/Account/Register
         [AllowAnonymous]
-        [Route("Register")]
+        [Route("register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -343,7 +343,7 @@ namespace libsys_api.Controllers
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [Route("RegisterExternal")]
+        [Route("register-external")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {
             if (!ModelState.IsValid)

@@ -13,6 +13,7 @@ namespace libsys_api.Controllers
     {
         [Authorize]
         // GET: api/Student
+        [Route("api/students")]
         public IHttpActionResult Get()
         {
             StudentData data = new StudentData();
@@ -26,10 +27,11 @@ namespace libsys_api.Controllers
         }
 
         // GET: api/Student/5
-        public IHttpActionResult GetById(string Id)
+        [Route("api/students/student-id/")]
+        public IHttpActionResult GetByStudentId(string studentId)
         {
             StudentData data = new StudentData();
-            var result = data.GetStudentById(Id);
+            var result = data.GetStudentById(studentId);
             if (result == null)
             {
                 return NotFound();
@@ -39,6 +41,7 @@ namespace libsys_api.Controllers
 
         [Authorize]
         // POST: api/Student
+        [Route("api/students/save")]
         public void Post([FromBody]StudentModel studentModel)
         {
             StudentData data = new StudentData();
@@ -47,6 +50,7 @@ namespace libsys_api.Controllers
 
         [Authorize]
         // PUT: api/Student/5
+        [Route("api/students/update/")]
         public void Put(int id, [FromBody] StudentModel studentModel)
         {
             StudentData data = new StudentData();
@@ -55,6 +59,7 @@ namespace libsys_api.Controllers
 
         [Authorize]
         // DELETE: api/Student/5
+        [Route("api/students/delete/")]
         public void Delete(int id)
         {
             StudentData data = new StudentData();
