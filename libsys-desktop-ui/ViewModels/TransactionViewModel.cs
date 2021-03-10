@@ -280,7 +280,7 @@ namespace libsys_desktop_ui.ViewModels
                     ClassificationType = "STUDENT",
                     Status = "PENDING",
                     DateBorrowed = DateTime.Now,
-                    DueDate = DateTime.Now.AddDays(2),
+                    DueDate = DateTime.Now.AddDays(7),
                     CreatedAt = DateTime.Now
 
                 };

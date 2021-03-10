@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\IUserLoggedInModel.cs" />
     <Compile Include="Models\BookClassificationModel.cs" />
     <Compile Include="Models\BookModel.cs" />
+    <Compile Include="Models\BorrowItemModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\UserLoggedInModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
