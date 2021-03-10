@@ -93,7 +93,7 @@
         <StackPanel Grid.Row="1" Grid.Column="5"
                     Orientation="Vertical" MinWidth="350">
             <TextBlock Text="Added Books:" FontSize="24" />
-            <ListBox x:Name="BorrowBooks"
+            <ListBox x:Name="BorrowBooks" SelectedItem="{Binding SelectedAddedBook}"
                      MinHeight="185" MaxHeight="300"
                      ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
