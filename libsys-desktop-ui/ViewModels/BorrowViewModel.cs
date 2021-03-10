@@ -12,8 +12,10 @@ namespace libsys_desktop_ui.ViewModels
 {
     public class BorrowViewModel : Screen
     {
+        private IUserLoggedInModel _userLoggedIn;
         private IStudentService _studentService;
         private IBookService _bookService;
+        private IBorrowService _borrowService;
         private string _studentId;
         private string _fullName;
         private string _department;
@@ -28,10 +30,13 @@ namespace libsys_desktop_ui.ViewModels
         private BindingList<BorrowBookModel> _borrowBooks = new BindingList<BorrowBookModel>();
         private BookModel _selectedBook;
 
-        public BorrowViewModel(IStudentService studentService, IBookService bookService)
+        public BorrowViewModel(IStudentService studentService, IBookService bookService,
+            IUserLoggedInModel userLoggedIn, IBorrowService borrowService)
         {
             _studentService = studentService;
             _bookService = bookService;
+            _userLoggedIn = userLoggedIn;
+            _borrowService = borrowService;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -271,18 +276,22 @@ namespace libsys_desktop_ui.ViewModels
 
         public async void SearchStudentId()
         {
-            var result = await _studentService.GetByStudentId(StudentId);
-            if(result == null)
+            try
             {
-                // TODO create a error if there's no student id found.
-                return;
+                var result = await _studentService.GetByStudentId(StudentId);
+
+                FullName = $"{result.LastName}, {result.FirstName}";
+                Department = result.Department;
+                PhoneNumber = result.PhoneNumber;
+                EmailAddress = result.EmailAddress;
+                BorrowLimit = result.BorrowLimit;
+                BorrowBooks = new BindingList<BorrowBookModel>();
             }
-            FullName = $"{result.LastName}, {result.FirstName}";
-            Department = result.Department;
-            PhoneNumber = result.PhoneNumber;
-            EmailAddress = result.EmailAddress;
-            BorrowLimit = result.BorrowLimit;
-            BorrowBooks = new BindingList<BorrowBookModel>();
+            catch (Exception ex)
+            {
+                //Create error message if no student id found.
+                throw new NullReferenceException(ex.Message);
+            }
         }
 
         public async void SearchBookTitle()
@@ -307,13 +316,9 @@ namespace libsys_desktop_ui.ViewModels
                 BorrowLimit -= 1;
                 BorrowBookModel item = new BorrowBookModel
                 {
+
                     Book = SelectedBook,
-                    ClassificationId = StudentId,
-                    ClassificationType = "STUDENT",
                     Status = "PENDING",
-                    DateBorrowed = DateTime.Now,
-                    DueDate = DateTime.Now.AddDays(7),
-                    CreatedAt = DateTime.Now
 
                 };
 
@@ -324,13 +329,26 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        public void Checkout()
+        public async Task Checkout()
         {
             // TODO: Add save to api endpoint service
+            BorrowListModel addedBooks = new BorrowListModel();
             foreach(var item in BorrowBooks)
             {
-
+                addedBooks.BorrowedBookDetails.Add(new BorrowModel
+                {
+                    BookId = item.Book.Id,
+                    CallNumber = item.Book.CallNumber,
+                    UserId = _userLoggedIn.Id,
+                    ClassificationId = StudentId,
+                    ClassificationType = "STUDENT",
+                    Status = item.Status,
+                    DateBorrowed = DateTime.Now,
+                    DueDate = DateTime.Now.AddDays(7),
+                    CreatedAt = DateTime.Now
+                });
             }
+            await _borrowService.Save(addedBooks);
         }
 
         public void Remove()

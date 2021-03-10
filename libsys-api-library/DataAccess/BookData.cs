@@ -11,58 +11,58 @@ namespace libsys_api_library.DataAccess
     public class BookData
     {
         //private BookModel _books;
-        public List<BookDetailModel> GetAllBooks()
+        public List<BookModel> GetAllBooks()
         {
             SqlDataAccess sql = new SqlDataAccess();
 
-            var output = sql.LoadData<BookDetailModel, dynamic>("dbo.spGetAllBookInfo", new { }, "libsys-data");
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spGetAllBookInfo", new { }, "libsys-data");
             return output;
         }
 
-        public List<BookDetailModel> GetAllAvailableBooks()
+        public List<BookModel> GetAllAvailableBooks()
         {
             SqlDataAccess sql = new SqlDataAccess();
 
-            var output = sql.LoadData<BookDetailModel, dynamic>("dbo.spGetAllAvailableBookInfo", new { }, "libsys-data");
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spGetAllAvailableBookInfo", new { }, "libsys-data");
             return output;
         }
 
-        public void SaveBookInfo(BookDetailModel bookModel)
+        public void SaveBookInfo(BookModel bookModel)
         {
             SqlDataAccess sql = new SqlDataAccess();
             sql.SaveData("dbo.spInsertBookInfo", bookModel, "libsys-data");
         }
 
-        public BookDetailModel GetBookById(int Id)
+        public BookModel GetBookById(int Id)
         {
             SqlDataAccess sql = new SqlDataAccess();
-            BookDetailModel bookDetail = new BookDetailModel();
+            BookModel books = new BookModel();
             var param = new { Id = Id };
 
-            var output = sql.LoadData<BookDetailModel, dynamic>("dbo.spBookInfoLookup", param, "libsys-data");
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spBookInfoLookup", param, "libsys-data");
             if(output.Count > 0)
             {
                 foreach (var item in output)
                 {
-                    bookDetail = item;
+                    books = item;
                 }
-                return bookDetail;
+                return books;
             }
             return null;
         }
 
-        public List<BookDetailModel> GetAvailableBooksByTitle(string BookTitle)
+        public List<BookModel> GetAvailableBooksByTitle(string BookTitle)
         {
             SqlDataAccess sql = new SqlDataAccess();
-            BookDetailModel bookDetail = new BookDetailModel();
+            BookModel bookDetail = new BookModel();
             var param = new { Title = BookTitle };
 
-            var output = sql.LoadData<BookDetailModel, dynamic>("dbo.spAvailableBookInfoLookup", param, "libsys-data");
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spAvailableBookInfoLookup", param, "libsys-data");
             
             return output;
         }
 
-        public void UpdateBookInfo(int Id, BookDetailModel bookModel)
+        public void UpdateBookInfo(int Id, BookModel bookModel)
         {
             SqlDataAccess sql = new SqlDataAccess();
             var param = new
@@ -85,7 +85,7 @@ namespace libsys_api_library.DataAccess
 
                 Id = Id
             };
-            sql.UpdateData<BookDetailModel, dynamic>("dbo.spUpdateBookInfo", param, "libsys-data");
+            sql.UpdateData<BookModel, dynamic>("dbo.spUpdateBookInfo", param, "libsys-data");
         }
 
         public void DeleteBookInfo(int Id)

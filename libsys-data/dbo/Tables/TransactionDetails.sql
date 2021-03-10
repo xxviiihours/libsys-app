@@ -2,6 +2,7 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
     [BookId] INT NOT NULL, 
+    [CallNumber] NVARCHAR(128) NOT NULL,
     [UserId] NVARCHAR(128) NOT NULL,
     [ClassificationId] NVARCHAR(128) NOT NULL,
     [ClassificationType] NVARCHAR(50) NOT NULL,

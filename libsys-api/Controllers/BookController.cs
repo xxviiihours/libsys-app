@@ -72,7 +72,7 @@ namespace libsys_api.Controllers
         [HttpPost]
         [Route("api/books/save")]
         // POST: api/Books
-        public void Post([FromBody]BookDetailModel bookDetails)
+        public void Post([FromBody]BookModel bookDetails)
         {
             BookData data = new BookData();
             data.SaveBookInfo(bookDetails);
@@ -82,7 +82,7 @@ namespace libsys_api.Controllers
         [Authorize]
         [HttpPut]
         [Route("api/books/update/")]
-        public void Put(int id, [FromBody]BookDetailModel bookDetails)
+        public void Put(int id, [FromBody]BookModel bookDetails)
         {
             BookData data = new BookData();
             data.UpdateBookInfo(id, bookDetails);

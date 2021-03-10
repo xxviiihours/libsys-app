@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace libsys_desktop_ui_library.Models
 {
-    public class BorrowBookModel
+    public class BorrowListModel
     {
-        public BookModel Book { get; set; }
 
-        public string Status { get; set; }
-
+        public List<BorrowModel> BorrowedBookDetails { get; set; } = new List<BorrowModel>();
     }
 }
