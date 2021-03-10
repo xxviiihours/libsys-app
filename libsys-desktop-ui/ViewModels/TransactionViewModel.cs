@@ -22,13 +22,22 @@ namespace libsys_desktop_ui.ViewModels
 
         private int _borrowLimit;
 
+        private string _bookTitle;
+
         private BindingList<BookModel> _books;
+        private BindingList<BorrowItemModel> _borrowBooks = new BindingList<BorrowItemModel>();
         private BookModel _selectedBook;
 
         public TransactionViewModel(IStudentService studentService, IBookService bookService)
         {
             _studentService = studentService;
             _bookService = bookService;
+        }
+
+        protected override async void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            await LoadAvailableBooks();
         }
 
         private async Task LoadAvailableBooks()
@@ -46,6 +55,17 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => Books);
             }
         }
+
+        public BindingList<BorrowItemModel> BorrowBooks
+        {
+            get { return _borrowBooks; }
+            set 
+            { 
+                _borrowBooks = value;
+                NotifyOfPropertyChange(() => BorrowBooks);
+            }
+        }
+
 
         public BookModel SelectedBook
         {
@@ -69,6 +89,7 @@ namespace libsys_desktop_ui.ViewModels
                 _studentId = value;
                 NotifyOfPropertyChange(() => StudentId);
                 NotifyOfPropertyChange(() => IsBookListEnabled);
+                NotifyOfPropertyChange(() => CanSearchStudentId);
             }
         }
 
@@ -128,6 +149,18 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public string BookTitle
+        {
+            get { return _bookTitle; }
+            set 
+            { 
+                _bookTitle = value;
+                NotifyOfPropertyChange(() => BookTitle);
+                NotifyOfPropertyChange(() => CanSearchBookTitle);
+            }
+        }
+
+
         public bool IsBookListEnabled
         {
             get
@@ -153,6 +186,29 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public bool CanSearchStudentId
+        {
+            get
+            {
+                if (StudentId?.Length > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool CanSearchBookTitle
+        {
+            get
+            {
+                if(BookTitle?.Length > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
         public bool CanAddBooks
         {
             get
@@ -174,6 +230,18 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public bool CanCheckout
+        {
+            get
+            {
+                if(BorrowBooks.Count > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public async void SearchStudentId()
         {
             var result = await _studentService.GetByStudentId(StudentId);
@@ -182,14 +250,50 @@ namespace libsys_desktop_ui.ViewModels
             PhoneNumber = result.PhoneNumber;
             EmailAddress = result.EmailAddress;
             BorrowLimit = result.BorrowLimit;
-            await LoadAvailableBooks();
+            BorrowBooks = new BindingList<BorrowItemModel>();
         }
 
+        public async void SearchBookTitle()
+        {
+            var searchedBookList = await _bookService.GetByBookTitle(BookTitle);
+            if(searchedBookList.Count > 0)
+            {
+                Books = new BindingList<BookModel>(searchedBookList);
+            }
+            else
+            {
+                //TODO: Throw error if can't find any available books
+                await LoadAvailableBooks();
+            }
+        }
 
         public void AddBooks()
         {
             //TODO: Add selected books to checkout list
-           
+            if(BorrowLimit > 0)
+            {
+                BorrowLimit -= 1;
+                BorrowItemModel item = new BorrowItemModel
+                {
+                    Book = SelectedBook,
+                    ClassificationId = StudentId,
+                    ClassificationType = "STUDENT",
+                    Status = "PENDING",
+                    DateBorrowed = DateTime.Now,
+                    DueDate = DateTime.Now.AddDays(2),
+                    CreatedAt = DateTime.Now
+
+                };
+
+                BorrowBooks.Add(item);
+                Books.Remove(SelectedBook);
+                NotifyOfPropertyChange(() => CanCheckout);
+            }
+        }
+
+        public void Checkout()
+        {
+            // TODO: Add save to api endpoint service
         }
     }
 }
