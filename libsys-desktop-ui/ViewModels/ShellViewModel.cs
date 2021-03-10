@@ -13,11 +13,11 @@ namespace libsys_desktop_ui.ViewModels
         private MainViewModel _mainViewModel;
         private BookViewModel _bookViewModel;
         private StudentViewModel _studentViewModel;
-        private TransactionViewModel _transactionModel;
+        private BorrowViewModel _transactionModel;
 
         private IEventAggregator _events;
         public ShellViewModel(IEventAggregator events, MainViewModel mainViewModel,
-            BookViewModel bookViewModel, StudentViewModel studentViewModel, TransactionViewModel transactionModel)
+            BookViewModel bookViewModel, StudentViewModel studentViewModel, BorrowViewModel transactionModel)
         {
             _events = events;
             _mainViewModel = mainViewModel;

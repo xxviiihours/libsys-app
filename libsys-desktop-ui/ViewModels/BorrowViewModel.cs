@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace libsys_desktop_ui.ViewModels
 {
-    public class TransactionViewModel : Screen
+    public class BorrowViewModel : Screen
     {
         private IStudentService _studentService;
         private IBookService _bookService;
@@ -28,7 +28,7 @@ namespace libsys_desktop_ui.ViewModels
         private BindingList<BorrowBookModel> _borrowBooks = new BindingList<BorrowBookModel>();
         private BookModel _selectedBook;
 
-        public TransactionViewModel(IStudentService studentService, IBookService bookService)
+        public BorrowViewModel(IStudentService studentService, IBookService bookService)
         {
             _studentService = studentService;
             _bookService = bookService;

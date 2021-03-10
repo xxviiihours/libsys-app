@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace libsys_desktop_ui.Views
 {
     /// <summary>
-    /// Interaction logic for TransactionView.xaml
+    /// Interaction logic for BorrowView.xaml
     /// </summary>
-    public partial class TransactionView : UserControl
+    public partial class BorrowView : UserControl
     {
-        public TransactionView()
+        public BorrowView()
         {
             InitializeComponent();
         }
