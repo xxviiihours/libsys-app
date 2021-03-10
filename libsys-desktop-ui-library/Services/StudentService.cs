@@ -20,7 +20,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<List<StudentModel>> GetAll()
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/student"))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/students"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -36,7 +36,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<StudentModel> GetByStudentId(string studentId)
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync($"/api/student/{studentId}"))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync($"/api/students/student-id?studentId={studentId}"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -52,7 +52,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task Save(StudentModel studentModel)
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/student", studentModel))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/students/save", studentModel))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {

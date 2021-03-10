@@ -19,7 +19,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<List<BookClassificationModel>> GetAll()
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/BookClassification"))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/book-classification"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {

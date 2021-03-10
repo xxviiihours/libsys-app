@@ -255,7 +255,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public async void SearchBookTitle()
         {
-            var searchedBookList = await _bookService.GetByBookTitle(BookTitle);
+            var searchedBookList = await _bookService.GetAvailableBooksByTitle(BookTitle);
             if(searchedBookList.Count > 0)
             {
                 Books = new BindingList<BookModel>(searchedBookList);

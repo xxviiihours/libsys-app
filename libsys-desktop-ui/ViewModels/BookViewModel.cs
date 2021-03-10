@@ -42,9 +42,6 @@ namespace libsys_desktop_ui.ViewModels
         private bool IsBookSelected;
         private bool IsClassificationSelected;
 
-        private bool _canSave;
-        private bool _canUpdate;
-
         private BindingList<BookClassificationModel> _bookClassification;
         private BindingList<BookModel> _books;
 
@@ -100,7 +97,6 @@ namespace libsys_desktop_ui.ViewModels
                 if (_selectedClassification == value) return;
                 _selectedClassification = value;
                 IsClassificationSelected = true;
-                //IsBookSelected = true;
                 FillClassificationItem();
                 NotifyOfPropertyChange(() => SelectedClassification);
                 NotifyOfPropertyChange(() => CanSave);
@@ -119,7 +115,6 @@ namespace libsys_desktop_ui.ViewModels
             set
             {
                 _classificationItem = value;
-                //_classificationItem = SelectedClassificationItem.Classification;
                 NotifyOfPropertyChange(() => ClassificationItem);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -289,11 +284,9 @@ namespace libsys_desktop_ui.ViewModels
             }
             set
             {
-                //if (_selectedBookItem == value) return;
                 _selectedBookItem = value;
                 SelectedClassification = null;
                 IsBookSelected = true;
-                //IsClassificationSelected = false;
                 FillData();
                 NotifyOfPropertyChange(() => SelectedBookItem);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -323,7 +316,6 @@ namespace libsys_desktop_ui.ViewModels
             {
                 bool option = false;
                 if (IsClassificationSelected &&
-                    //!IsBookSelected &&
                     SelectedBookItem == null &&
                     CallNumber?.Length > 0 &&
                     BookTitle?.Length > 0 &&
@@ -344,10 +336,6 @@ namespace libsys_desktop_ui.ViewModels
 
                 return option;
             }
-            //set
-            //{
-            //    _canSave = value;
-            //}
         }
 
         public bool CanUpdate
@@ -381,23 +369,26 @@ namespace libsys_desktop_ui.ViewModels
 
         public async Task Save()
         {
-            BookModel book = new BookModel();
-            book.Classification = ClassificationItem;
-            book.CallNumber = CallNumber.ToUpper();
-            book.Title = BookTitle;
-            book.Description = Description;
-            book.Edition = Edition;
-            book.Volumes = Volume;
-            book.Pages = Pages;
-            book.Source = Source;
-            book.Price = Price;
-            book.Publisher = Publisher;
-            book.Location = Location;
-            book.Year = Year;
-            book.Author = Author;
-            book.ModifiedBy = _userLoggedIn.FirstName;
-            //book.CreatedAt = DateTime.UtcNow;
-            Console.WriteLine();
+            BookModel book = new BookModel
+            {
+                Classification = ClassificationItem,
+                CallNumber = CallNumber.ToUpper(),
+                Title = BookTitle,
+                Description = Description,
+                Edition = Edition,
+                Volumes = Volume,
+                Pages = Pages,
+                Source = Source,
+                Price = Price,
+                Publisher = Publisher,
+                Location = Location,
+                Year = Year,
+                Author = Author,
+                ModifiedBy = _userLoggedIn.FirstName,
+                LastModified = DateTime.Now
+            };
+
+
             await _bookService.Save(book);
             await LoadBooks();
             Clear();
@@ -405,7 +396,6 @@ namespace libsys_desktop_ui.ViewModels
 
         public void Update()
         {
-            //ClassificationItem = SelectedBookItem.Classification;
             BookModel book = new BookModel();
             book.Classification = ClassificationItem;
             book.CallNumber = CallNumber;
@@ -421,7 +411,7 @@ namespace libsys_desktop_ui.ViewModels
             book.Year = Year;
             book.Author = Author;
             book.ModifiedBy = _userLoggedIn.FirstName;
-            book.LastModified = DateTime.UtcNow;
+            book.LastModified = DateTime.Now;
             Clear();
         }
 

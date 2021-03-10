@@ -72,7 +72,7 @@ namespace libsys_desktop_ui_library.Helpers
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
 
-            using (HttpResponseMessage responseMessage = await _httpClient.GetAsync("/api/user"))
+            using (HttpResponseMessage responseMessage = await _httpClient.GetAsync("/api/users/id"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {

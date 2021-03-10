@@ -12,7 +12,7 @@ namespace libsys_desktop_ui_library.Interfaces
         Task<List<BookModel>> GetAllBooks();
         Task<List<BookModel>> GetAllAvailableBooks();
         Task<BookModel> GetByBookId(string bookId);
-        Task<List<BookModel>> GetByBookTitle(string bookTitle);
+        Task<List<BookModel>> GetAvailableBooksByTitle(string bookTitle);
         Task Save(BookModel bookModel);
     }
 }

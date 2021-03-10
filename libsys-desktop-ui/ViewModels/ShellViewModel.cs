@@ -32,7 +32,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public void Handle(LogOnEvent message)
         {
-            ActivateItem(_transactionModel);
+            ActivateItem(_studentViewModel);
         }
     }
 }
