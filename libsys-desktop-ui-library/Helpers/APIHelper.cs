@@ -90,5 +90,15 @@ namespace libsys_desktop_ui_library.Helpers
                 }
             }
         }
+
+        public void LogOffUser()
+        {
+            _userLoggedIn.Id = "";
+            _userLoggedIn.FirstName = "";
+            _userLoggedIn.LastName = "";
+            _userLoggedIn.UserType = "";
+            _userLoggedIn.EmailAddress = "";
+            _userLoggedIn.CreatedAt = DateTime.MinValue;
+        }
     }
 }

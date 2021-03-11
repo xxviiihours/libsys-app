@@ -9,5 +9,6 @@ namespace libsys_desktop_ui_library.Interfaces
         HttpClient HttpClient { get; }
         Task<AuthenticatedUser> Authenticate(string username, string password);
         Task GetLoggedInUserInfo(string token);
+        void LogOffUser();
     }
 }

@@ -10,5 +10,6 @@ namespace libsys_desktop_ui_library.Interfaces
         string Id { get; set; }
         string LastName { get; set; }
         string UserType { get; set; }
+
     }
 }
