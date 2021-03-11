@@ -24,8 +24,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
-                    FontSize="48" Margin="0 50"
-                   Text="Transaction Form"/>
+                    FontSize="24" Margin="0 0 0 15"
+                   Text="Book Borrowing Form"/>
 
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical"
@@ -62,18 +62,19 @@
 
         <StackPanel Grid.Row="1" Grid.Column="2" 
                     Grid.RowSpan="2" Grid.ColumnSpan="3"
-                    Orientation="Vertical" Margin="20 0"
+                    Orientation="Vertical" Margin="20 0 30 10"
                     HorizontalAlignment="Stretch" MinWidth="400" MaxWidth="400">
-
+            
             <TextBlock Text="Search book here:" Margin="0 10 0 0"/>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 30">
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 30"
+                        HorizontalAlignment="Right">
                 <TextBox x:Name="BookTitle" Margin="0 0 20 0" MinWidth="300"/>
                 <Button x:Name="SearchBookTitle" Content="Search Book"></Button>
             </StackPanel>
 
             <TextBlock Text="List of available books:"/>
             <ListBox x:Name="Books" SelectedItem="{Binding SelectedBook}" IsEnabled="{Binding IsBookListEnabled}"
-                     MinHeight="200" MaxHeight="235"
+                     MinHeight="270" MaxHeight="270"
                      ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -91,7 +92,7 @@
 
             <!--Add books control-->
             <Button x:Name="AddBooks" Content="Add this book" Margin="0 20"/>
-            <Button x:Name="Refresh" Content="Refresh" />
+            <Button x:Name="Clear" Content="Clear all fields" />
         </StackPanel>
 
 

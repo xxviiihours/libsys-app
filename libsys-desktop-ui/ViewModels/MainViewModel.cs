@@ -8,64 +8,43 @@ using System.Threading.Tasks;
 
 namespace libsys_desktop_ui.ViewModels
 {
-    public class MainViewModel : Screen
+    public class MainViewModel : Conductor<object>
     {
 
-        private string _currentUser;
+        private BookViewModel _bookViewModel;
+        private StudentViewModel _studentViewModel;
+
         private IUserLoggedInModel _userLoggedIn;
 
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            CurrentUser = "Welcome, " + _userLoggedIn.FirstName + "!";
-        }
-        public MainViewModel(IUserLoggedInModel userLoggedIn)
+        public MainViewModel(IUserLoggedInModel userLoggedIn, BookViewModel bookViewModel, StudentViewModel studentViewModel)
         {
             _userLoggedIn = userLoggedIn;
+            _bookViewModel = bookViewModel;
+            _studentViewModel = studentViewModel;
         }
+
+        private string _currentUser;
 
         public string CurrentUser
         {
-            get 
-            { 
-                return _currentUser; 
-            }
+            get { return _currentUser; }
             set 
-            { 
+            {
                 _currentUser = value;
                 NotifyOfPropertyChange(() => CurrentUser);
             }
         }
 
-        public void ManageBooks()
+        public void GreetUser()
         {
-            Console.WriteLine("Hello World!");
+            CurrentUser = $"Welcome, {_userLoggedIn.FirstName}!";
+            NotifyOfPropertyChange(() => CurrentUser);
         }
 
-        public void ManageStudents()
+        protected override void OnViewLoaded(object view)
         {
-            //TODO: Create a Manage student form
+            base.OnViewLoaded(view);
+            GreetUser();
         }
-
-        public void ManageFaculty()
-        {
-            //TODO: Create a Manage Faculty form
-        }
-
-        public void ManageTransactions()
-        {
-            //TODO: Create a Manage Transaction form
-        }
-
-        public void ManageReports()
-        {
-            //TODO: Create a Manage Report form
-        }
-
-        public void ManageSettings()
-        {
-            //TODO: Create a Manage Settings form
-        }
-
     }
 }

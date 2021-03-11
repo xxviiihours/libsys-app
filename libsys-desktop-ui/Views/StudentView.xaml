@@ -32,26 +32,28 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
-                   Text="Student Management Form" FontSize="34"
-                   Margin="0 30"/>
+                   Text="Student Management Form" FontSize="24"
+                   Margin="0 0 0 50"/>
+        
+        
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
-            <TextBlock Text="Student Number:" Margin="0 5"/>
+            <TextBlock Text="Student Number:" Margin="0"/>
             <TextBox x:Name="StudentId"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
-            <TextBlock Text="First Name:" Margin="0 5"/>
+            <TextBlock Text="First Name:" Margin="0"/>
             <TextBox x:Name="FirstName"/>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
-            <TextBlock Text="Last Name:" Margin="0 5"/>
+            <TextBlock Text="Last Name:" Margin="0"/>
             <TextBox x:Name="LastName"/>
         </StackPanel>
         <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" 
                     Margin="0 5" MinWidth="150"
-                    HorizontalAlignment="Stretch">
+                    HorizontalAlignment="Center">
             <StackPanel Orientation="Vertical" Margin="0 0 10 0" 
                             MinWidth="100" HorizontalAlignment="Left">
                 <TextBlock Text="Gender:"/>
@@ -65,27 +67,27 @@
         </StackPanel>
         <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
-            <TextBlock Text="Course:" Margin="0 5"/>
+            <TextBlock Text="Course:" Margin="0"/>
             <TextBox x:Name="Course"/>
         </StackPanel>
         <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
-            <TextBlock Text="Department:" Margin="0 5"/>
+            <TextBlock Text="Department:" Margin="0"/>
             <TextBox x:Name="Department"/>
         </StackPanel>
         <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
-            <TextBlock Text="PhoneNumber:" Margin="0 5"/>
+            <TextBlock Text="PhoneNumber:" Margin="0"/>
             <TextBox x:Name="PhoneNumber"/>
         </StackPanel>
         <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
-            <TextBlock Text="EmailAddress:" Margin="0 5"/>
+            <TextBlock Text="EmailAddress:" Margin="0"/>
             <TextBox x:Name="EmailAddress"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="9" Grid.Column="1" Margin="0"
-                    Orientation="Horizontal" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="9" Grid.Column="1" Margin="0 20"
+                    Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel Orientation="Vertical" Width="100">
                 <Button x:Name="Save" Content="Save" Margin="0 10"/>
                 <Button x:Name="Update" Content="Update"/>
@@ -105,20 +107,20 @@
         <TextBox x:Name="PhoneNumber"/>
         <TextBlock Text="EmailAddress:" Margin="0 5"/>
         <TextBox x:Name="EmailAddress"/>-->
-        <Button Grid.Row="0" Grid.Column="5" Height="40" Width="140"
+        <!--<Button Grid.Row="0" Grid.Column="5" Height="40" Width="140"
                 VerticalAlignment="Bottom" HorizontalAlignment="Right"
                 x:Name="Return" Content="Go Back">
 
-        </Button>
-        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal"
-                  Margin="50 0 0 0">
+        </Button>-->
+        <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Horizontal"
+                  Margin="0 0 0 0" HorizontalAlignment="Right">
             <TextBlock Text="Search:" VerticalAlignment="Center" Margin="0 0 20 0"/>
             <TextBox x:Name="Search" MinWidth="250" Height="25"/>
         </StackPanel>
         <DataGrid Grid.Row="2" Grid.RowSpan="8"
                   Grid.Column="2" Grid.ColumnSpan="4"
-                  Margin="50 0 0 0"
-                  MinWidth="750" MaxWidth="750"
+                  Margin="30 0 0 20"
+                  MinWidth="700" MaxWidth="700"
                   HorizontalScrollBarVisibility="Visible" 
                   VerticalScrollBarVisibility="Visible"
                   x:Name="Students" SelectedItem="{Binding SelectedStudent}">

@@ -266,7 +266,7 @@ namespace libsys_desktop_ui.ViewModels
         {
             get
             {
-                if(BorrowBooks.Count > 0)
+                if(SelectedAddedBook != null)
                 {
                     return true;
                 }
@@ -349,6 +349,7 @@ namespace libsys_desktop_ui.ViewModels
                 });
             }
             await _borrowService.Save(addedBooks);
+            await Clear();
         }
 
         public void Remove()
@@ -356,6 +357,18 @@ namespace libsys_desktop_ui.ViewModels
             Books.Add(SelectedAddedBook?.Book);
             BorrowBooks.Remove(SelectedAddedBook);
             BorrowLimit += 1;
+        }
+
+        public async Task Clear()
+        {
+            BorrowBooks = new BindingList<BorrowBookModel>();
+            await LoadAvailableBooks();
+            StudentId = "";
+            FullName = "";
+            Department = "";
+            PhoneNumber = "";
+            EmailAddress = "";
+            BorrowLimit = 0;
         }
     }
 }

@@ -8,10 +8,10 @@
              d:DesignHeight="700" d:DesignWidth="1024">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -19,33 +19,14 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                   HorizontalAlignment="Center" FontSize="48" Margin="10 30 0 0"
-                   x:Name="CurrentUser" Text="Welcome Admin!" >
 
-        </TextBlock>
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
-            <Image Source="elms-logo-2.png" Height="542"></Image>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical">
-            <Button x:Name="ManageBooks" Content="Manage Books" 
-                    Margin="10" Height="70"/>
-            <Button x:Name="ManageStudents" Content="Manage Students" 
-                    Margin="10" Height="70"/>
-            <Button x:Name="ManageFaculty" Content="Manage Faculty" 
-                    Margin="10" Height="70"/>
-            <Button x:Name="ManageTransactions" Content="Transactions" 
-                    Margin="10" Height="70"/>
-            <Button x:Name="ManageReports" Content="Reports" 
-                    Margin="10" Height="70"/>
-            <Button x:Name="ManageSettings" Content="Settings" 
-                    Margin="10" Height="70"/>
-
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="4">
-
-      
-
-        </StackPanel>
+        <!--<Image Grid.Row="1" Grid.Column="1" MaxWidth="1024" MaxHeight="510"
+               Grid.RowSpan="2" Grid.ColumnSpan="3"
+            Source="/Assets/background.png" Stretch="Fill">
+        </Image>-->
+        <TextBlock Grid.Row="1" Grid.Column="1" MaxWidth="1024" MaxHeight="510"
+                   Grid.ColumnSpan="3" Grid.RowSpan="2" MinHeight="510"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   x:Name="CurrentUser" Text="Welcome, Admin!"/>
     </Grid>
 </UserControl>
