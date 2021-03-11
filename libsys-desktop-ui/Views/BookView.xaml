@@ -32,11 +32,11 @@
             </TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1"
-                    Orientation="Vertical" Margin="0 20 0 0" MinWidth="250">
+                    Orientation="Vertical" Margin="0 20 0 0" MinWidth="200" MaxWidth="300">
             <StackPanel Orientation="Horizontal" Margin="0 15">
                 <TextBlock Text="Classifications:" Margin="0 0 10 0"></TextBlock>
                 <ComboBox x:Name="Classifications"
-                      SelectedItem="{Binding SelectedClassification}" MinWidth="155" >
+                      SelectedItem="{Binding SelectedClassification}" MinWidth="200" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Classification}">
@@ -45,7 +45,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </StackPanel>
-            <TextBox x:Name="ClassificationItem"></TextBox>
+            <TextBox x:Name="ClassificationItem" Margin="0 0 0 3"></TextBox>
             <TextBlock Text="Call Number:"></TextBlock>
             <TextBox x:Name="CallNumber"></TextBox>
             <TextBlock Text="Book Title:"></TextBlock>
@@ -54,7 +54,7 @@
             <TextBox x:Name="Author"></TextBox>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="2"
-                    Orientation="Vertical" Margin="20 20 20 0" Width="270">
+                    Orientation="Vertical" Margin="10 20 10 0" Width="190">
             <TextBlock Text="Publisher:"></TextBlock>
             <TextBox x:Name="Publisher"></TextBox>
             <TextBlock Text="Edition:"></TextBlock>

@@ -394,7 +394,7 @@ namespace libsys_desktop_ui.ViewModels
             Clear();
         }
 
-        public void Update()
+        public async Task Update()
         {
             BookModel book = new BookModel();
             book.Classification = ClassificationItem;
@@ -412,6 +412,8 @@ namespace libsys_desktop_ui.ViewModels
             book.Author = Author;
             book.ModifiedBy = _userLoggedIn.FirstName;
             book.LastModified = DateTime.Now;
+            await _bookService.Update(SelectedBookItem.Id, book);
+            await LoadBooks();
             Clear();
         }
 
