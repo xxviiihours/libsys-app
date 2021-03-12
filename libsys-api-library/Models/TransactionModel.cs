@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace libsys_api_library.Models
 {
-    public class BorrowModel
+    public class TransactionModel
     {
         public int Id { get; set; }
 
         public int BookId { get; set; }
 
         public string CallNumber { get; set; }
+
+        public string BookTitle { get; set; }
 
         public string UserId { get; set; }
 

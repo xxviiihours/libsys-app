@@ -14,6 +14,8 @@ namespace libsys_desktop_ui_library.Models
 
         public string CallNumber { get; set; }
 
+        public string BookTitle { get; set; }
+
         public string UserId { get; set; }
 
         public string ClassificationId { get; set; }

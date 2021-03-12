@@ -8,7 +8,7 @@ namespace libsys_api_library.Models
 {
     public class BorrowListModel
     {
-        public List<BorrowModel> BorrowedBookDetails { get; set; }
+        public List<TransactionModel> BorrowedBookDetails { get; set; }
 
     }
 }

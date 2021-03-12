@@ -2,6 +2,7 @@
 	@Id INT OUTPUT,
     @BookId INT, 
     @CallNumber NVARCHAR(128),
+    @BookTitle NVARCHAR(128),
     @UserId NVARCHAR(128),
     @ClassificationId NVARCHAR(128),
     @ClassificationType NVARCHAR(50),
@@ -13,8 +14,8 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    INSERT INTO dbo.TransactionDetails(BookId, CallNumber, UserId, ClassificationId, ClassificationType, [Status], DateBorrowed, DueDate, CreatedAt)
-    VALUES(@BookId, @CallNumber, @UserId, @ClassificationId, @ClassificationType, @Status, @DateBorrowed, @DueDate, @CreatedAt);
+    INSERT INTO dbo.TransactionDetails(BookId, CallNumber, BookTitle, UserId, ClassificationId, ClassificationType, [Status], DateBorrowed, DueDate, CreatedAt)
+    VALUES(@BookId, @CallNumber, @BookTitle, @UserId, @ClassificationId, @ClassificationType, @Status, @DateBorrowed, @DueDate, @CreatedAt);
     SELECT @Id = @@IDENTITY;
 
     UPDATE dbo.BookInformations

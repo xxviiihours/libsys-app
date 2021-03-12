@@ -84,7 +84,7 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
-    <Compile Include="ViewModels\ReturnView.cs" />
+    <Compile Include="ViewModels\ReturnViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\StudentViewModel.cs" />
     <Compile Include="ViewModels\BorrowViewModel.cs" />

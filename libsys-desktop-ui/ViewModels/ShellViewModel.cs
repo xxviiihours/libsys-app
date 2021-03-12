@@ -76,7 +76,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public void ManageReturnBooks()
         {
-            //TODO: Create a Manage Transaction form
+            ActivateItem(IoC.Get<ReturnViewModel>());
         }
 
         public void ManageReports()

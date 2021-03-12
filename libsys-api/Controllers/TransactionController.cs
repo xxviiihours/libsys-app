@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace libsys_api.Controllers
 {
+    [Authorize]
     public class TransactionController : ApiController
     {
         // GET: api/Borrow
@@ -18,13 +19,21 @@ namespace libsys_api.Controllers
         }
 
         // GET: api/Borrow/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("api/transaction/classification-id")]
+        public IHttpActionResult GetAllBorrowedBooksByClassificationId(string classificationId)
         {
-            return "value";
+            Console.WriteLine();
+            TransactionData data = new TransactionData();
+            var result = data.GetBorrowedBooksByClassificationId(classificationId);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         // POST: api/Borrow
-        [Authorize]
         [HttpPost]
         [Route("api/transaction/borrow/save")]
         public void Post([FromBody] BorrowListModel borrowList)
@@ -34,8 +43,12 @@ namespace libsys_api.Controllers
         }
 
         // PUT: api/Borrow/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [Route("api/transaction/return/update")]
+        public void Put(int id, [FromBody]TransactionModel borrowedBook)
         {
+            TransactionData data = new TransactionData();
+            data.Return(id, borrowedBook);
         }
 
         // DELETE: api/Borrow/5

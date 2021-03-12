@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="libsys_desktop_ui.Views.ReturnView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:libsys_desktop_ui.Views"
+             mc:Ignorable="d" Background="White" FontSize="14"
+             d:DesignHeight="700" d:DesignWidth="1024">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
+                    FontSize="24" Margin="0 0 0 15"
+                   Text="Book Returning Form"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" MinWidth="250" MaxWidth="350"
+                    Orientation="Vertical">
+            <TextBlock Text="Select Classification:"/>
+            <ComboBox x:Name="Classifications" Margin="0 0 20 20"
+                      SelectedItem="{Binding SelectedClassification}">
+            </ComboBox>
+            <TextBlock Text="ID Number:"/>
+            <TextBox x:Name="IdNumber"  Margin="0 0 20 10"/>
+            <Button x:Name="SearchID" Content="Search ID"  
+                    Margin="0 0 20 40"/>
+            <TextBlock Text="Full Name:" />
+            <TextBox x:Name="FullName" Margin="0 0 20 0"/>
+            <TextBlock Text="Department:" />
+            <TextBox x:Name="Department"  Margin="0 0 20 0"/>
+        </StackPanel>
+        <!--<StackPanel Grid.Row="2" Grid.Column="1"
+                    Orientation="Vertical">
+            <TextBlock Text="ID Number:"/>
+            <TextBox x:Name="IdNumber"  Margin="0 0 0 10"/>
+            <Button x:Name="SearchID" Content="Search ID"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1"
+                    Orientation="Vertical">
+            <TextBlock Text="Full Name:"/>
+            <TextBox x:Name="FullName" />
+        </StackPanel>-->
+
+        <!--CENTER-->
+        <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3"
+                    Orientation="Vertical">
+            <TextBlock Text="List of borrowed books:"/>
+            <ListBox x:Name="BorrowedBooks" SelectedItem="{Binding SelectedBorrowedBook}"
+                     Width="400" Margin="0 0 0 25"
+                     MinHeight="100" MaxHeight="300"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding BookTitle}" FontWeight="Bold" FontSize="16"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Book Title: "/>
+                                <TextBlock Text="{Binding CallNumber}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+                <TextBlock Text="Date Borrowed: "/>
+                <TextBlock x:Name="DateBorrowed" Text="dd/mm/yyyy"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Due Date: "/>
+                <TextBlock x:Name="DueDate" Text="dd/mm/yyyy"/>
+            </StackPanel>
+            <TextBlock Grid.Row="6" Grid.Column="2"
+                   x:Name="ViolationMessage" 
+                   Visibility="{Binding IsViolated, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                   Foreground="#FFF90000" TextWrapping="Wrap" Margin="0 20 0 0"
+                   Text="This book is already past it's due date.">
+            </TextBlock>
+            <Button Margin="0 20 0 0"
+                x:Name="Generate" Content="Generate Receipt"/>
+            <Button Margin="0 10 0 0"
+                x:Name="Return" Content="Return this book"/>
+        </StackPanel>
+        
+        <!--<StackPanel Grid.Row="2" Grid.Column="2"
+                    Orientation="Vertical" Margin="0 0 0 20"
+                    HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Date Borrowed: "/>
+                <TextBlock x:Name="DateBorrowed" Text="dd/mm/yyyy"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Due Date: "/>
+                <TextBlock x:Name="DueDate" Text="dd/mm/yyyy"/>
+            </StackPanel>
+            <TextBlock Grid.Row="6" Grid.Column="2"
+                   x:Name="ViolationMessage" 
+                   Visibility="{Binding IsViolated, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                   Foreground="#FFF90000" TextWrapping="Wrap" Margin="0 20 0 0"
+                   Text="This book is already past it's due date.">
+            </TextBlock>
+            <Button Grid.Row="7" Grid.Column="1" Margin="0 20 0 0"
+                x:Name="Generate" Content="Generate Receipt"/>
+            <Button Grid.Row="7" Grid.Column="1" Margin="0 10 0 0"
+                x:Name="Return" Content="Return the book"/>
+        </StackPanel>-->
+        
+        
+        <!--SIDE -->
+        <StackPanel Grid.Row="1" Grid.Column="5"
+                    Grid.RowSpan="4" Margin="20 0 0 0"
+                    Orientation="Vertical"
+                    MinWidth="300" MaxWidth="400">
+            <TextBlock Text="Generated Receipt:"/>
+            <TextBox x:Name="Receipt" TextWrapping="Wrap"
+                     MinHeight="400" TextAlignment="Center"
+                     Text="" />
+            <Button x:Name="Export" Content="Export" Margin="0 16"/>
+            <Button x:Name="Clear" Content="Clear All"/>
+        </StackPanel>
+        <!--<StackPanel Grid.Row="5" Grid.Column="3"
+                    Orientation="Vertical" Margin="100 20 0 20"
+                    HorizontalAlignment="Stretch">
+            <Button x:Name="Export" Content="Export" Margin="0 16"/>
+            <Button x:Name="Clear" Content="Clear All"/>
+        </StackPanel>-->
+    </Grid>
+</UserControl>

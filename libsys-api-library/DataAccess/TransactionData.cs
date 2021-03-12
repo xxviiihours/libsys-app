@@ -13,22 +13,23 @@ namespace libsys_api_library.DataAccess
         public void SaveBorrowInfo(BorrowListModel borrowList)
         {
             SqlDataAccess sql = new SqlDataAccess();
-            List<BorrowModel> borrowDetails = new List<BorrowModel>();
+            List<TransactionModel> borrowDetails = new List<TransactionModel>();
             BookData books = new BookData();
             StudentData students = new StudentData();
 
             foreach(var item in borrowList.BorrowedBookDetails)
             {
-                var detail = new BorrowModel
+                var detail = new TransactionModel
                 {
                     BookId = item.BookId,
                     CallNumber = item.CallNumber,
+                    BookTitle = item.BookTitle,
                     UserId = item.UserId,
                     ClassificationId = item.ClassificationId,
                     ClassificationType = item.ClassificationType,
                     Status = item.Status,
-                    DateBorrowed = item.DateBorrowed,
-                    DueDate = item.DueDate,
+                    DateBorrowed = DateTime.Now,
+                    DueDate = DateTime.Now.AddDays(7),
                     CreatedAt = item.CreatedAt
                 };
                 var bookInfo = books.GetBookById(detail.BookId);
@@ -49,6 +50,30 @@ namespace libsys_api_library.DataAccess
             }
           
             sql.SaveData("dbo.spInsertBorrowTransaction", borrowDetails, "libsys-data");
+        }
+
+        public List<TransactionModel> GetBorrowedBooksByClassificationId(string classificationId)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+            var param = new { ClassificationId = classificationId };
+
+            var output = sql.LoadData<TransactionModel, dynamic>("dbo.spBorrowedBooksLookup", param, "libsys-data");
+
+            return output;
+        }
+
+        public void Return(int id, TransactionModel borrowedBook)
+        {
+            SqlDataAccess sql = new SqlDataAccess();
+            var param = new
+            {
+                BookId = borrowedBook.BookId,
+                CallNumber = borrowedBook.CallNumber,
+                ClassificationId = borrowedBook.ClassificationId,
+                Status = borrowedBook.Status,
+                Id = id
+            };
+            sql.UpdateData<TransactionModel, dynamic>("dbo.spReturnBookInfo", param, "libsys-data");
         }
     }
 }

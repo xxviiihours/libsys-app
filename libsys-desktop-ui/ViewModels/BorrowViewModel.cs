@@ -339,6 +339,7 @@ namespace libsys_desktop_ui.ViewModels
                 {
                     BookId = item.Book.Id,
                     CallNumber = item.Book.CallNumber,
+                    BookTitle = item.Book.Title,
                     UserId = _userLoggedIn.Id,
                     ClassificationId = StudentId,
                     ClassificationType = "STUDENT",
@@ -348,7 +349,7 @@ namespace libsys_desktop_ui.ViewModels
                     CreatedAt = DateTime.Now
                 });
             }
-            await _transactionService.Save(addedBooks);
+            await _transactionService.Borrow(addedBooks);
             await Clear();
         }
 
