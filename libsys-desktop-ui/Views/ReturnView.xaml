@@ -125,12 +125,12 @@
         
         <!--SIDE -->
         <StackPanel Grid.Row="1" Grid.Column="5"
-                    Grid.RowSpan="4" Margin="20 0 0 0"
+                    Grid.RowSpan="4" Margin="20 0 0 20"
                     Orientation="Vertical"
                     MinWidth="300" MaxWidth="400">
             <TextBlock Text="Generated Receipt:"/>
             <TextBox x:Name="Receipt" TextWrapping="Wrap"
-                     MinHeight="400" TextAlignment="Center"
+                     MinHeight="345" TextAlignment="Center"
                      Text="" />
             <Button x:Name="Export" Content="Export" Margin="0 16"/>
             <Button x:Name="Clear" Content="Clear All"/>

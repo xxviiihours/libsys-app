@@ -18,7 +18,10 @@ namespace libsys_desktop_ui.ViewModels
         private string _selectedClassification;
         private string _idNumber;
         private string _fullName;
+        private string _department;
+
         private BindingList<TransactionModel> _borrowedBooks;
+        private TransactionModel _selectedBorrowedBook = new TransactionModel();
 
         private DateTime _dateBorrowed;
         private DateTime _dueDate;
@@ -76,8 +79,6 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        private string _department;
-
         public string Department
         {
             get { return _department; }
@@ -99,24 +100,26 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        private TransactionModel _selectedBorrowedBook;
-
         public TransactionModel SelectedBorrowedBook
         {
             get { return _selectedBorrowedBook; }
             set 
             { 
                 _selectedBorrowedBook = value;
-                DateBorrowed = _selectedBorrowedBook.DateBorrowed;
-                DueDate = _selectedBorrowedBook.DueDate;
-
+                FillDateTimeValue();
                 NotifyOfPropertyChange(() => SelectedBorrowedBook);
                 NotifyOfPropertyChange(() => CanGenerate);
                 NotifyOfPropertyChange(() => CanReturn);
             }
         }
 
-
+        public void FillDateTimeValue()
+        {
+            if (SelectedBorrowedBook == null)
+                return;
+            DateBorrowed = SelectedBorrowedBook.DateBorrowed;
+            DueDate = SelectedBorrowedBook.DueDate;
+        }
 
         public DateTime DateBorrowed
         {
@@ -231,6 +234,8 @@ namespace libsys_desktop_ui.ViewModels
             transaction.ClassificationId = SelectedBorrowedBook.ClassificationId;
             transaction.Status = "RETURNED";
             await _transactionService.Return(SelectedBorrowedBook.Id, transaction);
+            ClearBorrowedData();
+            await LoadBorrowedBooks();
         }
 
         public void Export()
@@ -238,9 +243,22 @@ namespace libsys_desktop_ui.ViewModels
             // TODO: Export Receipt file
         }
 
+        public void ClearBorrowedData()
+        {
+            BorrowedBooks = new BindingList<TransactionModel>();
+            DateBorrowed = DateTime.MinValue;
+            DueDate = DateTime.MinValue;
+        }
+
         public void Clear()
         {
-            //TODO: Clear all the fileds after.
+            BorrowedBooks = new BindingList<TransactionModel>();
+            DateBorrowed = DateTime.MinValue;
+            DueDate = DateTime.MinValue;
+
+            IdNumber = "";
+            FullName = "";
+            Department = "";
         }
     }
 }
