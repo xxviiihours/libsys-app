@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace libsys_desktop_ui_library.Interfaces
 {
-    public interface IBorrowService
+    public interface ITransactionService
     {
         Task Save(BorrowListModel borrowList);
     }

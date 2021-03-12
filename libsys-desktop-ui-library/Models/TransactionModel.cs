@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace libsys_desktop_ui_library.Models
 {
-    public class BorrowModel
+    public class TransactionModel
     {
         public int Id { get; set; }
 

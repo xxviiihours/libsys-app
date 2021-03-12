@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace libsys_api.Controllers
 {
-    public class BorrowController : ApiController
+    public class TransactionController : ApiController
     {
         // GET: api/Borrow
         public IEnumerable<string> Get()
@@ -26,10 +26,10 @@ namespace libsys_api.Controllers
         // POST: api/Borrow
         [Authorize]
         [HttpPost]
-        [Route("api/borrow/save")]
+        [Route("api/transaction/borrow/save")]
         public void Post([FromBody] BorrowListModel borrowList)
         {
-            BorrowData data = new BorrowData();
+            TransactionData data = new TransactionData();
             data.SaveBorrowInfo(borrowList);
         }
 

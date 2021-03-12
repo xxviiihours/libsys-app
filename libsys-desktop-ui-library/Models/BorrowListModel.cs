@@ -9,6 +9,6 @@ namespace libsys_desktop_ui_library.Models
     public class BorrowListModel
     {
 
-        public List<BorrowModel> BorrowedBookDetails { get; set; } = new List<BorrowModel>();
+        public List<TransactionModel> BorrowedBookDetails { get; set; } = new List<TransactionModel>();
     }
 }

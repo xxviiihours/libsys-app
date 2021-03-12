@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace libsys_desktop_ui_library.Services
 {
-   public class BorrowService : IBorrowService
+   public class TransactionService : ITransactionService
     {
         private readonly IAPIHelper _apiHelper;
-        public BorrowService(IAPIHelper apiHelper)
+        public TransactionService(IAPIHelper apiHelper)
         {
             _apiHelper = apiHelper;
         }
         public async Task Save(BorrowListModel borrowList)
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/borrow/save", borrowList))
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PostAsJsonAsync("/api/transaction/borrow/save", borrowList))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {

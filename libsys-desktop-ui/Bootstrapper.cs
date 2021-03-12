@@ -32,7 +32,7 @@ namespace libsys_desktop_ui
                 .PerRequest<IBookService, BookService>()
                 .PerRequest<IStudentService, StudentService>()
                 .PerRequest<IBookClassificationService, BookClassificationService>()
-                .PerRequest<IBorrowService, BorrowService>();
+                .PerRequest<ITransactionService, TransactionService>();
 
             _container
                 .Singleton<IWindowManager, WindowManager>()

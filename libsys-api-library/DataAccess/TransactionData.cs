@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace libsys_api_library.DataAccess
 {
-    public class BorrowData
+    public class TransactionData
     {
         public void SaveBorrowInfo(BorrowListModel borrowList)
         {

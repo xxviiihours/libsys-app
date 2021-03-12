@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\BookClassificationData.cs" />
     <Compile Include="DataAccess\BookData.cs" />
-    <Compile Include="DataAccess\BorrowData.cs" />
+    <Compile Include="DataAccess\TransactionData.cs" />
     <Compile Include="DataAccess\StudentData.cs" />
     <Compile Include="Models\BookClassificationModel.cs" />
     <Compile Include="Models\BookModel.cs" />
