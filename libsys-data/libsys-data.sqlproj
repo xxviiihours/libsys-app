@@ -88,6 +88,8 @@
     <Build Include="dbo\Stored Procedures\spAvailableBookInfoLookup.sql" />
     <Build Include="dbo\Stored Procedures\spGetAllAvailableBookInfo.sql" />
     <Build Include="dbo\Stored Procedures\spInsertBorrowTransaction.sql" />
+    <Build Include="dbo\Stored Procedures\spBorrowedBooksLookup.sql" />
+    <Build Include="dbo\Stored Procedures\spReturnBookInfo.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="libsys-data.refactorlog" />

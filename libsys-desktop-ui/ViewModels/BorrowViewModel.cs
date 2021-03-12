@@ -15,7 +15,7 @@ namespace libsys_desktop_ui.ViewModels
         private IUserLoggedInModel _userLoggedIn;
         private IStudentService _studentService;
         private IBookService _bookService;
-        private IBorrowService _borrowService;
+        private ITransactionService _transactionService;
         private string _studentId;
         private string _fullName;
         private string _department;
@@ -31,12 +31,12 @@ namespace libsys_desktop_ui.ViewModels
         private BookModel _selectedBook;
 
         public BorrowViewModel(IStudentService studentService, IBookService bookService,
-            IUserLoggedInModel userLoggedIn, IBorrowService borrowService)
+            IUserLoggedInModel userLoggedIn, ITransactionService transactionService)
         {
             _studentService = studentService;
             _bookService = bookService;
             _userLoggedIn = userLoggedIn;
-            _borrowService = borrowService;
+            _transactionService = transactionService;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -335,10 +335,11 @@ namespace libsys_desktop_ui.ViewModels
             BorrowListModel addedBooks = new BorrowListModel();
             foreach(var item in BorrowBooks)
             {
-                addedBooks.BorrowedBookDetails.Add(new BorrowModel
+                addedBooks.BorrowedBookDetails.Add(new TransactionModel
                 {
                     BookId = item.Book.Id,
                     CallNumber = item.Book.CallNumber,
+                    BookTitle = item.Book.Title,
                     UserId = _userLoggedIn.Id,
                     ClassificationId = StudentId,
                     ClassificationType = "STUDENT",
@@ -348,7 +349,7 @@ namespace libsys_desktop_ui.ViewModels
                     CreatedAt = DateTime.Now
                 });
             }
-            await _borrowService.Save(addedBooks);
+            await _transactionService.Borrow(addedBooks);
             await Clear();
         }
 

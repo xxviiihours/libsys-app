@@ -47,12 +47,12 @@
   <ItemGroup>
     <Compile Include="DataAccess\BookClassificationData.cs" />
     <Compile Include="DataAccess\BookData.cs" />
-    <Compile Include="DataAccess\BorrowData.cs" />
+    <Compile Include="DataAccess\TransactionData.cs" />
     <Compile Include="DataAccess\StudentData.cs" />
     <Compile Include="Models\BookClassificationModel.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\BorrowListModel.cs" />
-    <Compile Include="Models\BorrowModel.cs" />
+    <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
