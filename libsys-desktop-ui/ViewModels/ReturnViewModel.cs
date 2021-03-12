@@ -108,6 +108,8 @@ namespace libsys_desktop_ui.ViewModels
                 _selectedBorrowedBook = value;
                 FillDateTimeValue();
                 NotifyOfPropertyChange(() => SelectedBorrowedBook);
+                NotifyOfPropertyChange(() => IsViolated);
+                NotifyOfPropertyChange(() => ViolationMessage);
                 NotifyOfPropertyChange(() => CanGenerate);
                 NotifyOfPropertyChange(() => CanReturn);
             }
@@ -165,6 +167,21 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public bool IsViolated
+        {
+            get
+            {
+                bool output = false;
+                if (DueDate != DateTime.MinValue && DueDate < DateTime.Now)
+                {
+                    output = true;
+                    ViolationMessage = "This book is already past it's due date.";
+                    return output;
+                }
+                return output;
+            }
+        }
+
         public async Task LoadBorrowedBooks()
         {
             var borrowedBookList = await _transactionService.GetBorrowedBooksByClassificationId(IdNumber);
@@ -187,7 +204,8 @@ namespace libsys_desktop_ui.ViewModels
         {
             get
             {
-                if(SelectedBorrowedBook != null && DueDate < DateTime.Now)
+                if((SelectedBorrowedBook != null && DueDate != DateTime.MinValue)
+                    && DueDate < DateTime.Now)
                 {
                     return true;
                 }
@@ -223,6 +241,30 @@ namespace libsys_desktop_ui.ViewModels
         public void Generate()
         {
             // TODO: Create Generate report and show it to Receipt textbox
+            Receipt = "COLEGIO DE SAN GABRIEL ARCANGEL\n"
+                    + "     eLMS Violation Reciept\n"
+                    + "--------------------------------\n"
+                    + "Borrower's Information\n"
+                    + "--------------------------------\n"
+                    + $"Student ID: {IdNumber}\n"
+                    + $"Fullname: {FullName}\n"
+                    + $"Department: {Department}\n"
+                    + "--------------------------------\n"
+                    + "Book Information\n"
+                    + "--------------------------------\n"
+                    + $"Call Number: {SelectedBorrowedBook.CallNumber}\n"
+                    + $"Book Title: {SelectedBorrowedBook.BookTitle}\n"
+                    + "--------------------------------\n"
+                    + "Violation Fines\n"
+                    + "--------------------------------\n"
+                    + $"Date Borrowed: {SelectedBorrowedBook.DateBorrowed}\n"
+                    + $"Due Date: {SelectedBorrowedBook.DueDate}\n"
+                    + "Total Days: \n"
+                    + "Total Fine: \n"
+                    + "Cashier's Signature: ___________\n"
+                    + "--------------------------------\n"
+                    + "          © 2020 eMLS\n"
+                    + "      All Rights Reserved.\n";
         }
 
         public async Task Return()

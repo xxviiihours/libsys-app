@@ -88,7 +88,7 @@
                 <TextBlock x:Name="DueDate" Text="dd/mm/yyyy"/>
             </StackPanel>
             <TextBlock Grid.Row="6" Grid.Column="2"
-                   x:Name="ViolationMessage" 
+                   x:Name="ViolationMessage" TextAlignment="Center"
                    Visibility="{Binding IsViolated, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
                    Foreground="#FFF90000" TextWrapping="Wrap" Margin="0 20 0 0"
                    Text="This book is already past it's due date.">
@@ -130,8 +130,11 @@
                     MinWidth="300" MaxWidth="400">
             <TextBlock Text="Generated Receipt:"/>
             <TextBox x:Name="Receipt" TextWrapping="Wrap"
-                     MinHeight="345" TextAlignment="Center"
-                     Text="" />
+                     MinHeight="345" MaxHeight="345"
+                     MinWidth="300" MaxWidth="300"
+                     HorizontalScrollBarVisibility="Visible"
+                     VerticalScrollBarVisibility="Visible" 
+                     FontFamily="OCR A Extended" Background="#FFC3C3C3"/>
             <Button x:Name="Export" Content="Export" Margin="0 16"/>
             <Button x:Name="Clear" Content="Clear All"/>
         </StackPanel>
