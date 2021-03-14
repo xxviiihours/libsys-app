@@ -20,14 +20,14 @@ namespace libsys_desktop_ui.Models
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
         
-        private int _borrowLimit;
+        private int borrowLimit;
 
         public int BorrowLimit
         {
-            get { return _borrowLimit; }
+            get { return borrowLimit; }
             set 
             { 
-                _borrowLimit = value;
+                borrowLimit = value;
                 OnPropertyChanged(nameof(BorrowLimit)); 
             }
         }

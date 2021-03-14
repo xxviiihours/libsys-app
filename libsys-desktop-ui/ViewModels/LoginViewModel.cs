@@ -13,27 +13,27 @@ namespace libsys_desktop_ui.ViewModels
     public class LoginViewModel : Screen
     {
 
-        private IAPIHelper _apiHelper;
-        private IEventAggregator _events;
+        private readonly IAPIHelper apiHelper;
+        private readonly IEventAggregator events;
 
-        private string _emailAddress = "admin@libsysapp.com";
-        private string _password = "@Dmin123";
+        private string emailAddress = "admin@libsysapp.com";
+        private string password = "@Dmin123";
 
-        private string _errorMessage;
+        private string errorMessage;
 
 
-        public LoginViewModel(IAPIHelper aPIHelper, IEventAggregator events)
+        public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
         {
-            _apiHelper = aPIHelper;
-            _events = events;
+            this.apiHelper = apiHelper;
+            this.events = events;
         }
 
         public string EmailAddress
         {
-            get { return _emailAddress; }
+            get { return emailAddress; }
             set
             {
-                _emailAddress = value;
+                emailAddress = value;
                 NotifyOfPropertyChange(() => EmailAddress);
                 NotifyOfPropertyChange(() => CanLogin);
                 NotifyOfPropertyChange(() => IsDisabled);
@@ -42,10 +42,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string Password
         {
-            get { return _password; }
+            get { return password; }
             set
             {
-                _password = value;
+                password = value;
                 NotifyOfPropertyChange(() => Password);
                 NotifyOfPropertyChange(() => CanLogin);
                 NotifyOfPropertyChange(() => IsDisabled);
@@ -53,10 +53,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string ErrorMessage
         {
-            get { return _errorMessage; }
+            get { return errorMessage; }
             set
             {
-                _errorMessage = value;
+                errorMessage = value;
                 NotifyOfPropertyChange(() => ErrorMessage);
                 NotifyOfPropertyChange(() => IsErrorVisible);
                 NotifyOfPropertyChange(() => IsDisabled);
@@ -112,10 +112,10 @@ namespace libsys_desktop_ui.ViewModels
             try
             {
                 ErrorMessage = "";
-                var userAuth = await _apiHelper.Authenticate(EmailAddress, Password);
-                await _apiHelper.GetLoggedInUserInfo(userAuth.Access_Token);
+                var userAuth = await apiHelper.Authenticate(EmailAddress, Password);
+                await apiHelper.GetLoggedInUserInfo(userAuth.Access_Token);
 
-                _events.PublishOnUIThread(new LogOnEvent());
+                events.PublishOnUIThread(new LogOnEvent());
             }
             catch (Exception ex)
             {

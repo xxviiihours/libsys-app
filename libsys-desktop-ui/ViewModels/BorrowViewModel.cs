@@ -12,31 +12,32 @@ namespace libsys_desktop_ui.ViewModels
 {
     public class BorrowViewModel : Screen
     {
-        private IUserLoggedInModel _userLoggedIn;
-        private IStudentService _studentService;
-        private IBookService _bookService;
-        private ITransactionService _transactionService;
-        private string _studentId;
-        private string _fullName;
-        private string _department;
-        private string _phoneNumber;
-        private string _emailAddress;
+        private readonly IUserLoggedInModel userLoggedIn;
+        private readonly IStudentService studentService;
+        private readonly IBookService bookService;
+        private readonly ITransactionService transactionService;
 
-        private int _borrowLimit;
+        private string studentId;
+        private string fullName;
+        private string department;
+        private string phoneNumber;
+        private string emailAddress;
 
-        private string _bookTitle;
+        private int borrowLimit;
 
-        private BindingList<BookModel> _books;
-        private BindingList<BorrowBookModel> _borrowBooks = new BindingList<BorrowBookModel>();
-        private BookModel _selectedBook;
+        private string bookTitle;
+
+        private BindingList<BookModel> books;
+        private BindingList<BorrowBookModel> borrowBooks = new BindingList<BorrowBookModel>();
+        private BookModel selectedBook;
 
         public BorrowViewModel(IStudentService studentService, IBookService bookService,
             IUserLoggedInModel userLoggedIn, ITransactionService transactionService)
         {
-            _studentService = studentService;
-            _bookService = bookService;
-            _userLoggedIn = userLoggedIn;
-            _transactionService = transactionService;
+            this.studentService = studentService;
+            this.bookService = bookService;
+            this.userLoggedIn = userLoggedIn;
+            this.transactionService = transactionService;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -47,26 +48,26 @@ namespace libsys_desktop_ui.ViewModels
 
         private async Task LoadAvailableBooks()
         {
-            var bookList = await _bookService.GetAllAvailableBooks();
+            var bookList = await bookService.GetAllAvailableBooks();
             Books = new BindingList<BookModel>(bookList);
         }
 
         public BindingList<BookModel> Books
         {
-            get { return _books; }
+            get { return books; }
             set 
             { 
-                _books = value;
+                books = value;
                 NotifyOfPropertyChange(() => Books);
             }
         }
 
         public BindingList<BorrowBookModel> BorrowBooks
         {
-            get { return _borrowBooks; }
+            get { return borrowBooks; }
             set 
             { 
-                _borrowBooks = value;
+                borrowBooks = value;
                 NotifyOfPropertyChange(() => BorrowBooks);
             }
         }
@@ -76,11 +77,11 @@ namespace libsys_desktop_ui.ViewModels
         {
             get
             {
-                return _selectedBook;
+                return selectedBook;
             }
             set
             {
-                _selectedBook = value;
+                selectedBook = value;
                 NotifyOfPropertyChange(() => SelectedBook);
                 NotifyOfPropertyChange(() => CanAddBooks);
             }
@@ -103,10 +104,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string StudentId
         {
-            get { return _studentId; }
+            get { return studentId; }
             set 
             {
-                _studentId = value;
+                studentId = value;
                 NotifyOfPropertyChange(() => StudentId);
                 NotifyOfPropertyChange(() => IsBookListEnabled);
                 NotifyOfPropertyChange(() => CanSearchStudentId);
@@ -115,10 +116,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string FullName 
         { 
-            get { return _fullName; } 
+            get { return fullName; } 
             set
             {
-                _fullName = value;
+                fullName = value;
                 NotifyOfPropertyChange(() => FullName);
                 NotifyOfPropertyChange(() => IsBookListEnabled);
             }
@@ -126,10 +127,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string Department
         {
-            get { return _department; }
+            get { return department; }
             set
             {
-                _department = value;
+                department = value;
                 NotifyOfPropertyChange(() => Department);
                 NotifyOfPropertyChange(() => IsBookListEnabled);
             }
@@ -137,10 +138,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string PhoneNumber
         {
-            get { return _phoneNumber; }
+            get { return phoneNumber; }
             set
             {
-                _phoneNumber = value;
+                phoneNumber = value;
                 NotifyOfPropertyChange(() => PhoneNumber);
                 NotifyOfPropertyChange(() => IsBookListEnabled);
             }
@@ -148,10 +149,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string EmailAddress
         {
-            get { return _emailAddress; }
+            get { return emailAddress; }
             set
             {
-                _emailAddress = value;
+                emailAddress = value;
                 NotifyOfPropertyChange(() => EmailAddress);
                 NotifyOfPropertyChange(() => IsBookListEnabled);
             }
@@ -159,10 +160,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public int BorrowLimit
         {
-            get { return _borrowLimit; }
+            get { return borrowLimit; }
             set 
             { 
-                _borrowLimit = value;
+                borrowLimit = value;
                 NotifyOfPropertyChange(() => BorrowLimit);
                 NotifyOfPropertyChange(() => IsBookListEnabled);
                 NotifyOfPropertyChange(() => CanAddBooks);
@@ -171,10 +172,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string BookTitle
         {
-            get { return _bookTitle; }
+            get { return bookTitle; }
             set 
             { 
-                _bookTitle = value;
+                bookTitle = value;
                 NotifyOfPropertyChange(() => BookTitle);
                 NotifyOfPropertyChange(() => CanSearchBookTitle);
             }
@@ -278,7 +279,7 @@ namespace libsys_desktop_ui.ViewModels
         {
             try
             {
-                var result = await _studentService.GetByStudentId(StudentId);
+                var result = await studentService.GetByStudentId(StudentId);
 
                 FullName = $"{result.LastName}, {result.FirstName}";
                 Department = result.Department;
@@ -296,7 +297,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public async void SearchBookTitle()
         {
-            var searchedBookList = await _bookService.GetAvailableBooksByTitle(BookTitle);
+            var searchedBookList = await bookService.GetAvailableBooksByTitle(BookTitle);
             if(searchedBookList.Count > 0)
             {
                 Books = new BindingList<BookModel>(searchedBookList);
@@ -340,7 +341,7 @@ namespace libsys_desktop_ui.ViewModels
                     BookId = item.Book.Id,
                     CallNumber = item.Book.CallNumber,
                     BookTitle = item.Book.Title,
-                    UserId = _userLoggedIn.Id,
+                    UserId = userLoggedIn.Id,
                     ClassificationId = StudentId,
                     ClassificationType = "STUDENT",
                     Status = item.Status,
@@ -349,7 +350,7 @@ namespace libsys_desktop_ui.ViewModels
                     CreatedAt = DateTime.Now
                 });
             }
-            await _transactionService.Borrow(addedBooks);
+            await transactionService.Borrow(addedBooks);
             await Clear();
         }
 

@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using libsys_desktop_ui.Helpers;
+using libsys_desktop_ui.Interfaces;
 using libsys_desktop_ui.ViewModels;
 using libsys_desktop_ui_library.Helpers;
 using libsys_desktop_ui_library.Interfaces;
@@ -17,7 +18,7 @@ namespace libsys_desktop_ui
 {
     public class Bootstrapper : BootstrapperBase
     {
-        private SimpleContainer _container = new SimpleContainer();
+        private readonly SimpleContainer container = new SimpleContainer();
         public Bootstrapper()
         {
             Initialize();
@@ -28,14 +29,14 @@ namespace libsys_desktop_ui
 
         protected override void Configure()
         {
-            _container.Instance(_container)
+            container.Instance(container)
                 .PerRequest<IBookService, BookService>()
                 .PerRequest<IStudentService, StudentService>()
                 .PerRequest<IBookClassificationService, BookClassificationService>()
                 .PerRequest<ITransactionService, TransactionService>()
                 .PerRequest<IPDFHelper, PDFHelper>();
 
-            _container
+            container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<IUserLoggedInModel, UserLoggedInModel>()
@@ -45,7 +46,7 @@ namespace libsys_desktop_ui
                 .Where(type => type.IsClass)
                 .Where(classType => classType.Name.EndsWith("ViewModel"))
                 .ToList()
-                .ForEach(viewModelType => _container.RegisterPerRequest(
+                .ForEach(viewModelType => container.RegisterPerRequest(
                     viewModelType, viewModelType.ToString(), viewModelType));
         }
 
@@ -56,17 +57,17 @@ namespace libsys_desktop_ui
 
         protected override object GetInstance(Type service, string key)
         {
-            return _container.GetInstance(service, key);
+            return container.GetInstance(service, key);
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return _container.GetAllInstances(service);
+            return container.GetAllInstances(service);
         }
 
         protected override void BuildUp(object instance)
         {
-            _container.BuildUp(instance);
+            container.BuildUp(instance);
         }
     }
 }

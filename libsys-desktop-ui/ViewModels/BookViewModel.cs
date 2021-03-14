@@ -12,42 +12,41 @@ namespace libsys_desktop_ui.ViewModels
 {
     public class BookViewModel : Screen
     {
-        private IAPIHelper _apiHelper;
-        private IUserLoggedInModel _userLoggedIn;
-        private IBookService _bookService;
-        private IBookClassificationService _bookClassificationService;
+        private readonly IUserLoggedInModel userLoggedIn;
+        private readonly IBookService bookService;
+        private readonly IBookClassificationService bookClassificationService;
 
 
 
-        private string _classificationItem;
+        private string classificationItem;
 
-        private string _callNumber;
-        private string _bookTitle;
-        private string _author;
+        private string callNumber;
+        private string bookTitle;
+        private string author;
 
 
-        private string _publisher;
-        private string _edition;
-        private string _volume;
-        private int _pages;
-        private int _year;
+        private string publisher;
+        private string edition;
+        private string volume;
+        private int pages;
+        private int year;
 
-        private string _location;
-        private string _source;
-        private double _price;
-        private string _description;
+        private string location;
+        private string source;
+        private double price;
+        private string description;
 
-        private string _search;
+        private string search;
 
         private bool IsBookSelected;
         private bool IsClassificationSelected;
 
-        private BindingList<BookClassificationModel> _bookClassification;
-        private BindingList<BookModel> _books;
+        private BindingList<BookClassificationModel> classifications;
+        private BindingList<BookModel> books;
 
 
-        private BookClassificationModel _selectedClassification;
-        private BookModel _selectedBookItem;
+        private BookClassificationModel selectedClassification;
+        private BookModel selectedBookItem;
 
         protected override async void OnViewLoaded(object view)
         {
@@ -55,24 +54,23 @@ namespace libsys_desktop_ui.ViewModels
             await LoadBookClassification();
             await LoadBooks();
         }
-        public BookViewModel(IAPIHelper apiHelper, IUserLoggedInModel userLoggedIn, 
-            IBookService bookService, IBookClassificationService bookClassificationService)
+        public BookViewModel(IUserLoggedInModel userLoggedIn, IBookService bookService, 
+            IBookClassificationService bookClassificationService)
         {
-            _apiHelper = apiHelper;
-            _userLoggedIn = userLoggedIn;
-            _bookService = bookService;
-            _bookClassificationService = bookClassificationService;
+            this.userLoggedIn = userLoggedIn;
+            this.bookService = bookService;
+            this.bookClassificationService = bookClassificationService;
         }
 
         private async Task LoadBooks()
         {
-            var bookList = await _bookService.GetAllBooks();
+            var bookList = await bookService.GetAllBooks();
             Books = new BindingList<BookModel>(bookList);
         }
 
         private async Task LoadBookClassification()
         {
-            var bookClassificationList = await _bookClassificationService.GetAll();
+            var bookClassificationList = await bookClassificationService.GetAll();
             Classifications = new BindingList<BookClassificationModel>(bookClassificationList);
         }
 
@@ -80,22 +78,22 @@ namespace libsys_desktop_ui.ViewModels
         {
             get 
             {
-                return _bookClassification;
+                return classifications;
             }
             set 
             {
-                _bookClassification = value;
+                classifications = value;
                 NotifyOfPropertyChange(() => Classifications);
             } 
         }
 
         public BookClassificationModel SelectedClassification
         {
-            get { return _selectedClassification; }
+            get { return selectedClassification; }
             set 
             {
-                if (_selectedClassification == value) return;
-                _selectedClassification = value;
+                if (selectedClassification == value) return;
+                selectedClassification = value;
                 IsClassificationSelected = true;
                 FillClassificationItem();
                 NotifyOfPropertyChange(() => SelectedClassification);
@@ -107,14 +105,14 @@ namespace libsys_desktop_ui.ViewModels
         public void FillClassificationItem()
         {
             if (SelectedClassification == null) return;
-            ClassificationItem = _selectedClassification.Classification;
+            ClassificationItem = selectedClassification.Classification;
         }
         public string ClassificationItem
         {
-            get { return _classificationItem; }
+            get { return classificationItem; }
             set
             {
-                _classificationItem = value;
+                classificationItem = value;
                 NotifyOfPropertyChange(() => ClassificationItem);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -122,10 +120,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string CallNumber
         {
-            get { return _callNumber; }
+            get { return callNumber; }
             set
             {
-                _callNumber = value;
+                callNumber = value;
                 NotifyOfPropertyChange(() => CallNumber);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -133,10 +131,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string BookTitle
         {
-            get { return _bookTitle; }
+            get { return bookTitle; }
             set
             {
-                _bookTitle = value;
+                bookTitle = value;
                 NotifyOfPropertyChange(() => BookTitle);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -144,10 +142,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string Author
         {
-            get { return _author; }
+            get { return author; }
             set
             {
-                _author = value;
+                author = value;
                 NotifyOfPropertyChange(() => Author);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -156,10 +154,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string Publisher
         {
-            get { return _publisher; }
+            get { return publisher; }
             set
             {
-                _publisher = value;
+                publisher = value;
                 NotifyOfPropertyChange(() => Publisher);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -167,10 +165,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string Edition
         {
-            get { return _edition; }
+            get { return edition; }
             set
             {
-                _edition = value;
+                edition = value;
                 NotifyOfPropertyChange(() => Edition);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -178,10 +176,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string Volume
         {
-            get { return _volume; }
+            get { return volume; }
             set
             {
-                _volume = value;
+                volume = value;
                 NotifyOfPropertyChange(() => Volume);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -189,10 +187,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public int Year
         {
-            get { return _year; }
+            get { return year; }
             set 
             { 
-                _year = value;
+                year = value;
                 NotifyOfPropertyChange(() => Year);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -200,10 +198,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public int Pages
         {
-            get { return _pages; }
+            get { return pages; }
             set
             {
-                _pages = value;
+                pages = value;
                 NotifyOfPropertyChange(() => Pages);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -211,10 +209,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string Location
         {
-            get { return _location; }
+            get { return location; }
             set
             {
-                _location = value;
+                location = value;
                 NotifyOfPropertyChange(() => Location);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -222,10 +220,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string Source
         {
-            get { return _source; }
+            get { return source; }
             set
             {
-                _source = value;
+                source = value;
                 NotifyOfPropertyChange(() => Source);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -233,10 +231,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public double Price
         {
-            get { return _price; }
+            get { return price; }
             set
             {
-                _price = value;
+                price = value;
                 NotifyOfPropertyChange(() => Price);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -244,10 +242,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string Description
         {
-            get { return _description; }
+            get { return description; }
             set
             {
-                _description = value;
+                description = value;
                 NotifyOfPropertyChange(() => Description);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -255,10 +253,10 @@ namespace libsys_desktop_ui.ViewModels
         }
         public string Search
         {
-            get { return _search; }
+            get { return search; }
             set
             {
-                _search = value;
+                search = value;
                 NotifyOfPropertyChange(() => Search);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -268,11 +266,11 @@ namespace libsys_desktop_ui.ViewModels
         { 
             get 
             {
-                return _books;
+                return books;
             }
             set 
             {
-                _books = value;
+                books = value;
                 NotifyOfPropertyChange(() => Books);
             } 
         }
@@ -280,11 +278,11 @@ namespace libsys_desktop_ui.ViewModels
         {
             get
             {
-                return _selectedBookItem;
+                return selectedBookItem;
             }
             set
             {
-                _selectedBookItem = value;
+                selectedBookItem = value;
                 SelectedClassification = null;
                 IsBookSelected = true;
                 FillData();
@@ -384,12 +382,12 @@ namespace libsys_desktop_ui.ViewModels
                 Location = Location,
                 Year = Year,
                 Author = Author,
-                ModifiedBy = _userLoggedIn.FirstName,
+                ModifiedBy = userLoggedIn.FirstName,
                 LastModified = DateTime.Now
             };
 
 
-            await _bookService.Save(book);
+            await bookService.Save(book);
             await LoadBooks();
             Clear();
         }
@@ -410,9 +408,9 @@ namespace libsys_desktop_ui.ViewModels
             book.Location = Location;
             book.Year = Year;
             book.Author = Author;
-            book.ModifiedBy = _userLoggedIn.FirstName;
+            book.ModifiedBy = userLoggedIn.FirstName;
             book.LastModified = DateTime.Now;
-            await _bookService.Update(SelectedBookItem.Id, book);
+            await bookService.Update(SelectedBookItem.Id, book);
             await LoadBooks();
             Clear();
         }

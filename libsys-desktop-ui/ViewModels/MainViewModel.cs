@@ -11,16 +11,11 @@ namespace libsys_desktop_ui.ViewModels
     public class MainViewModel : Conductor<object>
     {
 
-        private BookViewModel _bookViewModel;
-        private StudentViewModel _studentViewModel;
+        private readonly IUserLoggedInModel userLoggedIn;
 
-        private IUserLoggedInModel _userLoggedIn;
-
-        public MainViewModel(IUserLoggedInModel userLoggedIn, BookViewModel bookViewModel, StudentViewModel studentViewModel)
+        public MainViewModel(IUserLoggedInModel userLoggedIn)
         {
-            _userLoggedIn = userLoggedIn;
-            _bookViewModel = bookViewModel;
-            _studentViewModel = studentViewModel;
+            this.userLoggedIn = userLoggedIn;
         }
 
         private string _currentUser;
@@ -37,7 +32,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public void GreetUser()
         {
-            CurrentUser = $"Welcome, {_userLoggedIn.FirstName}!";
+            CurrentUser = $"Welcome, {userLoggedIn.FirstName}!";
             NotifyOfPropertyChange(() => CurrentUser);
         }
 

@@ -86,9 +86,9 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="EventHandlers\LogOnEvent.cs" />
-    <Compile Include="Helpers\IPDFHelper.cs" />
     <Compile Include="Helpers\PasswordBoxHelper.cs" />
     <Compile Include="Helpers\PDFHelper.cs" />
+    <Compile Include="Interfaces\IPDFHelper.cs" />
     <Compile Include="Models\StudentDisplayModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

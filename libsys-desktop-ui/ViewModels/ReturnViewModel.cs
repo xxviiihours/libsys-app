@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using libsys_desktop_ui.Helpers;
+using libsys_desktop_ui.Interfaces;
 using libsys_desktop_ui_library.Interfaces;
 using libsys_desktop_ui_library.Models;
 using System;
@@ -13,31 +14,31 @@ namespace libsys_desktop_ui.ViewModels
 {
     public class ReturnViewModel : Screen
     {
-        private IStudentService _studentService;
-        private ITransactionService _transactionService;
-        private IPDFHelper _pdfHelper;
+        private readonly IStudentService studentService;
+        private readonly ITransactionService transactionService;
+        private readonly IPDFHelper pdfHelper;
 
-        private string _selectedClassification;
-        private string _idNumber;
-        private string _fullName;
-        private string _department;
+        private string selectedClassification;
+        private string idNumber;
+        private string fullName;
+        private string department;
 
-        private BindingList<TransactionModel> _borrowedBooks;
-        private TransactionModel _selectedBorrowedBook = new TransactionModel();
+        private BindingList<TransactionModel> borrowedBooks;
+        private TransactionModel selectedBorrowedBook = new TransactionModel();
 
-        private DateTime _dateBorrowed;
-        private DateTime _dueDate;
-        private string _violationMessage;
+        private DateTime dateBorrowed;
+        private DateTime dueDate;
+        private string violationMessage;
 
 
-        private string _receipt;
+        private string receipt;
 
         public ReturnViewModel(IStudentService studentService, ITransactionService transactionService,
             IPDFHelper pdfHelper)
         {
-            _studentService = studentService;
-            _transactionService = transactionService;
-            _pdfHelper = pdfHelper;
+            this.studentService = studentService;
+            this.transactionService = transactionService;
+            this.pdfHelper = pdfHelper;
         }
 
         public BindingList<string> Classifications
@@ -52,9 +53,9 @@ namespace libsys_desktop_ui.ViewModels
 
         public string SelectedClassification
         {
-            get { return _selectedClassification; }
+            get { return selectedClassification; }
             set 
-            { _selectedClassification = value;
+            { selectedClassification = value;
                 NotifyOfPropertyChange(() => SelectedClassification);
                 NotifyOfPropertyChange(() => CanSearchID);
             }
@@ -63,10 +64,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string IdNumber
         {
-            get { return _idNumber; }
+            get { return idNumber; }
             set 
             { 
-                _idNumber = value;
+                idNumber = value;
                 NotifyOfPropertyChange(() => IdNumber);
                 NotifyOfPropertyChange(() => CanSearchID);
             }
@@ -75,20 +76,20 @@ namespace libsys_desktop_ui.ViewModels
 
         public string FullName
         {
-            get { return _fullName; }
+            get { return fullName; }
             set 
             { 
-                _fullName = value;
+                fullName = value;
                 NotifyOfPropertyChange(() => FullName);
             }
         }
 
         public string Department
         {
-            get { return _department; }
+            get { return department; }
             set 
             { 
-                _department = value;
+                department = value;
                 NotifyOfPropertyChange(() => Department);
             }
         }
@@ -96,20 +97,20 @@ namespace libsys_desktop_ui.ViewModels
 
         public BindingList<TransactionModel> BorrowedBooks
         {
-            get { return _borrowedBooks; }
+            get { return borrowedBooks; }
             set 
             { 
-                _borrowedBooks = value;
+                borrowedBooks = value;
                 NotifyOfPropertyChange(() => BorrowedBooks);
             }
         }
 
         public TransactionModel SelectedBorrowedBook
         {
-            get { return _selectedBorrowedBook; }
+            get { return selectedBorrowedBook; }
             set 
             { 
-                _selectedBorrowedBook = value;
+                selectedBorrowedBook = value;
                 FillDateTimeValue();
                 NotifyOfPropertyChange(() => SelectedBorrowedBook);
                 NotifyOfPropertyChange(() => IsViolated);
@@ -129,20 +130,20 @@ namespace libsys_desktop_ui.ViewModels
 
         public DateTime DateBorrowed
         {
-            get { return _dateBorrowed; }
+            get { return dateBorrowed; }
             set 
             { 
-                _dateBorrowed = value;
+                dateBorrowed = value;
                 NotifyOfPropertyChange(() => DateBorrowed);
             }
         }
 
         public DateTime DueDate
         {
-            get { return _dueDate; }
+            get { return dueDate; }
             set 
             { 
-                _dueDate = value;
+                dueDate = value;
                 NotifyOfPropertyChange(() => DueDate);
                 NotifyOfPropertyChange(() => CanGenerate);
                 NotifyOfPropertyChange(() => CanReturn);
@@ -152,10 +153,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string ViolationMessage
         {
-            get { return _violationMessage; }
+            get { return violationMessage; }
             set 
             { 
-                _violationMessage = value;
+                violationMessage = value;
                 NotifyOfPropertyChange(() => ViolationMessage);
             }
         }
@@ -163,10 +164,10 @@ namespace libsys_desktop_ui.ViewModels
 
         public string Receipt
         {
-            get { return _receipt; }
+            get { return receipt; }
             set 
             { 
-                _receipt = value;
+                receipt = value;
                 NotifyOfPropertyChange(() => Receipt);
                 NotifyOfPropertyChange(() => CanExport);
             }
@@ -190,7 +191,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public async Task LoadBorrowedBooks()
         {
-            var borrowedBookList = await _transactionService.GetBorrowedBooksByClassificationId(IdNumber);
+            var borrowedBookList = await transactionService.GetBorrowedBooksByClassificationId(IdNumber);
             BorrowedBooks = new BindingList<TransactionModel>(borrowedBookList);
         }
 
@@ -249,7 +250,7 @@ namespace libsys_desktop_ui.ViewModels
 
             if (SelectedClassification == "STUDENT")
             {
-                var result = await _studentService.GetByStudentId(IdNumber);
+                var result = await studentService.GetByStudentId(IdNumber);
                 FullName = $"{result.LastName}, {result.FirstName}";
                 Department = result.Department;
                 
@@ -293,7 +294,7 @@ namespace libsys_desktop_ui.ViewModels
             transaction.CallNumber = SelectedBorrowedBook.CallNumber;
             transaction.ClassificationId = SelectedBorrowedBook.ClassificationId;
             transaction.Status = "RETURNED";
-            await _transactionService.Return(SelectedBorrowedBook.Id, transaction);
+            await transactionService.Return(SelectedBorrowedBook.Id, transaction);
             ClearBorrowedData();
             await LoadBorrowedBooks();
         }
@@ -301,7 +302,7 @@ namespace libsys_desktop_ui.ViewModels
         public void Export()
         {
             // TODO: Export Receipt file
-            _pdfHelper.GenerateReport(Receipt);
+            pdfHelper.GenerateReport(Receipt);
         }
 
         public void ClearBorrowedData()

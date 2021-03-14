@@ -11,20 +11,20 @@ namespace libsys_desktop_ui.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>
     {
-        private IAPIHelper _apiHelper;
-        private IUserLoggedInModel _user;
+        private readonly IAPIHelper apiHelper;
+        private readonly IUserLoggedInModel user;
 
-        private IEventAggregator _events;
+        private readonly IEventAggregator events;
         public ShellViewModel(IEventAggregator events, IUserLoggedInModel user,
             IAPIHelper apiHelper)
         {
-            _events = events;
-            _user = user;
+            this.events = events;
+            this.user = user;
 
-            _events.Subscribe(this);
+            this.events.Subscribe(this);
 
             ActivateItem(IoC.Get<LoginViewModel>());
-            _apiHelper = apiHelper;
+            this.apiHelper = apiHelper;
         }
 
         public bool IsUserLoggedIn
@@ -32,7 +32,7 @@ namespace libsys_desktop_ui.ViewModels
             get
             {
                 bool output = false;
-                if (string.IsNullOrWhiteSpace(_user.Id) == false)
+                if (string.IsNullOrWhiteSpace(user.Id) == false)
                 {
                     output = true;
                     return output;
@@ -54,7 +54,7 @@ namespace libsys_desktop_ui.ViewModels
         
         public void LogOut()
         {
-            _apiHelper.LogOffUser();
+            apiHelper.LogOffUser();
             ActivateItem(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsUserLoggedIn);
         }
