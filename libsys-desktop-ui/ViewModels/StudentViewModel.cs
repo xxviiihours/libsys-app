@@ -13,30 +13,31 @@ namespace libsys_desktop_ui.ViewModels
     public class StudentViewModel : Screen
     {
 
-        private IStudentService _studentService;
+        private readonly IStudentService studentService;
 
-        private string _studentId;
-        private string _firstName;
-        private string _lastName;
-        private string _gender;
-        private string _yearLevel;
-        private string _course;
-        private string _department;
-        private string _phoneNumber;
-        private string _emailAddress;
+        private string studentId;
+        private string firstName;
+        private string lastName;
+        private string gender;
+        private string yearLevel;
+        private string course;
+        private string department;
+        private string phoneNumber;
+        private string emailAddress;
 
+        private string search;
 
-        private string _search;
+        private BindingList<StudentModel> students;
 
-        private BindingList<StudentModel> _students;
+        private StudentModel selectedStudent;
         public StudentViewModel(IStudentService studentService)
         {
-            _studentService = studentService;
+            this.studentService = studentService;
         }
 
         public async Task LoadStudents()
         {
-            var studentList = await _studentService.GetAll();
+            var studentList = await studentService.GetAll();
             Students = new BindingList<StudentModel>(studentList);
         }
 
@@ -48,107 +49,116 @@ namespace libsys_desktop_ui.ViewModels
 
         public string StudentId
         {
-            get { return _studentId; }
+            get { return studentId; }
             set 
             { 
-                _studentId = value;
+                studentId = value;
                 NotifyOfPropertyChange(() => StudentId);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
 
         public string FirstName
         {
-            get { return _firstName; }
+            get { return firstName; }
             set 
             { 
-                _firstName = value;
+                firstName = value;
                 NotifyOfPropertyChange(() => FirstName);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
         public string LastName
         {
-            get { return _lastName; }
+            get { return lastName; }
             set 
             { 
-                _lastName = value;
+                lastName = value;
                 NotifyOfPropertyChange(() => LastName);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
 
         public string Gender
         {
-            get { return _gender; }
+            get { return gender; }
             set 
             { 
-                _gender = value;
+                gender = value;
                 NotifyOfPropertyChange(() => Gender);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
 
         public string YearLevel
         {
-            get { return _yearLevel; }
+            get { return yearLevel; }
             set 
             { 
-                _yearLevel = value;
+                yearLevel = value;
                 NotifyOfPropertyChange(() => YearLevel);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
 
         public string Course
         {
-            get { return _course; }
+            get { return course; }
             set 
             {
-                _course = value;
+                course = value;
                 NotifyOfPropertyChange(() => Course);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
 
         public string Department
         {
-            get { return _department; }
+            get { return department; }
             set 
             { 
-                _department = value;
+                department = value;
                 NotifyOfPropertyChange(() => Department);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
 
         public string PhoneNumber
         {
-            get { return _phoneNumber; }
+            get { return phoneNumber; }
             set 
             { 
-                _phoneNumber = value;
+                phoneNumber = value;
                 NotifyOfPropertyChange(() => PhoneNumber);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
 
         public string EmailAddress
         {
-            get { return _emailAddress; }
+            get { return emailAddress; }
             set 
             { 
-                _emailAddress = value;
+                emailAddress = value;
                 NotifyOfPropertyChange(() => EmailAddress);
+                NotifyOfPropertyChange(() => CanSave);
             }
         }
 
         public string Search
         {
-            get { return _search; }
+            get { return search; }
             set 
             { 
-                _search = value;
+                search = value;
                 NotifyOfPropertyChange(() => Search);
             }
         }
@@ -157,12 +167,71 @@ namespace libsys_desktop_ui.ViewModels
 
         public BindingList<StudentModel> Students
         {
-            get { return _students; }
+            get { return students; }
             set 
             { 
-                _students = value;
+                students = value;
                 NotifyOfPropertyChange(() => Students);
             }
+        }
+
+        public StudentModel SelectedStudent
+        {
+            get { return selectedStudent; }
+            set 
+            { 
+                selectedStudent = value;
+                FillStudentData();
+                NotifyOfPropertyChange(() => SelectedStudent);
+                NotifyOfPropertyChange(() => CanUpdate);
+            }
+        }
+
+
+        public bool CanSave
+        {
+            get
+            {
+                if(SelectedStudent == null &&
+                    StudentId?.Length > 0 &&
+                    FirstName?.Length > 0 &&
+                    LastName?.Length > 0 &&
+                    Gender?.Length > 0 &&
+                    YearLevel?.Length > 0 &&
+                    Course?.Length > 0 &&
+                    Department?.Length > 0 &&
+                    PhoneNumber?.Length > 0 &&
+                    EmailAddress?.Length > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool CanUpdate
+        {
+            get
+            {
+                if(SelectedStudent != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public void FillStudentData()
+        {
+            StudentId = SelectedStudent?.StudentId;
+            FirstName = SelectedStudent?.FirstName;
+            LastName = SelectedStudent?.LastName;
+            Gender = SelectedStudent?.Gender;
+            YearLevel = SelectedStudent?.YearLevel;
+            Course = SelectedStudent?.Course;
+            Department = SelectedStudent?.Department;
+            PhoneNumber = SelectedStudent?.PhoneNumber;
+            EmailAddress = SelectedStudent?.EmailAddress;
         }
 
         public async Task Save()
@@ -177,10 +246,46 @@ namespace libsys_desktop_ui.ViewModels
                 Course = Course,
                 Department = Department,
                 PhoneNumber = PhoneNumber,
+                EmailAddress = EmailAddress,
+                BorrowLimit = 2
+            };
+            await studentService.Save(student);
+            await LoadStudents();
+            Clear();
+        }
+
+        public async Task Update()
+        {
+            StudentModel studentModel = new StudentModel
+            {
+                StudentId = StudentId,
+                FirstName = FirstName,
+                LastName = LastName,
+                Gender = Gender,
+                YearLevel = YearLevel,
+                Course = Course,
+                Department = Department,
+                PhoneNumber = PhoneNumber,
                 EmailAddress = EmailAddress
             };
-            await _studentService.Save(student);
+
+            await studentService.Update(SelectedStudent.Id, studentModel);
             await LoadStudents();
+            Clear();
+        }
+
+        public void Clear()
+        {
+            SelectedStudent = null;
+            StudentId = "";
+            FirstName = "";
+            LastName = "";
+            Gender = "";
+            YearLevel = "";
+            Course = "";
+            Department = "";
+            PhoneNumber = "";
+            EmailAddress = "";
         }
     }
 }

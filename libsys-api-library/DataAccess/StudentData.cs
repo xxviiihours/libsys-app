@@ -56,6 +56,7 @@ namespace libsys_api_library.DataAccess
                 Department = studentModel.Department,
                 PhoneNumber = studentModel.PhoneNumber,
                 EmailAddress = studentModel.EmailAddress,
+
                 Id = Id
             };
             sql.UpdateData<StudentModel, dynamic>("dbo.spUpdateStudentInfo", param, "libsys-data");

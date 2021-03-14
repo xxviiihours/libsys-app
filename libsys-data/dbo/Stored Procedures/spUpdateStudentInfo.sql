@@ -11,6 +11,10 @@
 	@EmailAddress NVARCHAR(MAX)
 AS
 BEGIN
+	SET NOCOUNT ON;
+	DECLARE @BorrowLimit AS INT;
+	SET @BorrowLimit = 2;
+
 	UPDATE dbo.Students
 	SET StudentId = @StudentId, 
 		FirstName = @FirstName, 
@@ -20,6 +24,7 @@ BEGIN
 		YearLevel = @YearLevel, 
 		Department = @Department, 
 		PhoneNumber = @PhoneNumber, 
-		EmailAddress = @EmailAddress
+		EmailAddress = @EmailAddress,
+		BorrowLimit = @BorrowLimit
 	WHERE Id = @Id;
 END

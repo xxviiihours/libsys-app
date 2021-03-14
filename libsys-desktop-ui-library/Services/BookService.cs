@@ -114,6 +114,3 @@ namespace libsys_desktop_ui_library.Services
         }
     }
 }
-
-
-//https://localhost:44320/api/books/update?id=

@@ -64,5 +64,20 @@ namespace libsys_desktop_ui_library.Services
                 }
             }
         }
+
+        public async Task Update(int id, StudentModel studentModel)
+        {
+            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.PutAsJsonAsync($"/api/students/update?id={id}", studentModel))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    //TODO: Create a logger
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
     }
 }
