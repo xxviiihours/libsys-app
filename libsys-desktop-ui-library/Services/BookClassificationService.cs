@@ -11,15 +11,15 @@ namespace libsys_desktop_ui_library.Services
 {
     public class BookClassificationService : IBookClassificationService
     {
-        private IAPIHelper _apiHelper;
+        private readonly IAPIHelper apiHelper;
         public BookClassificationService(IAPIHelper apiHelper)
         {
-            _apiHelper = apiHelper;
+            this.apiHelper = apiHelper;
         }
 
         public async Task<List<BookClassificationModel>> GetAll()
         {
-            using (HttpResponseMessage responseMessage = await _apiHelper.HttpClient.GetAsync("/api/book-classification"))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync("/api/book-classification"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {

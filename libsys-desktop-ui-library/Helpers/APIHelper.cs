@@ -13,31 +13,33 @@ namespace libsys_desktop_ui_library.Helpers
 {
     public class APIHelper : IAPIHelper
     {
-        private HttpClient _httpClient;
-        private IUserLoggedInModel _userLoggedIn;
-        
+
+        private readonly IUserLoggedInModel userLoggedIn;
+
+        private HttpClient httpClient;
+       
         public HttpClient HttpClient 
         { 
             get 
             { 
-                return _httpClient; 
+                return httpClient; 
             } 
         }
         public APIHelper(IUserLoggedInModel userLoggedIn)
         {
             InitializeClient();
-            _userLoggedIn = userLoggedIn;
+            this.userLoggedIn = userLoggedIn;
         }
 
         public void InitializeClient()
         {
             string BASE_URL = ConfigurationManager.AppSettings["api"];
 
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(BASE_URL);
+            httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(BASE_URL);
 
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         }
 
@@ -51,7 +53,7 @@ namespace libsys_desktop_ui_library.Helpers
 
             });
 
-            using (HttpResponseMessage responseMessage = await _httpClient.PostAsync("/token", data))
+            using (HttpResponseMessage responseMessage = await httpClient.PostAsync("/token", data))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -67,21 +69,21 @@ namespace libsys_desktop_ui_library.Helpers
 
         public async Task GetLoggedInUserInfo(string token)
         {
-            _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
 
-            using (HttpResponseMessage responseMessage = await _httpClient.GetAsync("/api/users/id"))
+            using (HttpResponseMessage responseMessage = await httpClient.GetAsync("/api/users/id"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var result = await responseMessage.Content.ReadAsAsync<UserLoggedInModel>();
-                    _userLoggedIn.Id = result.Id;
-                    _userLoggedIn.FirstName = result.FirstName;
-                    _userLoggedIn.LastName = result.LastName;
-                    _userLoggedIn.UserType = result.UserType;
-                    _userLoggedIn.EmailAddress = result.EmailAddress;
+                    userLoggedIn.Id = result.Id;
+                    userLoggedIn.FirstName = result.FirstName;
+                    userLoggedIn.LastName = result.LastName;
+                    userLoggedIn.UserType = result.UserType;
+                    userLoggedIn.EmailAddress = result.EmailAddress;
 
                 }
                 else
@@ -93,12 +95,12 @@ namespace libsys_desktop_ui_library.Helpers
 
         public void LogOffUser()
         {
-            _userLoggedIn.Id = "";
-            _userLoggedIn.FirstName = "";
-            _userLoggedIn.LastName = "";
-            _userLoggedIn.UserType = "";
-            _userLoggedIn.EmailAddress = "";
-            _userLoggedIn.CreatedAt = DateTime.MinValue;
+            userLoggedIn.Id = "";
+            userLoggedIn.FirstName = "";
+            userLoggedIn.LastName = "";
+            userLoggedIn.UserType = "";
+            userLoggedIn.EmailAddress = "";
+            userLoggedIn.CreatedAt = DateTime.MinValue;
         }
     }
 }
