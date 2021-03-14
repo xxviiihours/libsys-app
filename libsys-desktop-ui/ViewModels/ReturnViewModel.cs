@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using libsys_desktop_ui.Helpers;
 using libsys_desktop_ui_library.Interfaces;
 using libsys_desktop_ui_library.Models;
 using System;
@@ -14,6 +15,7 @@ namespace libsys_desktop_ui.ViewModels
     {
         private IStudentService _studentService;
         private ITransactionService _transactionService;
+        private IPDFHelper _pdfHelper;
 
         private string _selectedClassification;
         private string _idNumber;
@@ -30,10 +32,12 @@ namespace libsys_desktop_ui.ViewModels
 
         private string _receipt;
 
-        public ReturnViewModel(IStudentService studentService, ITransactionService transactionService)
+        public ReturnViewModel(IStudentService studentService, ITransactionService transactionService,
+            IPDFHelper pdfHelper)
         {
             _studentService = studentService;
             _transactionService = transactionService;
+            _pdfHelper = pdfHelper;
         }
 
         public BindingList<string> Classifications
@@ -164,6 +168,7 @@ namespace libsys_desktop_ui.ViewModels
             { 
                 _receipt = value;
                 NotifyOfPropertyChange(() => Receipt);
+                NotifyOfPropertyChange(() => CanExport);
             }
         }
 
@@ -172,7 +177,8 @@ namespace libsys_desktop_ui.ViewModels
             get
             {
                 bool output = false;
-                if (DueDate != DateTime.MinValue && DueDate < DateTime.Now)
+                if (DueDate != DateTime.MinValue &&
+                    DueDate < DateTime.Now)
                 {
                     output = true;
                     ViolationMessage = "This book is already past it's due date.";
@@ -218,6 +224,18 @@ namespace libsys_desktop_ui.ViewModels
             get
             {
                 if(SelectedBorrowedBook != null && DueDate > DateTime.Now)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool CanExport
+        {
+            get
+            {
+                if(Receipt?.Length > 0)
                 {
                     return true;
                 }
@@ -283,6 +301,7 @@ namespace libsys_desktop_ui.ViewModels
         public void Export()
         {
             // TODO: Export Receipt file
+            _pdfHelper.GenerateReport(Receipt);
         }
 
         public void ClearBorrowedData()
@@ -301,6 +320,8 @@ namespace libsys_desktop_ui.ViewModels
             IdNumber = "";
             FullName = "";
             Department = "";
+            Receipt = "";
+            ViolationMessage = "";
         }
     }
 }
