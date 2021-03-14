@@ -10,7 +10,6 @@ namespace libsys_api_library.DataAccess
 {
     public class BookData
     {
-        //private BookModel _books;
         public List<BookModel> GetAllBooks()
         {
             SqlDataAccess sql = new SqlDataAccess();
