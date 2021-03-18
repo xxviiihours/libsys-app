@@ -35,6 +35,22 @@ namespace libsys_desktop_ui_library.Services
             }
         }
 
+        public async Task<List<BookModel>> GetAllBooksByTitle(string bookTitle)
+        {
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/books/title?BookTitle={bookTitle}"))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<List<BookModel>>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
         public async Task<List<BookModel>> GetAllAvailableBooks()
         {
             using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync("/api/books/available"))
