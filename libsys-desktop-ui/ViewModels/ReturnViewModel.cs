@@ -33,6 +33,11 @@ namespace libsys_desktop_ui.ViewModels
 
         private string receipt;
 
+
+        private string orNumber;
+        private string cashierName;
+
+
         public ReturnViewModel(IStudentService studentService, ITransactionService transactionService,
             IPDFHelper pdfHelper)
         {
@@ -111,11 +116,12 @@ namespace libsys_desktop_ui.ViewModels
             set 
             { 
                 selectedBorrowedBook = value;
-                FillDateTimeValue();
                 NotifyOfPropertyChange(() => SelectedBorrowedBook);
-                NotifyOfPropertyChange(() => IsViolated);
+                FillDateTimeValue();
+                NotifyOfPropertyChange(() => IsViolationMessageVisible);
                 NotifyOfPropertyChange(() => ViolationMessage);
                 NotifyOfPropertyChange(() => CanGenerate);
+                NotifyOfPropertyChange(() => CanClearViolation);
                 NotifyOfPropertyChange(() => CanReturn);
             }
         }
@@ -126,6 +132,11 @@ namespace libsys_desktop_ui.ViewModels
                 return;
             DateBorrowed = SelectedBorrowedBook.DateBorrowed;
             DueDate = SelectedBorrowedBook.DueDate;
+
+            if (DueDate != DateTime.MinValue && DueDate < DateTime.Now)
+            {
+                ViolationMessage = "This book is already past it's due date.";
+            }
         }
 
         public DateTime DateBorrowed
@@ -150,6 +161,19 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            { 
+                errorMessage = value;
+                NotifyOfPropertyChange(() => ErrorMessage);
+                NotifyOfPropertyChange(() => IsErrorMessageVisible);
+            }
+        }
+
 
         public string ViolationMessage
         {
@@ -158,6 +182,7 @@ namespace libsys_desktop_ui.ViewModels
             { 
                 violationMessage = value;
                 NotifyOfPropertyChange(() => ViolationMessage);
+                NotifyOfPropertyChange(() => IsViolationMessageVisible);
             }
         }
 
@@ -173,28 +198,81 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        public bool IsViolated
+        public string OrNumber
+        {
+            get { return orNumber; }
+            set 
+            {
+                orNumber = value;
+                NotifyOfPropertyChange(() => OrNumber);
+                NotifyOfPropertyChange(() => CanSaveViolation);
+            }
+        }
+
+        public string CashierName
+        {
+            get { return cashierName; }
+            set 
+            { 
+                cashierName = value;
+                NotifyOfPropertyChange(() => CashierName);
+                NotifyOfPropertyChange(() => CanSaveViolation);
+            }
+        }
+
+
+        public bool IsErrorMessageVisible
+        {
+            get
+            {
+                if(ErrorMessage?.Length > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        private bool successMessage;
+
+        public bool SuccessMessage
+        {
+            get 
+            { 
+                return successMessage;
+            }
+            set 
+            { 
+                successMessage = value;
+                NotifyOfPropertyChange(() => SuccessMessage);
+            }
+        }
+
+        public bool IsViolationMessageVisible
         {
             get
             {
                 bool output = false;
-                if (DueDate != DateTime.MinValue &&
-                    DueDate < DateTime.Now)
+                if (ViolationMessage?.Length > 0)
                 {
                     output = true;
-                    ViolationMessage = "This book is already past it's due date.";
                     return output;
                 }
                 return output;
             }
         }
 
-        public async Task LoadBorrowedBooks()
+        public bool IsViolationFormVisible 
         {
-            var borrowedBookList = await transactionService.GetBorrowedBooksByClassificationId(IdNumber);
-            BorrowedBooks = new BindingList<TransactionModel>(borrowedBookList);
+            get
+            {
+                if(SelectedBorrowedBook != null && IsViolationMessageVisible)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
-
         public bool CanSearchID
         {
             get
@@ -220,11 +298,35 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public bool CanClearViolation
+        {
+            get
+            {
+                if(SelectedBorrowedBook != null && IsViolationMessageVisible)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public bool CanReturn
         {
             get
             {
-                if(SelectedBorrowedBook != null && DueDate > DateTime.Now)
+                if(BorrowedBooks != null && SelectedBorrowedBook != null && !IsViolationMessageVisible)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool CanSaveViolation
+        {
+            get
+            {
+                if(OrNumber?.Length > 0 && CashierName?.Length > 0)
                 {
                     return true;
                 }
@@ -243,25 +345,51 @@ namespace libsys_desktop_ui.ViewModels
                 return false;
             }
         }
+
+        public async Task LoadBorrowedBooks()
+        {
+            var borrowedBookList = await transactionService.GetBorrowedBooksByClassificationId(IdNumber);
+            BorrowedBooks = new BindingList<TransactionModel>(borrowedBookList);
+        }
+
         public async Task SearchID()
         {
-            if (SelectedClassification == null)
-                return;
+           try
+           {
+                ViolationMessage = "";
+                ErrorMessage = "";
+                NotifyOfPropertyChange(() => IsViolationMessageVisible);
+                NotifyOfPropertyChange(() => IsViolationFormVisible);
 
-            if (SelectedClassification == "STUDENT")
+                if (SelectedClassification == null)
+                    return;
+
+                if (SelectedClassification == "STUDENT")
+                {
+                    var result = await studentService.GetByStudentId(IdNumber);
+
+                    FullName = $"{result.LastName}, {result.FirstName}";
+                    Department = result.Department;
+
+                    await LoadBorrowedBooks();
+                }
+            }
+            catch (Exception ex)
             {
-                var result = await studentService.GetByStudentId(IdNumber);
-                FullName = $"{result.LastName}, {result.FirstName}";
-                Department = result.Department;
-                
-                await LoadBorrowedBooks();
+                Console.WriteLine(ex.Message);
+                ErrorMessage = "ID not found.";
             }
         }
+
+        // LAZY CODE LMAO
         public void Generate()
         {
-            // TODO: Create Generate report and show it to Receipt textbox
+            int numberOfDays = DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day;
+            decimal totalFine =Convert.ToDecimal(numberOfDays * 5);
             Receipt = "COLEGIO DE SAN GABRIEL ARCANGEL\n"
-                    + "     eLMS Violation Reciept\n"
+                    + "    Libsys Violation Reciept\n"
+                    + "--------------------------------\n"
+                    + $"OR Number: {SelectedBorrowedBook.Id}\n"
                     + "--------------------------------\n"
                     + "Borrower's Information\n"
                     + "--------------------------------\n"
@@ -278,17 +406,25 @@ namespace libsys_desktop_ui.ViewModels
                     + "--------------------------------\n"
                     + $"Date Borrowed: {SelectedBorrowedBook.DateBorrowed}\n"
                     + $"Due Date: {SelectedBorrowedBook.DueDate}\n"
-                    + "Total Days: \n"
-                    + "Total Fine: \n"
+                    + $"Total Days: {numberOfDays}\n"
+                    + $"Total Fine: {totalFine}\n"
+                    + "--------------------------------\n"
+                    + "Cashier Information\n"
+                    + "--------------------------------\n"
+                    + "Name of the Cashier: ___________\n\n"
                     + "Cashier's Signature: ___________\n"
                     + "--------------------------------\n"
-                    + "          © 2020 eMLS\n"
+                    + "         © 2021 Libsys\n"
                     + "      All Rights Reserved.\n";
+        }
+
+        public void ClearViolation()
+        {
+            NotifyOfPropertyChange(() => IsViolationFormVisible);
         }
 
         public async Task Return()
         {
-            // TODO: Save returning book to API
             TransactionModel transaction = new TransactionModel();
             transaction.BookId = SelectedBorrowedBook.BookId;
             transaction.CallNumber = SelectedBorrowedBook.CallNumber;
@@ -297,6 +433,14 @@ namespace libsys_desktop_ui.ViewModels
             await transactionService.Return(SelectedBorrowedBook.Id, transaction);
             ClearBorrowedData();
             await LoadBorrowedBooks();
+        }
+
+        public void SaveViolation()
+        {
+            Console.WriteLine();
+            ViolationMessage = "";
+            NotifyOfPropertyChange(() => CanReturn);
+            // TODO: save violation receipt to database
         }
 
         public void Export()
@@ -308,21 +452,22 @@ namespace libsys_desktop_ui.ViewModels
         public void ClearBorrowedData()
         {
             BorrowedBooks = new BindingList<TransactionModel>();
+            SelectedBorrowedBook = null;
             DateBorrowed = DateTime.MinValue;
             DueDate = DateTime.MinValue;
         }
 
-        public void Clear()
+        public void ClearAll()
         {
-            BorrowedBooks = new BindingList<TransactionModel>();
-            DateBorrowed = DateTime.MinValue;
-            DueDate = DateTime.MinValue;
-
+            ClearBorrowedData();
             IdNumber = "";
             FullName = "";
             Department = "";
             Receipt = "";
             ViolationMessage = "";
+            ErrorMessage = "";
+            NotifyOfPropertyChange(() => IsViolationMessageVisible);
+            NotifyOfPropertyChange(() => IsViolationFormVisible);
         }
     }
 }
