@@ -85,7 +85,6 @@
             <Button x:Name="Save" Content="Save"
                     Margin="0 5"></Button>
             <Button Margin="0 5" x:Name="Update" Content="Update"></Button>
-            <Button Margin="0 5" x:Name="Delete" Content="Delete"></Button>
             <Button Margin="0 5" x:Name="Clear" Content="Clear"></Button>
         </StackPanel>
         
@@ -99,15 +98,6 @@
                   MaxHeight="150" MaxWidth="980" Margin="0 0 0 20"
                   HorizontalScrollBarVisibility="Visible" 
                   VerticalScrollBarVisibility="Visible">
-            <!--<DataGrid.Columns>
-                <DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button>Show/Hide</Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>-->
         </DataGrid>
     </Grid>
 </UserControl>

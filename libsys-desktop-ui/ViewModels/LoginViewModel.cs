@@ -62,6 +62,18 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => IsDisabled);
             }
         }
+        private int loading;
+
+        public int Loading
+        {
+            get { return loading; }
+            set 
+            { 
+                loading = value;
+                NotifyOfPropertyChange(() => Loading);
+            }
+        }
+
 
         public bool IsErrorVisible
         {
@@ -90,14 +102,27 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        private bool isLoading;
 
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set 
+            { 
+                isLoading = value;
+                NotifyOfPropertyChange(() => IsLoading);
+                NotifyOfPropertyChange(() => CanLogin);
+                NotifyOfPropertyChange(() => IsDisabled);
+            }
+        }
 
         public bool CanLogin 
         {
             get
             {
                 bool option = false;
-                if(EmailAddress?.Length > 0 && Password?.Length > 0)
+                if(EmailAddress?.Length > 0 && Password?.Length > 0
+                    && IsLoading != true)
                 {
                     option = true;
                     return option;
@@ -112,15 +137,24 @@ namespace libsys_desktop_ui.ViewModels
             try
             {
                 ErrorMessage = "";
+                IsLoading = true;
                 var userAuth = await apiHelper.Authenticate(EmailAddress, Password);
                 await apiHelper.GetLoggedInUserInfo(userAuth.Access_Token);
-
+                IsLoading = false;
                 events.PublishOnUIThread(new LogOnEvent());
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                ErrorMessage = ex.Message + ": " + "Invalid Username or password.";
+                if (ex.Message == "Bad Request")
+                {
+                    ErrorMessage = "Invalid Username or password.";
+                    IsLoading = false;
+                }
+                else
+                {
+                    ErrorMessage = $"{ex.Message} No internet access.";
+                    IsLoading = false;
+                }
             }
         }
     }

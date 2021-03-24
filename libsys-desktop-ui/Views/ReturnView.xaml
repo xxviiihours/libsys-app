@@ -32,6 +32,7 @@
                     FontSize="24" Margin="0 0 0 15"
                    Text="Book Returning Form"/>
 
+        <!-- LEFT SIDE -->
         <StackPanel Grid.Row="1" Grid.Column="1" MinWidth="250" MaxWidth="350"
                     Orientation="Vertical">
             <TextBlock Text="Select Classification:"/>
@@ -47,19 +48,8 @@
             <TextBlock Text="Department:" />
             <TextBox x:Name="Department"  Margin="0 0 20 0"/>
         </StackPanel>
-        <!--<StackPanel Grid.Row="2" Grid.Column="1"
-                    Orientation="Vertical">
-            <TextBlock Text="ID Number:"/>
-            <TextBox x:Name="IdNumber"  Margin="0 0 0 10"/>
-            <Button x:Name="SearchID" Content="Search ID"/>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Grid.Column="1"
-                    Orientation="Vertical">
-            <TextBlock Text="Full Name:"/>
-            <TextBox x:Name="FullName" />
-        </StackPanel>-->
 
-        <!--CENTER-->
+        <!-- CENTER -->
         <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3"
                     Orientation="Vertical">
             <TextBlock Text="List of borrowed books:"/>
@@ -98,34 +88,10 @@
             <Button Margin="0 10 0 0"
                 x:Name="Return" Content="Return this book"/>
         </StackPanel>
-        
-        <!--<StackPanel Grid.Row="2" Grid.Column="2"
-                    Orientation="Vertical" Margin="0 0 0 20"
-                    HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Date Borrowed: "/>
-                <TextBlock x:Name="DateBorrowed" Text="dd/mm/yyyy"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Due Date: "/>
-                <TextBlock x:Name="DueDate" Text="dd/mm/yyyy"/>
-            </StackPanel>
-            <TextBlock Grid.Row="6" Grid.Column="2"
-                   x:Name="ViolationMessage" 
-                   Visibility="{Binding IsViolated, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
-                   Foreground="#FFF90000" TextWrapping="Wrap" Margin="0 20 0 0"
-                   Text="This book is already past it's due date.">
-            </TextBlock>
-            <Button Grid.Row="7" Grid.Column="1" Margin="0 20 0 0"
-                x:Name="Generate" Content="Generate Receipt"/>
-            <Button Grid.Row="7" Grid.Column="1" Margin="0 10 0 0"
-                x:Name="Return" Content="Return the book"/>
-        </StackPanel>-->
-        
-        
-        <!--SIDE -->
+
+        <!-- RIGHT SIDE -->
         <StackPanel Grid.Row="1" Grid.Column="5"
-                    Grid.RowSpan="4" Margin="20 0 0 20"
+                    Grid.RowSpan="4" Margin="20 0 0 21"
                     Orientation="Vertical"
                     MinWidth="300" MaxWidth="400">
             <TextBlock Text="Generated Receipt:"/>
@@ -138,11 +104,5 @@
             <Button x:Name="Export" Content="Export" Margin="0 16"/>
             <Button x:Name="Clear" Content="Clear All"/>
         </StackPanel>
-        <!--<StackPanel Grid.Row="5" Grid.Column="3"
-                    Orientation="Vertical" Margin="100 20 0 20"
-                    HorizontalAlignment="Stretch">
-            <Button x:Name="Export" Content="Export" Margin="0 16"/>
-            <Button x:Name="Clear" Content="Clear All"/>
-        </StackPanel>-->
     </Grid>
 </UserControl>

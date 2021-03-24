@@ -33,7 +33,7 @@
 
         <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
                    Text="Student Management Form" FontSize="24"
-                   Margin="0 0 0 50"/>
+                   Margin="0 0 0 35"/>
         
         
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical"
@@ -87,6 +87,13 @@
         </StackPanel>
 
         <StackPanel Grid.Row="9" Grid.Column="1" Margin="0 20"
+                    Orientation="Vertical" HorizontalAlignment="Stretch">
+            <Button x:Name="Save" Content="Save"/>
+            <Button x:Name="Update" Content="Update" Margin="0 5"/>
+            <Button x:Name="Clear" Content="Clear"/>
+        </StackPanel>
+
+        <!--<StackPanel Grid.Row="9" Grid.Column="1" Margin="0 20"
                     Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel Orientation="Vertical" Width="100">
                 <Button x:Name="Save" Content="Save" Margin="0 10"/>
@@ -96,22 +103,8 @@
                 <Button x:Name="Delete" Content="Delete" Margin="0 10"/>
                 <Button x:Name="Clear" Content="Clear"/>
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
 
-        <!--
-        <TextBlock Text="Course:" Margin="0 5"/>
-        <TextBox x:Name="Course"/>
-        <TextBlock Text="Department:" Margin="0 5"/>
-        <TextBox x:Name="Department"/>
-        <TextBlock Text="PhoneNumber:" Margin="0 5"/>
-        <TextBox x:Name="PhoneNumber"/>
-        <TextBlock Text="EmailAddress:" Margin="0 5"/>
-        <TextBox x:Name="EmailAddress"/>-->
-        <!--<Button Grid.Row="0" Grid.Column="5" Height="40" Width="140"
-                VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                x:Name="Return" Content="Go Back">
-
-        </Button>-->
         <StackPanel Grid.Row="1" Grid.Column="5" Orientation="Horizontal"
                   Margin="0 0 0 0" HorizontalAlignment="Right">
             <TextBlock Text="Search:" VerticalAlignment="Center" Margin="0 0 20 0"/>

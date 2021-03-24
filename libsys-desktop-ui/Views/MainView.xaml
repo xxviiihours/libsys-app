@@ -25,7 +25,7 @@
             Source="/Assets/background.png" Stretch="Fill">
         </Image>-->
         <TextBlock Grid.Row="1" Grid.Column="1" MaxWidth="1024" MaxHeight="510"
-                   Grid.ColumnSpan="3" Grid.RowSpan="2" MinHeight="510"
+                   Grid.ColumnSpan="3" Grid.RowSpan="2" MinHeight="509"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    x:Name="CurrentUser" Text="Welcome, Admin!"/>
     </Grid>
