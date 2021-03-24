@@ -34,12 +34,14 @@ namespace libsys_desktop_ui
                 .PerRequest<IStudentService, StudentService>()
                 .PerRequest<IBookClassificationService, BookClassificationService>()
                 .PerRequest<ITransactionService, TransactionService>()
+                .PerRequest<IViolationService, ViolationService>()
                 .PerRequest<IPDFHelper, PDFHelper>();
 
             container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<IUserLoggedInModel, UserLoggedInModel>()
+                .Singleton<IConfigHelper, ConfigHelper>()
                 .Singleton<IAPIHelper, APIHelper>();
             
             GetType().Assembly.GetTypes()
