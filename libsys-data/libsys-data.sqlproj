@@ -94,6 +94,7 @@
     <RefactorLog Include="libsys-data.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="libsys-data.publish.xml" />
+    <None Include="PublishLocations\libsys-data.publish.xml" />
+    <None Include="PublishLocations\libsys-data-db.publish.xml" />
   </ItemGroup>
 </Project>

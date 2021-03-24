@@ -376,6 +376,10 @@ namespace libsys_desktop_ui.ViewModels
         public async Task LoadBorrowedBooks()
         {
             var borrowedBookList = await transactionService.GetBorrowedBooksByClassificationId(IdNumber);
+            if(borrowedBookList.Count <= 0)
+            {
+                ErrorMessage = "No list of books found for this ID.";
+            }
             BorrowedBooks = new BindingList<TransactionModel>(borrowedBookList);
         }
 
