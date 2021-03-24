@@ -64,14 +64,38 @@ namespace libsys_desktop_ui.ViewModels
 
         private async Task LoadBooks()
         {
-            var bookList = await bookService.GetAllBooks();
-            Books = new BindingList<BookModel>(bookList);
+            try
+            {
+                ErrorMessage = "";
+                var bookList = await bookService.GetAllBooks();
+                if (bookList.Count <= 0)
+                {
+                    return;
+                }
+                Books = new BindingList<BookModel>(bookList);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         private async Task LoadBookClassification()
         {
-            var bookClassificationList = await bookClassificationService.GetAll();
-            Classifications = new BindingList<BookClassificationModel>(bookClassificationList);
+            try
+            {
+                ErrorMessage = "";
+                var bookClassificationList = await bookClassificationService.GetAll();
+                if (bookClassificationList.Count <= 0)
+                {
+                    return;
+                }
+                Classifications = new BindingList<BookClassificationModel>(bookClassificationList);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         public BindingList<BookClassificationModel> Classifications
@@ -262,6 +286,20 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanUpdate);
             }
         }
+
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set 
+            { 
+                errorMessage = value;
+                NotifyOfPropertyChange(() => ErrorMessage);
+                NotifyOfPropertyChange(() => IsErrorVisible);
+            }
+        }
+
         public BindingList<BookModel> Books 
         { 
             get 
@@ -308,6 +346,19 @@ namespace libsys_desktop_ui.ViewModels
             Year = SelectedBookItem.Year;
             Author = SelectedBookItem?.Author;
         }
+
+        public bool IsErrorVisible
+        {
+            get
+            {
+                if(ErrorMessage?.Length > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public bool CanSave
         {
             get
@@ -367,52 +418,68 @@ namespace libsys_desktop_ui.ViewModels
 
         public async Task Save()
         {
-            BookModel book = new BookModel
+            try
             {
-                Classification = ClassificationItem,
-                CallNumber = CallNumber.ToUpper(),
-                Title = BookTitle,
-                Description = Description,
-                Edition = Edition,
-                Volumes = Volume,
-                Pages = Pages,
-                Source = Source,
-                Price = Price,
-                Publisher = Publisher,
-                Location = Location,
-                Year = Year,
-                Author = Author,
-                ModifiedBy = userLoggedIn.FirstName,
-                LastModified = DateTime.Now
-            };
+                ErrorMessage = "";
+                BookModel book = new BookModel
+                {
+                    Classification = ClassificationItem,
+                    CallNumber = CallNumber.ToUpper(),
+                    Title = BookTitle,
+                    Description = Description,
+                    Edition = Edition,
+                    Volumes = Volume,
+                    Pages = Pages,
+                    Source = Source,
+                    Price = Price,
+                    Publisher = Publisher,
+                    Location = Location,
+                    Year = Year,
+                    Author = Author,
+                    ModifiedBy = userLoggedIn.FirstName,
+                    LastModified = DateTime.Now
+                };
 
 
-            await bookService.Save(book);
-            await LoadBooks();
-            Clear();
+                await bookService.Save(book);
+                await LoadBooks();
+                Clear();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         public async Task Update()
         {
-            BookModel book = new BookModel();
-            book.Classification = ClassificationItem;
-            book.CallNumber = CallNumber;
-            book.Title = BookTitle;
-            book.Description = Description;
-            book.Edition = Edition;
-            book.Volumes = Volume;
-            book.Pages = Pages;
-            book.Source = Source;
-            book.Price = Price;
-            book.Publisher = Publisher;
-            book.Location = Location;
-            book.Year = Year;
-            book.Author = Author;
-            book.ModifiedBy = userLoggedIn.FirstName;
-            book.LastModified = DateTime.Now;
-            await bookService.Update(SelectedBookItem.Id, book);
-            await LoadBooks();
-            Clear();
+            try
+            {
+                ErrorMessage = "";
+                BookModel book = new BookModel();
+                book.Classification = ClassificationItem;
+                book.CallNumber = CallNumber;
+                book.Title = BookTitle;
+                book.Description = Description;
+                book.Edition = Edition;
+                book.Volumes = Volume;
+                book.Pages = Pages;
+                book.Source = Source;
+                book.Price = Price;
+                book.Publisher = Publisher;
+                book.Location = Location;
+                book.Year = Year;
+                book.Author = Author;
+                book.ModifiedBy = userLoggedIn.FirstName;
+                book.LastModified = DateTime.Now;
+                await bookService.Update(SelectedBookItem.Id, book);
+                await LoadBooks();
+                Clear();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         public void Clear()
@@ -434,6 +501,7 @@ namespace libsys_desktop_ui.ViewModels
             Location = "";
             Year = 0;
             Author = "";
+            ErrorMessage = "";
         }
     }
 }

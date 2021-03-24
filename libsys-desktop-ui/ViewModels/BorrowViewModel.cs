@@ -49,8 +49,20 @@ namespace libsys_desktop_ui.ViewModels
 
         private async Task LoadAvailableBooks()
         {
-            var bookList = await bookService.GetAllAvailableBooks();
-            Books = new BindingList<BookModel>(bookList);
+            try
+            {
+                ErrorMessage = "";
+                var bookList = await bookService.GetAllAvailableBooks();
+                if (bookList.Count <= 0)
+                {
+                    return;
+                }
+                Books = new BindingList<BookModel>(bookList);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         public BindingList<BookModel> Books

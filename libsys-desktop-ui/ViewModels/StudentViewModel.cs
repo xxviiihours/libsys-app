@@ -27,9 +27,12 @@ namespace libsys_desktop_ui.ViewModels
 
         private string search;
 
+        private string errorMessage;
+
         private BindingList<StudentModel> students;
 
         private StudentModel selectedStudent;
+
         public StudentViewModel(IStudentService studentService)
         {
             this.studentService = studentService;
@@ -37,8 +40,20 @@ namespace libsys_desktop_ui.ViewModels
 
         public async Task LoadStudents()
         {
-            var studentList = await studentService.GetAll();
-            Students = new BindingList<StudentModel>(studentList);
+            try
+            {
+                ErrorMessage = "";
+                var studentList = await studentService.GetAll();
+                if (studentList.Count <= 0)
+                {
+                    return;
+                }
+                Students = new BindingList<StudentModel>(studentList);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         protected override async void OnViewLoaded(object view)
@@ -57,7 +72,6 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanSave);
             }
         }
-
 
         public string FirstName
         {
@@ -81,7 +95,6 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-
         public string Gender
         {
             get { return gender; }
@@ -93,7 +106,6 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-
         public string YearLevel
         {
             get { return yearLevel; }
@@ -104,7 +116,6 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanSave);
             }
         }
-
 
         public string Course
         {
@@ -187,6 +198,16 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                NotifyOfPropertyChange(() => ErrorMessage);
+                NotifyOfPropertyChange(() => IsErrorVisible);
+            }
+        }
 
         public bool CanSave
         {
@@ -220,7 +241,17 @@ namespace libsys_desktop_ui.ViewModels
                 return false;
             }
         }
-
+        public bool IsErrorVisible
+        {
+            get
+            {
+                if (ErrorMessage?.Length > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
         public void FillStudentData()
         {
             StudentId = SelectedStudent?.StudentId;
@@ -236,42 +267,58 @@ namespace libsys_desktop_ui.ViewModels
 
         public async Task Save()
         {
-            StudentModel student = new StudentModel
+            try
             {
-                StudentId = StudentId,
-                FirstName = FirstName,
-                LastName = LastName,
-                Gender = Gender,
-                YearLevel = YearLevel,
-                Course = Course,
-                Department = Department,
-                PhoneNumber = PhoneNumber,
-                EmailAddress = EmailAddress,
-                BorrowLimit = 2
-            };
-            await studentService.Save(student);
-            await LoadStudents();
-            Clear();
+                ErrorMessage = "";
+                StudentModel student = new StudentModel
+                {
+                    StudentId = StudentId,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    Gender = Gender,
+                    YearLevel = YearLevel,
+                    Course = Course,
+                    Department = Department,
+                    PhoneNumber = PhoneNumber,
+                    EmailAddress = EmailAddress,
+                    BorrowLimit = 2
+                };
+                await studentService.Save(student);
+                await LoadStudents();
+                Clear();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         public async Task Update()
         {
-            StudentModel studentModel = new StudentModel
+            try
             {
-                StudentId = StudentId,
-                FirstName = FirstName,
-                LastName = LastName,
-                Gender = Gender,
-                YearLevel = YearLevel,
-                Course = Course,
-                Department = Department,
-                PhoneNumber = PhoneNumber,
-                EmailAddress = EmailAddress
-            };
+                ErrorMessage = "";
+                StudentModel studentModel = new StudentModel
+                {
+                    StudentId = StudentId,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    Gender = Gender,
+                    YearLevel = YearLevel,
+                    Course = Course,
+                    Department = Department,
+                    PhoneNumber = PhoneNumber,
+                    EmailAddress = EmailAddress
+                };
 
-            await studentService.Update(SelectedStudent.Id, studentModel);
-            await LoadStudents();
-            Clear();
+                await studentService.Update(SelectedStudent.Id, studentModel);
+                await LoadStudents();
+                Clear();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
         }
 
         public void Clear()
@@ -286,6 +333,7 @@ namespace libsys_desktop_ui.ViewModels
             Department = "";
             PhoneNumber = "";
             EmailAddress = "";
+            ErrorMessage = "";
         }
     }
 }
