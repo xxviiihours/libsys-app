@@ -31,7 +31,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="1"
                     Orientation="Vertical"
-                    Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
+                    Margin="0 0 0 0" MinWidth="200" MaxWidth="200">
             <!--<ComboBox x:Name="ClassificationType" 
                       SelectedItem="{Binding SelectedClassification}">
                 <ComboBoxItem>
@@ -43,6 +43,11 @@
                 <ComboBox />-->
             <TextBlock Text="Student Number:" Margin="0 5"/>
             <TextBox x:Name="StudentId"/>
+            <TextBlock x:Name="ErrorMessage" 
+                       Visibility="{Binding IsErrorVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                       Foreground="#FFF90000" TextWrapping="Wrap"
+                       Text="ID Number not found." TextAlignment="Center">
+            </TextBlock>
             <Button x:Name="SearchStudentId" Content="Search ID" 
                     Margin="0 10 0 30"/>
             <TextBlock Text="Full Name:" Margin="0 5"/>
@@ -101,7 +106,7 @@
 
 
         <StackPanel Grid.Row="1" Grid.Column="5"
-                    Orientation="Vertical" MinWidth="350">
+                    Orientation="Vertical" MinWidth="310" MaxWidth="320">
             <TextBlock Text="Added Books:" FontSize="24" />
             <ListBox x:Name="BorrowBooks" SelectedItem="{Binding SelectedAddedBook}"
                      MinHeight="185" MaxHeight="300"

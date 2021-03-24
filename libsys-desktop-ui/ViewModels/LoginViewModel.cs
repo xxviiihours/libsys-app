@@ -21,6 +21,7 @@ namespace libsys_desktop_ui.ViewModels
 
         private string errorMessage;
 
+        private bool isLoading;
 
         public LoginViewModel(IAPIHelper apiHelper, IEventAggregator events)
         {
@@ -62,19 +63,6 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => IsDisabled);
             }
         }
-        private int loading;
-
-        public int Loading
-        {
-            get { return loading; }
-            set 
-            { 
-                loading = value;
-                NotifyOfPropertyChange(() => Loading);
-            }
-        }
-
-
         public bool IsErrorVisible
         {
             get 
@@ -101,8 +89,6 @@ namespace libsys_desktop_ui.ViewModels
                 return "Black";
             }
         }
-
-        private bool isLoading;
 
         public bool IsLoading
         {

@@ -18,6 +18,7 @@ namespace libsys_desktop_ui.ViewModels
         private readonly ITransactionService transactionService;
 
         private string studentId;
+        private string errorMessage;
         private string fullName;
         private string department;
         private string phoneNumber;
@@ -114,6 +115,17 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                NotifyOfPropertyChange(() => ErrorMessage);
+                NotifyOfPropertyChange(() => IsErrorVisible);
+            }
+        }
+       
         public string FullName 
         { 
             get { return fullName; } 
@@ -181,13 +193,27 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public bool IsErrorVisible
+        {
+            get
+            {
+                bool output = false;
+                if (ErrorMessage?.Length > 0)
+                {
+                    output = true;
+                    return output;
+                }
+                return output;
+            }
+        }
 
         public bool IsBookListEnabled
         {
             get
             {
                 bool output = false;
-                if(StudentId?.Length > 0 &&
+                if(IsErrorVisible == false &&
+                   StudentId?.Length > 0 &&
                    FullName?.Length > 0 &&
                    Department?.Length > 0 &&
                    PhoneNumber?.Length > 0 &&
@@ -279,19 +305,30 @@ namespace libsys_desktop_ui.ViewModels
         {
             try
             {
-                var result = await studentService.GetByStudentId(StudentId);
+                ErrorMessage = "";
+                var student = await studentService.GetByStudentId(StudentId);
 
-                FullName = $"{result.LastName}, {result.FirstName}";
-                Department = result.Department;
-                PhoneNumber = result.PhoneNumber;
-                EmailAddress = result.EmailAddress;
-                BorrowLimit = result.BorrowLimit;
+                var result = await transactionService.GetBorrowedBooksByClassificationId(StudentId);
+                foreach(var item in result)
+                {
+                    if(item.DueDate < DateTime.Now)
+                    {
+                        ErrorMessage = "This student has an over-dued books. Please return the book first in order to proceed.";
+                        
+                    }
+                }
+                FullName = $"{student.LastName}, {student.FirstName}";
+                Department = student.Department;
+                PhoneNumber = student.PhoneNumber;
+                EmailAddress = student.EmailAddress;
+                BorrowLimit = student.BorrowLimit;
                 BorrowBooks = new BindingList<BorrowBookModel>();
             }
             catch (Exception ex)
             {
                 //Create error message if no student id found.
-                throw new NullReferenceException(ex.Message);
+                ErrorMessage = $"ID Number {ex.Message.ToLower()}.";
+                await Clear();
             }
         }
 
