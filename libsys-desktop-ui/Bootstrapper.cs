@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using libsys_desktop_ui.Helpers;
 using libsys_desktop_ui.Interfaces;
+using libsys_desktop_ui.Services;
 using libsys_desktop_ui.ViewModels;
 using libsys_desktop_ui_library.Helpers;
 using libsys_desktop_ui_library.Interfaces;
@@ -35,6 +36,7 @@ namespace libsys_desktop_ui
                 .PerRequest<IBookClassificationService, BookClassificationService>()
                 .PerRequest<ITransactionService, TransactionService>()
                 .PerRequest<IViolationService, ViolationService>()
+                .PerRequest<IExcelReportService, ExcelReportService>()
                 .PerRequest<IPDFHelper, PDFHelper>();
 
             container
@@ -42,6 +44,7 @@ namespace libsys_desktop_ui
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<IUserLoggedInModel, UserLoggedInModel>()
                 .Singleton<IConfigHelper, ConfigHelper>()
+                .Singleton<IDataTableConverterHelper, DataTableConverterHelper>()
                 .Singleton<IAPIHelper, APIHelper>();
             
             GetType().Assembly.GetTypes()
