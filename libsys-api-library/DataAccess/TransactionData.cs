@@ -1,5 +1,6 @@
 ﻿using libsys_api_library.Internal.DataAccess;
 using libsys_api_library.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,18 @@ namespace libsys_api_library.DataAccess
 {
     public class TransactionData
     {
+        private readonly IConfiguration configuration;
+
+        public TransactionData(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         public void SaveBorrowInfo(BorrowListModel borrowList)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             List<TransactionModel> borrowDetails = new List<TransactionModel>();
-            BookData books = new BookData();
-            StudentData students = new StudentData();
+            BookData books = new BookData(configuration);
+            StudentData students = new StudentData(configuration);
 
             foreach(var item in borrowList.BorrowedBookDetails)
             {
@@ -54,7 +61,7 @@ namespace libsys_api_library.DataAccess
 
         public List<TransactionModel> GetBorrowedBooksByClassificationId(string classificationId)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new { ClassificationId = classificationId };
 
             var output = sql.LoadData<TransactionModel, dynamic>("dbo.spBorrowedBooksLookup", param, "libsys-data");
@@ -64,7 +71,7 @@ namespace libsys_api_library.DataAccess
 
         public void Return(int id, TransactionModel borrowedBook)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new
             {
                 BookId = borrowedBook.BookId,

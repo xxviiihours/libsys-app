@@ -1,5 +1,6 @@
 ﻿using libsys_api_library.Internal.DataAccess;
 using libsys_api_library.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,15 @@ namespace libsys_api_library.DataAccess
 {
     public class StudentData
     {
+        private readonly IConfiguration configuration;
+
+        public StudentData(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         public List<StudentModel> GetAllStudents()
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
 
             var output = sql.LoadData<StudentModel, dynamic>("dbo.spGetAllStudentInfo", new { }, "libsys-data");
             return output;
@@ -20,13 +27,13 @@ namespace libsys_api_library.DataAccess
 
         public void SaveStudentInfo(StudentModel studentModel)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             sql.SaveData("dbo.spInsertStudentInfo", studentModel, "libsys-data");
         }
 
         public StudentModel GetStudentById(string studentId)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             StudentModel studentModel = new StudentModel();
             var param = new { studentId = studentId };
 
@@ -44,7 +51,7 @@ namespace libsys_api_library.DataAccess
 
         public void UpdateStudentInfo(int Id, StudentModel studentModel)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new
             {
                 StudentId = studentModel.StudentId,
@@ -64,7 +71,7 @@ namespace libsys_api_library.DataAccess
 
         public void DeleteStudentInfo(int Id)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new { Id = Id };
             sql.DeleteData("dbo.spDeleteStudentInfo", param, "libsys-data");
         }

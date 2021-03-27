@@ -2,6 +2,7 @@
 using libsys_api_library.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,12 @@ namespace libsys_core_api.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
+        private readonly IConfiguration configuration;
+
+        public TransactionController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         // GET: api/v2/transactions
         [HttpGet]
         [Route("transactions")]
@@ -27,7 +34,7 @@ namespace libsys_core_api.Controllers
         public ActionResult GetAllBorrowedBooksByClassificationId(string classificationId)
         {
             Console.WriteLine();
-            TransactionData data = new TransactionData();
+            TransactionData data = new TransactionData(configuration);
             var result = data.GetBorrowedBooksByClassificationId(classificationId);
             if (result == null)
             {
@@ -41,7 +48,7 @@ namespace libsys_core_api.Controllers
         [Route("transactions/borrow/save")]
         public void Post([FromBody] BorrowListModel borrowList)
         {
-            TransactionData data = new TransactionData();
+            TransactionData data = new TransactionData(configuration);
             data.SaveBorrowInfo(borrowList);
         }
 
@@ -50,7 +57,7 @@ namespace libsys_core_api.Controllers
         [Route("transactions/return/update")]
         public void Put(int id, [FromBody] TransactionModel borrowedBook)
         {
-            TransactionData data = new TransactionData();
+            TransactionData data = new TransactionData(configuration);
             data.Return(id, borrowedBook);
         }
 

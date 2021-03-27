@@ -2,6 +2,7 @@
 using libsys_api_library.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,12 @@ namespace libsys_core_api.Controllers
     [ApiController]
     public class ViolationController : ControllerBase
     {
+        private readonly IConfiguration configuration;
+
+        public ViolationController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         // GET: api/Violation
         [HttpGet]
         [Route("violations")]
@@ -34,7 +41,7 @@ namespace libsys_core_api.Controllers
         [Route("violations/save")]
         public void Post([FromBody] ViolationModel violationModel)
         {
-            ViolationData violationData = new ViolationData();
+            ViolationData violationData = new ViolationData(configuration);
             violationData.SaveViolation(violationModel);
         }
 

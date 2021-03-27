@@ -3,6 +3,7 @@ using libsys_api_library.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,18 @@ namespace libsys_core_api.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
+        private readonly IConfiguration configuration;
+
+        public BookController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         // GET: api/v2/Books
         [HttpGet]
         [Route("books")]
         public ActionResult GetAll()
         {
-            BookData data = new BookData();
+            BookData data = new BookData(configuration);
             var result = data.GetAllBooks();
             if (result == null)
             {
@@ -33,7 +40,7 @@ namespace libsys_core_api.Controllers
         [Route("books/available")]
         public ActionResult GetAllAvailable()
         {
-            BookData data = new BookData();
+            BookData data = new BookData(configuration);
             var result = data.GetAllAvailableBooks();
             if (result == null)
             {
@@ -47,7 +54,7 @@ namespace libsys_core_api.Controllers
         [Route("books/id/")]
         public ActionResult GetById(int Id)
         {
-            BookData data = new BookData();
+            BookData data = new BookData(configuration);
             var result = data.GetBookById(Id);
             if (result == null)
             {
@@ -61,7 +68,7 @@ namespace libsys_core_api.Controllers
         [Route("books/available/title")]
         public ActionResult GetAvailableBooksByTitle(string bookTitle)
         {
-            BookData data = new BookData();
+            BookData data = new BookData(configuration);
             var result = data.GetAvailableBooksByTitle(bookTitle);
             if (result == null)
             {
@@ -76,7 +83,7 @@ namespace libsys_core_api.Controllers
         [Route("books/save")]
         public void Post([FromBody] BookModel bookDetails)
         {
-            BookData data = new BookData();
+            BookData data = new BookData(configuration);
             data.SaveBookInfo(bookDetails);
         }
 
@@ -86,7 +93,7 @@ namespace libsys_core_api.Controllers
         [Route("books/update/")]
         public void Put(int id, [FromBody] BookModel bookDetails)
         {
-            BookData data = new BookData();
+            BookData data = new BookData(configuration);
             data.UpdateBookInfo(id, bookDetails);
         }
 
@@ -96,7 +103,7 @@ namespace libsys_core_api.Controllers
         [Route("books/delete/")]
         public void Delete(int id)
         {
-            BookData data = new BookData();
+            BookData data = new BookData(configuration);
             data.DeleteBookInfo(id);
         }
     }

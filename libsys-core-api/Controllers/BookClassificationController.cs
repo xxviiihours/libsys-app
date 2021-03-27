@@ -1,6 +1,7 @@
 ﻿using libsys_api_library.DataAccess;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,17 @@ namespace libsys_core_api.Controllers
     [ApiController]
     public class BookClassificationController : ControllerBase
     {
+        private readonly IConfiguration configuration;
+
+        public BookClassificationController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         // GET: api/v2/BookClassifications
         [Route("book-classifications")]
         public ActionResult Get()
         {
-            BookClassificationData data = new BookClassificationData();
+            BookClassificationData data = new BookClassificationData(configuration);
             var result = data.GetAllBookClassification();
             if (result == null)
             {

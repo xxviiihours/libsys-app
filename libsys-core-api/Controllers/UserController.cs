@@ -2,6 +2,7 @@
 using libsys_api_library.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,12 @@ namespace libsys_core_api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IConfiguration configuration;
+
+        public UserController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         // GET: api/v2/Users
         [HttpGet]
         [Route("users")]
@@ -29,7 +36,7 @@ namespace libsys_core_api.Controllers
         {
             //string id = RequestContext.Principal.Identity.GetUserId();
             string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserData userData = new UserData();
+            UserData userData = new UserData(configuration);
             return userData.GetUserById(id).First();
         }
 

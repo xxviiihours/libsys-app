@@ -3,6 +3,7 @@ using libsys_api_library.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,18 @@ namespace libsys_core_api.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
+        private readonly IConfiguration configuration;
+
+        public StudentController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         [Authorize]
         // GET: api/v2/Students
         [Route("students")]
         public ActionResult Get()
         {
-            StudentData data = new StudentData();
+            StudentData data = new StudentData(configuration);
             var result = data.GetAllStudents();
             if (result == null)
             {
@@ -33,7 +40,7 @@ namespace libsys_core_api.Controllers
         [Route("students/student-id/")]
         public ActionResult GetByStudentId(string studentId)
         {
-            StudentData data = new StudentData();
+            StudentData data = new StudentData(configuration);
             var result = data.GetStudentById(studentId);
             if (result == null)
             {
@@ -47,7 +54,7 @@ namespace libsys_core_api.Controllers
         [Route("students/save")]
         public void Post([FromBody] StudentModel studentModel)
         {
-            StudentData data = new StudentData();
+            StudentData data = new StudentData(configuration);
             data.SaveStudentInfo(studentModel);
         }
 
@@ -56,7 +63,7 @@ namespace libsys_core_api.Controllers
         [Route("students/update/")]
         public void Put(int id, [FromBody] StudentModel studentModel)
         {
-            StudentData data = new StudentData();
+            StudentData data = new StudentData(configuration);
             data.UpdateStudentInfo(id, studentModel);
         }
 
@@ -65,7 +72,7 @@ namespace libsys_core_api.Controllers
         [Route("students/delete/")]
         public void Delete(int id)
         {
-            StudentData data = new StudentData();
+            StudentData data = new StudentData(configuration);
             data.DeleteStudentInfo(id);
         }
     }
