@@ -127,7 +127,7 @@ namespace libsys_desktop_ui.ViewModels
                 var userAuth = await apiHelper.Authenticate(EmailAddress, Password);
                 await apiHelper.GetLoggedInUserInfo(userAuth.Access_Token);
                 IsLoading = false;
-                events.PublishOnUIThread(new LogOnEvent());
+                await events.PublishOnUIThreadAsync(new LogOnEvent());
             }
             catch (Exception ex)
             {

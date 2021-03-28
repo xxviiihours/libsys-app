@@ -1,13 +1,7 @@
 ﻿using libsys_desktop_ui.Interfaces;
-using PdfSharp.Drawing;
-using PdfSharp.Drawing.Layout;
-using PdfSharp.Pdf;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Drawing.Layout;
+using PdfSharpCore.Pdf;
 
 namespace libsys_desktop_ui.Helpers
 {
@@ -16,21 +10,21 @@ namespace libsys_desktop_ui.Helpers
 
         public void GenerateReport(string content)
         {
-            PdfDocument document = new PdfDocument();
+            var document = new PdfDocument();
 
 
             document.Info.Title = "Violation Receipt";
 
             // Create an empty page
-            PdfPage page = document.AddPage();
+            var page = document.AddPage();
 
             // Get an XGraphics object for drawing
-            XGraphics gfx = XGraphics.FromPdfPage(page);
+            var gfx = XGraphics.FromPdfPage(page);
 
-            XTextFormatter xText = new XTextFormatter(gfx);
+            var xText = new XTextFormatter(gfx);
 
             // Create a font
-            XFont font = new XFont("OCR A Extended", 12);
+            var font = new XFont("OCR A Extended", 12);
 
             XRect rect = new XRect(10, 10, 240, page.Height);
             // Draw the text
@@ -41,7 +35,6 @@ namespace libsys_desktop_ui.Helpers
             document.Save(filename);
 
             // ...and start a viewer.
-            Process.Start(filename);
         }
     }
 }

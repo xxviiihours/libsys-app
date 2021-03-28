@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace libsys_desktop_ui.ViewModels
@@ -21,9 +22,9 @@ namespace libsys_desktop_ui.ViewModels
             this.events = events;
             this.user = user;
 
-            this.events.Subscribe(this);
+            this.events.SubscribeOnPublishedThread(this);
 
-            ActivateItem(IoC.Get<LoginViewModel>());
+            ActivateItemAsync(IoC.Get<LoginViewModel>());
             this.apiHelper = apiHelper;
         }
 
@@ -43,40 +44,46 @@ namespace libsys_desktop_ui.ViewModels
 
         public void ExitApplication()
         {
-            TryClose();
+            TryCloseAsync();
         }
 
-        public void Handle(LogOnEvent message)
+        //public void Handle(LogOnEvent message)
+        //{
+        //    ActivateItem(IoC.Get<MainViewModel>());
+        //    NotifyOfPropertyChange(() => IsUserLoggedIn);
+        //}
+        public async Task HandleAsync(LogOnEvent message, CancellationToken cancellationToken)
         {
-            ActivateItem(IoC.Get<MainViewModel>());
+
+            await ActivateItemAsync(IoC.Get<MainViewModel>());
             NotifyOfPropertyChange(() => IsUserLoggedIn);
         }
-        
-        public void LogOut()
+
+        public async Task LogOut()
         {
             apiHelper.LogOffUser();
-            ActivateItem(IoC.Get<LoginViewModel>());
+            await ActivateItemAsync(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsUserLoggedIn);
         }
 
-        public void ManageBooks()
+        public async Task ManageBooks()
         {
-            ActivateItem(IoC.Get<BookViewModel>());
+            await ActivateItemAsync(IoC.Get<BookViewModel>());
         }
 
-        public void ManageStudents()
+        public async Task ManageStudents()
         {
-            ActivateItem(IoC.Get<StudentViewModel>());
+            await ActivateItemAsync(IoC.Get<StudentViewModel>());
         }
 
-        public void ManageBorrowBooks()
+        public async Task ManageBorrowBooks()
         {
-            ActivateItem(IoC.Get<BorrowViewModel>());
+            await ActivateItemAsync(IoC.Get<BorrowViewModel>());
         }
 
-        public void ManageReturnBooks()
+        public async Task ManageReturnBooks()
         {
-            ActivateItem(IoC.Get<ReturnViewModel>());
+            await ActivateItemAsync(IoC.Get<ReturnViewModel>());
         }
 
         public void ManageReports()
@@ -84,9 +91,10 @@ namespace libsys_desktop_ui.ViewModels
             //TODO: Create a Manage Report form
         }
 
-        public void ReturnDashboard()
+        public async Task ReturnDashboard()
         {
-            ActivateItem(IoC.Get<MainViewModel>());
+            await ActivateItemAsync(IoC.Get<MainViewModel>());
         }
+
     }
 }

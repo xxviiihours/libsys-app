@@ -7,13 +7,13 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "libsys-data", "libsys-data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-desktop-ui", "libsys-desktop-ui\libsys-desktop-ui.csproj", "{C7B93176-4E71-4FF8-BF25-019A6EE33D44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-api-library", "libsys-api-library\libsys-api-library.csproj", "{81647A63-DAD3-4834-AC8E-B075E661A768}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libsys-api-library", "libsys-api-library\libsys-api-library.csproj", "{81647A63-DAD3-4834-AC8E-B075E661A768}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-api", "libsys-api\libsys-api.csproj", "{C572AA3B-8474-498E-8312-3A00EC055938}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-desktop-ui-library", "libsys-desktop-ui-library\libsys-desktop-ui-library.csproj", "{5796CBAF-F1DE-457C-A1A4-A228D1760B5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libsys-desktop-ui-library", "libsys-desktop-ui-library\libsys-desktop-ui-library.csproj", "{5796CBAF-F1DE-457C-A1A4-A228D1760B5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libsys-core-api", "libsys-core-api\libsys-core-api.csproj", "{1A153931-3A0B-46D4-8243-72B8DA39DB9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libsys-core-api", "libsys-core-api\libsys-core-api.csproj", "{1A153931-3A0B-46D4-8243-72B8DA39DB9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
