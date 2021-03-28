@@ -21,7 +21,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<List<BookModel>> GetAllBooks()
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync("/api/books"))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync("/api/v2/books"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -37,7 +37,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<List<BookModel>> GetAllBooksByTitle(string bookTitle)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/books/title?BookTitle={bookTitle}"))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/v2/books/title?BookTitle={bookTitle}"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -53,7 +53,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<List<BookModel>> GetAllAvailableBooks()
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync("/api/books/available"))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync("/api/v2/books/available"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -69,7 +69,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<BookModel> GetByBookId(string bookId)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/books/id/{bookId}"))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/v2/books/id/{bookId}"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -85,7 +85,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<List<BookModel>> GetAvailableBooksByTitle(string bookTitle)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/books/available/title?BookTitle={bookTitle}"))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/v2/books/available/title?BookTitle={bookTitle}"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -101,7 +101,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task Save(BookModel bookModel)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PostAsJsonAsync("/api/books/save", bookModel))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PostAsJsonAsync("/api/v2/books/save", bookModel))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -116,7 +116,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task Update(int id, BookModel bookModel)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PutAsJsonAsync($"/api/books/update?id={id}", bookModel))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PutAsJsonAsync($"/api/v2/books/update?id={id}", bookModel))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {

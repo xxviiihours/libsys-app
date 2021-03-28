@@ -18,7 +18,7 @@ namespace libsys_desktop_ui_library.Services
         }
         public async Task Borrow(BorrowListModel borrowList)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PostAsJsonAsync("/api/transaction/borrow/save", borrowList))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PostAsJsonAsync("/api/v2/transactions/borrow/save", borrowList))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -33,7 +33,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task<List<TransactionModel>> GetBorrowedBooksByClassificationId(string id)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/transaction/classification-id?classificationId={id}"))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/v2/transactions/classification-id?classificationId={id}"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -48,7 +48,7 @@ namespace libsys_desktop_ui_library.Services
         }
         public async Task Return(int id, TransactionModel transactionModel)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PutAsJsonAsync($"/api/transaction/return/update?id={id}", transactionModel))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PutAsJsonAsync($"/api/v2/transactions/return/update?id={id}", transactionModel))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
