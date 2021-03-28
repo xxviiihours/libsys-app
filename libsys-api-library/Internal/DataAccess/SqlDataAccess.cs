@@ -15,6 +15,10 @@ namespace libsys_api_library.Internal.DataAccess
     {
         private readonly IConfiguration configuration;
 
+        public SqlDataAccess()
+        {
+
+        }
         public SqlDataAccess(IConfiguration configuration)
         {
             this.configuration = configuration;
