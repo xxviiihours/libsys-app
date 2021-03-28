@@ -1,5 +1,6 @@
 ﻿using libsys_api_library.DataAccess;
 using libsys_api_library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace libsys_core_api.Controllers
 {
+    [Authorize]
     [Route("api/v2")]
     [ApiController]
     public class TransactionController : ControllerBase
@@ -20,6 +22,7 @@ namespace libsys_core_api.Controllers
         {
             this.configuration = configuration;
         }
+
         // GET: api/v2/transactions
         [HttpGet]
         [Route("transactions")]
@@ -28,10 +31,10 @@ namespace libsys_core_api.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/v2/transactions/5
+        // GET: api/v2/transactions/classification-id/5
         [HttpGet]
         [Route("transactions/classification-id")]
-        public ActionResult GetAllBorrowedBooksByClassificationId(string classificationId)
+        public IActionResult GetAllBorrowedBooksByClassificationId(string classificationId)
         {
             Console.WriteLine();
             TransactionData data = new TransactionData(configuration);
@@ -52,7 +55,7 @@ namespace libsys_core_api.Controllers
             data.SaveBorrowInfo(borrowList);
         }
 
-        // PUT: api/v2/transactions/update
+        // PUT: api/v2/transactions/update/5
         [HttpPut]
         [Route("transactions/return/update")]
         public void Put(int id, [FromBody] TransactionModel borrowedBook)
@@ -61,7 +64,9 @@ namespace libsys_core_api.Controllers
             data.Return(id, borrowedBook);
         }
 
-        // DELETE: api/v2/transactions/delete
+        // DELETE: api/v2/transactions/delete/5
+        [HttpDelete]
+        [Route("transactions/return/delete)")]
         public void Delete(int id)
         {
         }

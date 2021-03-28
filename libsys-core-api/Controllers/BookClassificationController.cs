@@ -19,9 +19,10 @@ namespace libsys_core_api.Controllers
         {
             this.configuration = configuration;
         }
-        // GET: api/v2/BookClassifications
+        // GET: api/v2/book-classifications
+        [HttpGet]
         [Route("book-classifications")]
-        public ActionResult Get()
+        public IActionResult Get()
         {
             BookClassificationData data = new BookClassificationData(configuration);
             var result = data.GetAllBookClassification();
@@ -32,26 +33,30 @@ namespace libsys_core_api.Controllers
             return Ok(result);
         }
 
-        // GET: api/v2/BookClassifications/5
+        // GET: api/v2/book-classifications/5
+        [HttpGet]
         [Route("book-classifications/id/")]
         public string GetById(int id)
         {
             return "value";
         }
 
-        // POST: api/v2/BookClassifications
+        // POST: api/v2/book-classifications
+        [HttpPost]
         [Route("book-classifications/save")]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: api/v2/BookClassifications/5
+        // PUT: api/v2/book-classifications/5
+        [HttpPut]
         [Route("book-classifications/update/")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE: api/v2/BookClassifications/5
+        // DELETE: api/v2/book-classifications/5
+        [HttpDelete]
         [Route("book-classifications/delete/")]
         public void Delete(int id)
         {

@@ -21,10 +21,12 @@ namespace libsys_core_api.Controllers
         {
             this.configuration = configuration;
         }
+
+        // GET: api/v2/students
         [Authorize]
-        // GET: api/v2/Students
+        [HttpGet]
         [Route("students")]
-        public ActionResult Get()
+        public IActionResult Get()
         {
             StudentData data = new StudentData(configuration);
             var result = data.GetAllStudents();
@@ -36,9 +38,10 @@ namespace libsys_core_api.Controllers
             return Ok(result);
         }
 
-        // GET: api/v2/Students/5
+        // GET: api/v2/students/student-id/5
+        [HttpGet]
         [Route("students/student-id/")]
-        public ActionResult GetByStudentId(string studentId)
+        public IActionResult GetByStudentId(string studentId)
         {
             StudentData data = new StudentData(configuration);
             var result = data.GetStudentById(studentId);
@@ -49,8 +52,9 @@ namespace libsys_core_api.Controllers
             return Ok(result);
         }
 
+        // POST: api/v2/students/save
         [Authorize]
-        // POST: api/v2/Students
+        [HttpPost]
         [Route("students/save")]
         public void Post([FromBody] StudentModel studentModel)
         {
@@ -58,8 +62,9 @@ namespace libsys_core_api.Controllers
             data.SaveStudentInfo(studentModel);
         }
 
+        // PUT: api/v2/students/update/5
         [Authorize]
-        // PUT: api/v2/Students/5
+        [HttpPut]
         [Route("students/update/")]
         public void Put(int id, [FromBody] StudentModel studentModel)
         {
@@ -67,8 +72,9 @@ namespace libsys_core_api.Controllers
             data.UpdateStudentInfo(id, studentModel);
         }
 
+        // DELETE: api/v2/students/delete/5
         [Authorize]
-        // DELETE: api/v2/Students/5
+        [HttpDelete]
         [Route("students/delete/")]
         public void Delete(int id)
         {

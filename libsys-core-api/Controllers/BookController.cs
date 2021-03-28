@@ -21,10 +21,10 @@ namespace libsys_core_api.Controllers
         {
             this.configuration = configuration;
         }
-        // GET: api/v2/Books
+        // GET: api/v2/books
         [HttpGet]
         [Route("books")]
-        public ActionResult GetAll()
+        public IActionResult GetAll()
         {
             BookData data = new BookData(configuration);
             var result = data.GetAllBooks();
@@ -35,10 +35,10 @@ namespace libsys_core_api.Controllers
             return Ok(result);
         }
 
-        // GET: api/v2/Books
+        // GET: api/v2/books
         [HttpGet]
         [Route("books/available")]
-        public ActionResult GetAllAvailable()
+        public IActionResult GetAllAvailable()
         {
             BookData data = new BookData(configuration);
             var result = data.GetAllAvailableBooks();
@@ -49,10 +49,10 @@ namespace libsys_core_api.Controllers
             return Ok(result);
         }
 
-        // GET: api/v2/Books/5
+        // GET: api/v2/books/5
         [HttpGet]
         [Route("books/id/")]
-        public ActionResult GetById(int Id)
+        public IActionResult GetById(int Id)
         {
             BookData data = new BookData(configuration);
             var result = data.GetBookById(Id);
@@ -66,7 +66,7 @@ namespace libsys_core_api.Controllers
         // GET api/v2/books/available/title
         [HttpGet]
         [Route("books/available/title")]
-        public ActionResult GetAvailableBooksByTitle(string bookTitle)
+        public IActionResult GetAvailableBooksByTitle(string bookTitle)
         {
             BookData data = new BookData(configuration);
             var result = data.GetAvailableBooksByTitle(bookTitle);
@@ -77,7 +77,7 @@ namespace libsys_core_api.Controllers
             return Ok(result);
         }
 
-        // POST: api/v2/Books
+        // POST: api/v2/books/save
         [Authorize]
         [HttpPost]
         [Route("books/save")]
@@ -87,7 +87,7 @@ namespace libsys_core_api.Controllers
             data.SaveBookInfo(bookDetails);
         }
 
-        // PUT: api/v2/Books/5
+        // PUT: api/v2/books/update/5
         [Authorize]
         [HttpPut]
         [Route("books/update/")]
@@ -97,7 +97,7 @@ namespace libsys_core_api.Controllers
             data.UpdateBookInfo(id, bookDetails);
         }
 
-        // DELETE: api/v2/Books/5
+        // DELETE: api/v2/books/delete/5
         [Authorize]
         [HttpDelete]
         [Route("books/delete/")]

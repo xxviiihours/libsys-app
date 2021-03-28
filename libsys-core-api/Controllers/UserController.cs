@@ -21,7 +21,8 @@ namespace libsys_core_api.Controllers
         {
             this.configuration = configuration;
         }
-        // GET: api/v2/Users
+
+        // GET: api/v2/users
         [HttpGet]
         [Route("users")]
         public IEnumerable<UserModel> Get()
@@ -29,7 +30,7 @@ namespace libsys_core_api.Controllers
             return null;
         }
 
-        // GET: api/v2/Users/5
+        // GET: api/v2/users/id/5
         [HttpGet]
         [Route("users/id")]
         public UserModel GetById()
@@ -40,21 +41,21 @@ namespace libsys_core_api.Controllers
             return userData.GetUserById(id).First();
         }
 
-        // POST api/v2/Users/save
+        // POST api/v2/users/save
         [HttpPost]
         [Route("users/save")]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT  api/v2/Users/update/5
+        // PUT  api/v2/users/update/5
         [HttpPut]
         [Route("users/update/")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE  api/v2/Users/delete/
+        // DELETE  api/v2/users/delete/
         [HttpDelete]
         [Route("users/delete/")]
         public void Delete(int id)
