@@ -2,6 +2,8 @@
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Drawing.Layout;
 using PdfSharpCore.Pdf;
+using PdfSharpCore.Pdf.IO;
+using System.Diagnostics;
 
 namespace libsys_desktop_ui.Helpers
 {
@@ -29,12 +31,12 @@ namespace libsys_desktop_ui.Helpers
             XRect rect = new XRect(10, 10, 240, page.Height);
             // Draw the text
             xText.DrawString(content, font, XBrushes.Black, rect, XStringFormats.TopLeft);
-
             // Save the document...
             const string filename = "Violation Receipt.pdf";
             document.Save(filename);
 
             // ...and start a viewer.
+
         }
     }
 }

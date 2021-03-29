@@ -129,7 +129,8 @@ namespace libsys_desktop_ui.ViewModels
         {
             get { return selectedBorrowedBook; }
             set 
-            { 
+            {
+                ViolationMessage = "";
                 selectedBorrowedBook = value;
                 NotifyOfPropertyChange(() => SelectedBorrowedBook);
                 FillDateTimeValue();
