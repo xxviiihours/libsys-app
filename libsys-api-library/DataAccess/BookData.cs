@@ -21,7 +21,7 @@ namespace libsys_api_library.DataAccess
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
 
-            var output = sql.LoadData<BookModel, dynamic>("dbo.spGetAllBookInfo", new { }, "libsys-data");
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spGetAllBookInfo", new { }, "libsys_data");
             return output;
         }
 
@@ -29,14 +29,14 @@ namespace libsys_api_library.DataAccess
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
 
-            var output = sql.LoadData<BookModel, dynamic>("dbo.spGetAllAvailableBookInfo", new { }, "libsys-data");
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spGetAllAvailableBookInfo", new { }, "libsys_data");
             return output;
         }
 
         public void SaveBookInfo(BookModel bookModel)
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
-            sql.SaveData("dbo.spInsertBookInfo", bookModel, "libsys-data");
+            sql.SaveData("dbo.spInsertBookInfo", bookModel, "libsys_data");
         }
 
         public BookModel GetBookById(int Id)
@@ -45,7 +45,7 @@ namespace libsys_api_library.DataAccess
             BookModel books = new BookModel();
             var param = new { Id = Id };
 
-            var output = sql.LoadData<BookModel, dynamic>("dbo.spBookInfoLookup", param, "libsys-data");
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spBookInfoLookup", param, "libsys_data");
             if(output.Count > 0)
             {
                 foreach (var item in output)
@@ -63,7 +63,7 @@ namespace libsys_api_library.DataAccess
             BookModel bookDetail = new BookModel();
             var param = new { Title = BookTitle };
 
-            var output = sql.LoadData<BookModel, dynamic>("dbo.spAvailableBookInfoLookup", param, "libsys-data");
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spAvailableBookInfoLookup", param, "libsys_data");
             
             return output;
         }
@@ -91,14 +91,14 @@ namespace libsys_api_library.DataAccess
 
                 Id = Id
             };
-            sql.UpdateData<BookModel, dynamic>("dbo.spUpdateBookInfo", param, "libsys-data");
+            sql.UpdateData<BookModel, dynamic>("dbo.spUpdateBookInfo", param, "libsys_data");
         }
 
         public void DeleteBookInfo(int Id)
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new { Id = Id };
-            sql.DeleteData("dbo.spDeleteBookInfo", param, "libsys-data");
+            sql.DeleteData("dbo.spDeleteBookInfo", param, "libsys_data");
         }
     }
 }

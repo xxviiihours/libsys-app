@@ -21,7 +21,7 @@ namespace libsys_api_library.DataAccess
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
 
-            var output = sql.LoadData<StudentModel, dynamic>("dbo.spGetAllStudentInfo", new { }, "libsys-data");
+            var output = sql.LoadData<StudentModel, dynamic>("dbo.spGetAllStudentInfo", new { }, "libsys_data");
             return output;
         }
 
@@ -37,7 +37,7 @@ namespace libsys_api_library.DataAccess
             StudentModel studentModel = new StudentModel();
             var param = new { studentId = studentId };
 
-            var output = sql.LoadData<StudentModel, dynamic>("dbo.spStudentInfoLookup", param, "libsys-data");
+            var output = sql.LoadData<StudentModel, dynamic>("dbo.spStudentInfoLookup", param, "libsys_data");
             if (output.Count > 0)
             {
                 foreach (var item in output)
@@ -66,14 +66,14 @@ namespace libsys_api_library.DataAccess
 
                 Id = Id
             };
-            sql.UpdateData<StudentModel, dynamic>("dbo.spUpdateStudentInfo", param, "libsys-data");
+            sql.UpdateData<StudentModel, dynamic>("dbo.spUpdateStudentInfo", param, "libsys_data");
         }
 
         public void DeleteStudentInfo(int Id)
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new { Id = Id };
-            sql.DeleteData("dbo.spDeleteStudentInfo", param, "libsys-data");
+            sql.DeleteData("dbo.spDeleteStudentInfo", param, "libsys_data");
         }
     }
 }

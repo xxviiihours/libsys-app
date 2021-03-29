@@ -20,7 +20,7 @@ namespace libsys_api_library.DataAccess
         public void SaveViolation(ViolationModel violationModel)
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
-            sql.SaveData("dbo.spInsertViolationDetails", violationModel, "libsys-data");
+            sql.SaveData("dbo.spInsertViolationDetails", violationModel, "libsys_data");
         }
     }
 }

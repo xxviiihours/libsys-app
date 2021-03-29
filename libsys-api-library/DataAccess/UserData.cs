@@ -23,7 +23,7 @@ namespace libsys_api_library.DataAcess
 
             var param = new { Id = Id };
 
-            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", param, "libsys-data");
+            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", param, "libsys_data");
             
             return output;
         }

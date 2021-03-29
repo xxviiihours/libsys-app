@@ -56,7 +56,7 @@ namespace libsys_api_library.DataAccess
                 borrowDetails.Add(detail);
             }
           
-            sql.SaveData("dbo.spInsertBorrowTransaction", borrowDetails, "libsys-data");
+            sql.SaveData("dbo.spInsertBorrowTransaction", borrowDetails, "libsys_data");
         }
 
         public List<TransactionModel> GetBorrowedBooksByClassificationId(string classificationId)
@@ -64,7 +64,7 @@ namespace libsys_api_library.DataAccess
             SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new { ClassificationId = classificationId };
 
-            var output = sql.LoadData<TransactionModel, dynamic>("dbo.spBorrowedBooksLookup", param, "libsys-data");
+            var output = sql.LoadData<TransactionModel, dynamic>("dbo.spBorrowedBooksLookup", param, "libsys_data");
 
             return output;
         }
@@ -80,7 +80,7 @@ namespace libsys_api_library.DataAccess
                 Status = borrowedBook.Status,
                 Id = id
             };
-            sql.UpdateData<TransactionModel, dynamic>("dbo.spReturnBookInfo", param, "libsys-data");
+            sql.UpdateData<TransactionModel, dynamic>("dbo.spReturnBookInfo", param, "libsys_data");
         }
     }
 }

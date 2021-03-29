@@ -21,7 +21,7 @@ namespace libsys_api_library.DataAccess
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
 
-            var output = sql.LoadData<BookClassificationModel, dynamic>("dbo.spGetAllBookClassification", new { }, "libsys-data");
+            var output = sql.LoadData<BookClassificationModel, dynamic>("dbo.spGetAllBookClassification", new { }, "libsys_data");
             return output;
         }
     }
