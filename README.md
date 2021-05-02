@@ -3,5 +3,5 @@ A generic library system for any library school created using .NET Core 3.1 Fram
 
 
 Requirements:
-1. Any IDE's (Visual studio 2019 preferable)
+1. Any IDE's that supports C# (Visual studio 2019 preferable)
 2. .NET Core 3.1 Supported
