@@ -327,18 +327,18 @@ namespace libsys_desktop_ui.ViewModels
 
         public void Clear()
         {
-            //SelectedStudent = null;
-            //StudentId = "";
-            //FirstName = "";
-            //LastName = "";
-            //Gender = "";
-            //YearLevel = "";
-            //Course = "";
-            //Department = "";
-            //PhoneNumber = "";
-            //EmailAddress = "";
-            //ErrorMessage = "";
-            excelReportService.GenerateExcel(dataTableConverterHelper.ConvertToDataTable(Students), "");
+            SelectedStudent = null;
+            StudentId = "";
+            FirstName = "";
+            LastName = "";
+            Gender = "";
+            YearLevel = "";
+            Course = "";
+            Department = "";
+            PhoneNumber = "";
+            EmailAddress = "";
+            ErrorMessage = "";
+            //excelReportService.GenerateExcel(dataTableConverterHelper.ConvertToDataTable(Students), "");
         }
     }
 }

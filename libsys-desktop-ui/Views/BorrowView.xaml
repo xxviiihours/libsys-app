@@ -24,10 +24,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
-        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
-                    FontSize="24" Margin="0 0 0 15"
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"
+                   FontSize="24" Margin="0 0 0 15" Background="#FF75B7E4"
                    Text="Book Borrowing Form"/>
-
 
         <StackPanel Grid.Row="1" Grid.Column="1"
                     Orientation="Vertical"
@@ -82,7 +81,7 @@
 
             <TextBlock Text="List of available books:"/>
             <ListBox x:Name="Books" SelectedItem="{Binding SelectedBook}" IsEnabled="{Binding IsBookListEnabled}"
-                     MinHeight="270" MaxHeight="270"
+                     MinHeight="282" MaxHeight="282"
                      ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

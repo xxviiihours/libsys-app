@@ -6,6 +6,11 @@
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Views\bg_main.jpg" />
+	  <None Remove="Views\bg_secondary.jpg" />
+	  <None Remove="Views\logo.png" />
+	</ItemGroup>
+	<ItemGroup>
 	  <COMReference Include="Microsoft.Office.Interop.Excel">
 	    <WrapperTool>tlbimp</WrapperTool>
 	    <VersionMinor>9</VersionMinor>
@@ -33,5 +38,10 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\libsys-desktop-ui-library\libsys-desktop-ui-library.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="Views\bg_main.jpg" />
+	  <Resource Include="Views\bg_secondary.jpg" />
+	  <Resource Include="Views\logo.png" />
 	</ItemGroup>
 </Project>
