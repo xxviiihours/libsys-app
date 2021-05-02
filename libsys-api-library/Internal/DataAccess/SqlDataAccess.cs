@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,9 +13,21 @@ namespace libsys_api_library.Internal.DataAccess
 {
     internal class SqlDataAccess
     {
+        private readonly IConfiguration configuration;
+
+        public SqlDataAccess()
+        {
+
+        }
+        public SqlDataAccess(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         public string GetConnectionString(string name)
         {
-            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            return configuration.GetConnectionString(name);
+            //return ConfigurationManager.ConnectionStrings[name].ConnectionString;
 
         }
 

@@ -37,8 +37,12 @@
 
             </TextBlock>-->
             <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                        Orientation="Horizontal" Margin="0 0 0 10"
                         Visibility="{Binding IsUserLoggedIn, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
-                <TextBlock Text="Library Management Systems" FontSize="34" Margin="0 0 0 20"/>
+                <Image Source="/Views/logo.png" Width="120" Height="70"/>
+
+                <TextBlock Text="Library Management Systems" 
+                           FontWeight="Bold" FontSize="34" Margin="0 10 0 0"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Vertical"
                         Grid.RowSpan="3" MinWidth="170"
@@ -58,11 +62,14 @@
 
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                        Grid.RowSpan="2" MinWidth="1024" MaxWidth="1024"
-                        MinHeight="700" MaxHeight="700">
-                <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" >
-                    <ContentControl x:Name="ActiveItem" Margin="5"/>
-                </Border>
+                        Grid.RowSpan="2" MinWidth="1023" MaxWidth="1024"
+                        MinHeight="520" >
+                <!--<StackPanel.Background>
+                    <ImageBrush ImageSource="/Views/bg_main.jpg" Opacity="0.9"/>
+                </StackPanel.Background>-->
+                <!--<Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" >-->
+                    <ContentControl x:Name="ActiveItem"/>
+                <!--</Border>-->
             </StackPanel>
         </Grid>
     </DockPanel>    

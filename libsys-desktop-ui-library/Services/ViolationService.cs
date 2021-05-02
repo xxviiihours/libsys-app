@@ -20,7 +20,7 @@ namespace libsys_desktop_ui_library.Services
 
         public async Task Save(ViolationModel violationModel)
         {
-            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PostAsJsonAsync("/api/violation/save", violationModel))
+            using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.PostAsJsonAsync("/api/v2/violations/save", violationModel))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {

@@ -129,7 +129,8 @@ namespace libsys_desktop_ui.ViewModels
         {
             get { return selectedBorrowedBook; }
             set 
-            { 
+            {
+                ViolationMessage = "";
                 selectedBorrowedBook = value;
                 NotifyOfPropertyChange(() => SelectedBorrowedBook);
                 FillDateTimeValue();
@@ -407,7 +408,7 @@ namespace libsys_desktop_ui.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorMessage = "ID not found.";
+                ErrorMessage = ex.Message;
             }
         }
 
@@ -489,7 +490,7 @@ namespace libsys_desktop_ui.ViewModels
             }
             catch (Exception ex)
             {
-                NotificationMessage = "Unable to save to database. make sure you are connected to the internet.";
+                NotificationMessage = ex.Message;
             }
         }
 

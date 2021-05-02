@@ -25,12 +25,10 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
-                    Orientation="Horizontal">
-            <TextBlock Text="Book Management Form" FontSize="24"
-                   Margin="0 0 0 15">
-            </TextBlock>
-        </StackPanel>
+        <TextBlock  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"
+                    Text="Book Management Form" FontSize="24"
+                   Margin="0 0 0 15"  Background="#FF75B7E4">
+        </TextBlock>
         <StackPanel Grid.Row="1" Grid.Column="1"
                     Orientation="Vertical" Margin="0 20 0 0" MinWidth="200" MaxWidth="300">
             <StackPanel Orientation="Horizontal" Margin="0 15">
@@ -101,7 +99,7 @@
         </StackPanel>
         <DataGrid x:Name="Books" SelectedItem="{Binding SelectedBookItem}"
                   Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4"
-                  MinHeight="150" MaxHeight="150"
+                  MinHeight="160" MaxHeight="162"
                   MaxWidth="980" Margin="0 0 0 20"
                   HorizontalScrollBarVisibility="Visible" 
                   VerticalScrollBarVisibility="Visible">

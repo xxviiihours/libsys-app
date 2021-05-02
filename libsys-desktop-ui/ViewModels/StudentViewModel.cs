@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using libsys_desktop_ui.Interfaces;
 using libsys_desktop_ui_library.Interfaces;
 using libsys_desktop_ui_library.Models;
 using System;
@@ -14,7 +15,8 @@ namespace libsys_desktop_ui.ViewModels
     {
 
         private readonly IStudentService studentService;
-
+        private readonly IExcelReportService excelReportService;
+        private readonly IDataTableConverterHelper dataTableConverterHelper;
         private string studentId;
         private string firstName;
         private string lastName;
@@ -33,9 +35,11 @@ namespace libsys_desktop_ui.ViewModels
 
         private StudentModel selectedStudent;
 
-        public StudentViewModel(IStudentService studentService)
+        public StudentViewModel(IStudentService studentService, IExcelReportService excelReportService, IDataTableConverterHelper dataTableConverterHelper)
         {
             this.studentService = studentService;
+            this.excelReportService = excelReportService;
+            this.dataTableConverterHelper = dataTableConverterHelper;
         }
 
         public async Task LoadStudents()
@@ -334,6 +338,7 @@ namespace libsys_desktop_ui.ViewModels
             PhoneNumber = "";
             EmailAddress = "";
             ErrorMessage = "";
+            //excelReportService.GenerateExcel(dataTableConverterHelper.ConvertToDataTable(Students), "");
         }
     }
 }

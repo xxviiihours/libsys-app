@@ -31,6 +31,7 @@ namespace libsys_desktop_ui.ViewModels
         private BindingList<BookModel> books;
         private BindingList<BorrowBookModel> borrowBooks = new BindingList<BorrowBookModel>();
         private BookModel selectedBook;
+        private BorrowBookModel _selectedAddedBook;
 
         public BorrowViewModel(IStudentService studentService, IBookService bookService,
             IUserLoggedInModel userLoggedIn, ITransactionService transactionService)
@@ -39,12 +40,6 @@ namespace libsys_desktop_ui.ViewModels
             this.bookService = bookService;
             this.userLoggedIn = userLoggedIn;
             this.transactionService = transactionService;
-        }
-
-        protected override async void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            await LoadAvailableBooks();
         }
 
         private async Task LoadAvailableBooks()
@@ -99,8 +94,6 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanAddBooks);
             }
         }
-
-        private BorrowBookModel _selectedAddedBook;
 
         public BorrowBookModel SelectedAddedBook
         {
@@ -326,7 +319,8 @@ namespace libsys_desktop_ui.ViewModels
                     if(item.DueDate < DateTime.Now)
                     {
                         ErrorMessage = "This student has an over-dued books. Please return the book first in order to proceed.";
-                        
+                        Books = new BindingList<BookModel>();
+                        return;
                     }
                 }
                 FullName = $"{student.LastName}, {student.FirstName}";
@@ -334,7 +328,8 @@ namespace libsys_desktop_ui.ViewModels
                 PhoneNumber = student.PhoneNumber;
                 EmailAddress = student.EmailAddress;
                 BorrowLimit = student.BorrowLimit;
-                BorrowBooks = new BindingList<BorrowBookModel>();
+                await LoadAvailableBooks();
+
             }
             catch (Exception ex)
             {
@@ -412,14 +407,16 @@ namespace libsys_desktop_ui.ViewModels
 
         public async Task Clear()
         {
+            Books = new BindingList<BookModel>(); 
             BorrowBooks = new BindingList<BorrowBookModel>();
-            await LoadAvailableBooks();
+           
             StudentId = "";
             FullName = "";
             Department = "";
             PhoneNumber = "";
             EmailAddress = "";
             BorrowLimit = 0;
+            await LoadAvailableBooks();
         }
     }
 }

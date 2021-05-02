@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:libsys_desktop_ui.Views"
-             mc:Ignorable="d" Background="White" FontSize="24"
+             mc:Ignorable="d" FontSize="24"
              d:DesignHeight="700" d:DesignWidth="1024">
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Views/bg_secondary.jpg"/>
+    </UserControl.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -15,18 +18,34 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--<Image Grid.Row="1" Grid.Column="1" MaxWidth="1024" MaxHeight="510"
-               Grid.RowSpan="2" Grid.ColumnSpan="3"
-            Source="/Assets/background.png" Stretch="Fill">
+        <!--<Image Grid.Row="1" Grid.Column="1"
+               Grid.RowSpan="2" Grid.ColumnSpan="2" Width="1024" Height="510"
+            Source="/Views/Images/bg_main.jpg" Stretch="Fill" Opacity="0.9">
         </Image>-->
-        <TextBlock Grid.Row="1" Grid.Column="1" MaxWidth="1024" MaxHeight="510"
+        <!--<TextBlock Grid.Row="1" Grid.Column="1" MaxWidth="1024" MaxHeight="510"
                    Grid.ColumnSpan="3" Grid.RowSpan="2" MinHeight="509"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    x:Name="CurrentUser" Text="Welcome, Admin!"/>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 30"
+                    Orientation="Vertical" Height="250" Background="White">
+            <TextBlock Text="Welcome to Doña Rosario High School Library Management System." TextWrapping="Wrap"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0 50 0 0">
+                <TextBlock Text="Current User: "/>
+                <TextBlock x:Name="CurrentUser" />
+            </StackPanel>
+        </StackPanel>-->
+        <TextBlock Text="Sample"></TextBlock>
+        <StackPanel Width="700" Height="520">
+            
+        </StackPanel>
     </Grid>
 </UserControl>

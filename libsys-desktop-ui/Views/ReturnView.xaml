@@ -28,9 +28,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4"
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7"
                     FontSize="24" Margin="0 0 0 15"
-                   Text="Book Returning Form"/>
+                   Text="Book Returning Form" Background="#FF75B7E4"/>
 
         <!-- LEFT SIDE -->
         <StackPanel Grid.Row="1" Grid.Column="1"
@@ -148,7 +148,7 @@
                     MinWidth="300" MaxWidth="400">
             <TextBlock Text="Generated Receipt:"/>
             <TextBox x:Name="Receipt" TextWrapping="Wrap"
-                     MinHeight="345" MaxHeight="345"
+                     MinHeight="360" MaxHeight="360"
                      MinWidth="300" MaxWidth="300"
                      HorizontalScrollBarVisibility="Visible"
                      VerticalScrollBarVisibility="Visible" 

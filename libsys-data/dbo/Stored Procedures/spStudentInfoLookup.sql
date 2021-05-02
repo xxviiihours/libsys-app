@@ -5,6 +5,6 @@ BEGIN
 	SET NOCOUNT ON
 
 	SELECT Id, StudentId, FirstName, LastName, Gender, Course, YearLevel, Department, PhoneNumber, EmailAddress, BorrowLimit
-	FROM DBO.Students
+	FROM dbo.Students
 	WHERE StudentId = @StudentId;
 END

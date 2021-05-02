@@ -1,5 +1,6 @@
 ﻿using libsys_api_library.Internal.DataAccess;
 using libsys_api_library.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,18 @@ namespace libsys_api_library.DataAccess
 {
     public class TransactionData
     {
+        private readonly IConfiguration configuration;
+
+        public TransactionData(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         public void SaveBorrowInfo(BorrowListModel borrowList)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             List<TransactionModel> borrowDetails = new List<TransactionModel>();
-            BookData books = new BookData();
-            StudentData students = new StudentData();
+            BookData books = new BookData(configuration);
+            StudentData students = new StudentData(configuration);
 
             foreach(var item in borrowList.BorrowedBookDetails)
             {
@@ -49,22 +56,22 @@ namespace libsys_api_library.DataAccess
                 borrowDetails.Add(detail);
             }
           
-            sql.SaveData("dbo.spInsertBorrowTransaction", borrowDetails, "libsys-data");
+            sql.SaveData("dbo.spInsertBorrowTransaction", borrowDetails, "libsys_data");
         }
 
         public List<TransactionModel> GetBorrowedBooksByClassificationId(string classificationId)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new { ClassificationId = classificationId };
 
-            var output = sql.LoadData<TransactionModel, dynamic>("dbo.spBorrowedBooksLookup", param, "libsys-data");
+            var output = sql.LoadData<TransactionModel, dynamic>("dbo.spBorrowedBooksLookup", param, "libsys_data");
 
             return output;
         }
 
         public void Return(int id, TransactionModel borrowedBook)
         {
-            SqlDataAccess sql = new SqlDataAccess();
+            SqlDataAccess sql = new SqlDataAccess(configuration);
             var param = new
             {
                 BookId = borrowedBook.BookId,
@@ -73,7 +80,7 @@ namespace libsys_api_library.DataAccess
                 Status = borrowedBook.Status,
                 Id = id
             };
-            sql.UpdateData<TransactionModel, dynamic>("dbo.spReturnBookInfo", param, "libsys-data");
+            sql.UpdateData<TransactionModel, dynamic>("dbo.spReturnBookInfo", param, "libsys_data");
         }
     }
 }
