@@ -28,7 +28,7 @@ namespace libsys_api_library.DataAccess
         public void SaveStudentInfo(StudentModel studentModel)
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
-            sql.SaveData("dbo.spInsertStudentInfo", studentModel, "libsys-data");
+            sql.SaveData("dbo.spInsertStudentInfo", studentModel, "libsys_data");
         }
 
         public StudentModel GetStudentById(string studentId)

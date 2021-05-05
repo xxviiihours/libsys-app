@@ -8,7 +8,7 @@ namespace libsys_api_library.Models
 {
     public class StudentModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,6 +18,6 @@ namespace libsys_api_library.Models
         public string Department { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
-        public int BorrowLimit { get; set; } = 2;
+        public int BorrowLimit { get; set; }
     }
 }
