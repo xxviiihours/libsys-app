@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<RootNamespace>libsys_desktop_ui_library</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Folder Include="Properties\" />

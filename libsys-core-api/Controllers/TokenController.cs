@@ -65,7 +65,8 @@ namespace libsys_core_api.Controllers
             var result = new
             {
                 Access_Token = new JwtSecurityTokenHandler().WriteToken(token),
-                UserName = username
+                UserName = username,
+                Id = user.Id
             };
 
             return result;

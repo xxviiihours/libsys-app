@@ -27,5 +27,11 @@ namespace libsys_api_library.DataAcess
             
             return output;
         }
+
+        public void SaveUserInfo(UserModel userModel)
+        {
+            SqlDataAccess sql = new SqlDataAccess(configuration);
+            sql.SaveData("dbo.spInsertUserInfo", userModel, "libsys_data");
+        }
     }
 }

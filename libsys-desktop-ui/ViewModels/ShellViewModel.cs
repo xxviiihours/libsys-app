@@ -13,11 +13,13 @@ namespace libsys_desktop_ui.ViewModels
     public class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>
     {
         private readonly IAPIHelper apiHelper;
+        private readonly IWindowManager window;
+        private readonly UserViewModel userViewModel;
         private readonly IUserLoggedInModel user;
 
         private readonly IEventAggregator events;
         public ShellViewModel(IEventAggregator events, IUserLoggedInModel user,
-            IAPIHelper apiHelper)
+            IAPIHelper apiHelper, IWindowManager window, UserViewModel userViewModel)
         {
             this.events = events;
             this.user = user;
@@ -26,6 +28,8 @@ namespace libsys_desktop_ui.ViewModels
 
             ActivateItemAsync(IoC.Get<LoginViewModel>());
             this.apiHelper = apiHelper;
+            this.window = window;
+            this.userViewModel = userViewModel;
         }
 
         public bool IsUserLoggedIn
@@ -33,7 +37,22 @@ namespace libsys_desktop_ui.ViewModels
             get
             {
                 bool output = false;
-                if (string.IsNullOrWhiteSpace(user.Id) == false)
+                if (string.IsNullOrWhiteSpace(user.Id) == false &&
+                    ShowLogin == false)
+                {
+                    output = true;
+                    return output;
+                }
+                return output;
+            }
+        }
+
+        public bool ShowLogin
+        {
+            get
+            {
+                bool output = false;
+                if (string.IsNullOrWhiteSpace(user.Id) == true)
                 {
                     output = true;
                     return output;
@@ -57,6 +76,16 @@ namespace libsys_desktop_ui.ViewModels
 
             await ActivateItemAsync(IoC.Get<MainViewModel>());
             NotifyOfPropertyChange(() => IsUserLoggedIn);
+            NotifyOfPropertyChange(() => ShowLogin);
+        }
+        public async Task Login()
+        {
+            await ActivateItemAsync(IoC.Get<LoginViewModel>());
+            NotifyOfPropertyChange(() => IsUserLoggedIn);
+        }
+        public async Task Register()
+        {
+            await window.ShowDialogAsync(userViewModel, null, null);
         }
 
         public async Task LogOut()
@@ -64,6 +93,7 @@ namespace libsys_desktop_ui.ViewModels
             apiHelper.LogOffUser();
             await ActivateItemAsync(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsUserLoggedIn);
+            NotifyOfPropertyChange(() => ShowLogin);
         }
 
         public async Task ManageBooks()

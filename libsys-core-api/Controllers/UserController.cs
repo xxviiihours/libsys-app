@@ -44,8 +44,10 @@ namespace libsys_core_api.Controllers
         // POST api/v2/users/save
         [HttpPost]
         [Route("users/save")]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] UserModel userModel)
         {
+            UserData userData = new UserData(configuration);
+            userData.SaveUserInfo(userModel);
         }
 
         // PUT  api/v2/users/update/5

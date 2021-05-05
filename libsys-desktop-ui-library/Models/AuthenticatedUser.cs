@@ -13,5 +13,6 @@ namespace libsys_desktop_ui_library.Models
 
         public string UserName { get; set; }
 
+        public string Id { get; set; }
     }
 }
