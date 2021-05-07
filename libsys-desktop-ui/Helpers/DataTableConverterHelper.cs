@@ -13,10 +13,10 @@ namespace libsys_desktop_ui.Helpers
 {
     public class DataTableConverterHelper : IDataTableConverterHelper
     {
-        public DataTable ConvertToDataTable<T>(BindingList<T> models)
+        public async Task<DataTable> ConvertToDataTable<T>(BindingList<T> models)
         {
             DataTable table = new DataTable();
-            using (var reader = ObjectReader.Create(models))
+            await using (var reader = ObjectReader.Create(models))
             {
                 table.Load(reader);
             }

@@ -10,7 +10,7 @@ namespace libsys_desktop_ui.Interfaces
 {
     public interface IDataTableConverterHelper
     {
-        DataTable ConvertToDataTable<T>(BindingList<T> models);
+        Task<DataTable> ConvertToDataTable<T>(BindingList<T> models);
     }
 
 }

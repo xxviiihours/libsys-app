@@ -153,8 +153,8 @@ namespace libsys_desktop_ui.ViewModels
             {
                 ViolationMessage = "This book is already past it's due date.";
 
-                totalDays = DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day;
-                totalFine = Convert.ToDecimal(totalDays * configHelper.GetActualFine());
+                totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day);
+                totalFine = Math.Abs(Convert.ToDecimal(totalDays * configHelper.GetActualFine()));
 
             }
         }

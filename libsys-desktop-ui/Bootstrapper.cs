@@ -38,6 +38,7 @@ namespace libsys_desktop_ui
                 .PerRequest<IViolationService, ViolationService>()
                 .PerRequest<IExcelReportService, ExcelReportService>()
                 .PerRequest<IUserService, UserService>()
+                .PerRequest<IReportService, ReportService>()
                 .PerRequest<IPDFHelper, PDFHelper>();
 
             container

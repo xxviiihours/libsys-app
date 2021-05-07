@@ -116,9 +116,9 @@ namespace libsys_desktop_ui.ViewModels
             await ActivateItemAsync(IoC.Get<ReturnViewModel>());
         }
 
-        public void ManageReports()
+        public async Task ManageReports()
         {
-            //TODO: Create a Manage Report form
+            await ActivateItemAsync(IoC.Get<ReportViewModel>());
         }
 
         public async Task ReturnDashboard()

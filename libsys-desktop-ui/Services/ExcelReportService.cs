@@ -19,6 +19,7 @@ namespace libsys_desktop_ui.Services
             workBook.Worksheets.Add(dataSet);
 
             workBook.SaveAs($"{name}.xlsx");
+            workBook.Dispose();
         }
     }
 }
