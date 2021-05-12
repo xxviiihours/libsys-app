@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace libsys_desktop_ui.ViewModels
@@ -27,7 +28,7 @@ namespace libsys_desktop_ui.ViewModels
 
         private string publisher;
         private string edition;
-        private string volume;
+        private int volume;
         private int pages;
         private int year;
 
@@ -153,6 +154,7 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanUpdate);
             }
         }
+
         public string BookTitle
         {
             get { return bookTitle; }
@@ -169,7 +171,8 @@ namespace libsys_desktop_ui.ViewModels
             get { return author; }
             set
             {
-                author = value;
+                var result = Regex.Replace(value, @"\d+$", "");
+                author = result;
                 NotifyOfPropertyChange(() => Author);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -181,7 +184,8 @@ namespace libsys_desktop_ui.ViewModels
             get { return publisher; }
             set
             {
-                publisher = value;
+                var result = Regex.Replace(value, @"\d+$", "");
+                publisher = result;
                 NotifyOfPropertyChange(() => Publisher);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -192,13 +196,14 @@ namespace libsys_desktop_ui.ViewModels
             get { return edition; }
             set
             {
-                edition = value;
+                var result = Regex.Replace(value, @"\d+$", "");
+                edition = result;
                 NotifyOfPropertyChange(() => Edition);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
             }
         }
-        public string Volume
+        public int Volume
         {
             get { return volume; }
             set
@@ -236,7 +241,8 @@ namespace libsys_desktop_ui.ViewModels
             get { return location; }
             set
             {
-                location = value;
+                var result = Regex.Replace(value, @"\d+$", "");
+                location = result;
                 NotifyOfPropertyChange(() => Location);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -247,7 +253,8 @@ namespace libsys_desktop_ui.ViewModels
             get { return source; }
             set
             {
-                source = value;
+                var result = Regex.Replace(value, @"\d+$", "");
+                source = result;
                 NotifyOfPropertyChange(() => Source);
                 NotifyOfPropertyChange(() => CanSave);
                 NotifyOfPropertyChange(() => CanUpdate);
@@ -337,7 +344,7 @@ namespace libsys_desktop_ui.ViewModels
             BookTitle = SelectedBookItem?.Title;
             Description = SelectedBookItem?.Description;
             Edition = SelectedBookItem?.Edition;
-            Volume = SelectedBookItem?.Volumes;
+            Volume = SelectedBookItem.Volumes;
             Pages = SelectedBookItem.Pages;
             Source = SelectedBookItem?.Source;
             Price = SelectedBookItem.Price;
@@ -370,7 +377,7 @@ namespace libsys_desktop_ui.ViewModels
                     BookTitle?.Length > 0 &&
                     Description?.Length > 0 &&
                     Edition?.Length > 0 &&
-                    Volume?.Length > 0 &&
+                    Volume > 0 &&
                     Pages > 0 &&
                     Source?.Length > 0 &&
                     Price > 0 &&
@@ -399,7 +406,7 @@ namespace libsys_desktop_ui.ViewModels
                     BookTitle?.Length > 0 &&
                     Description?.Length > 0 &&
                     Edition?.Length > 0 &&
-                    Volume?.Length > 0 &&
+                    Volume > 0 &&
                     Pages > 0 &&
                     Source?.Length > 0 &&
                     Price > 0 &&
@@ -493,7 +500,7 @@ namespace libsys_desktop_ui.ViewModels
             BookTitle = "";
             Description = "";
             Edition = "";
-            Volume = "";
+            Volume = 0;
             Pages = 0;
             Source = "";
             Price = 0;

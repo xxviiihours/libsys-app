@@ -152,7 +152,11 @@ namespace libsys_desktop_ui.ViewModels
             if (DueDate != DateTime.MinValue && DueDate < DateTime.Now)
             {
                 ViolationMessage = "This book is already past it's due date.";
-
+                var dayOfWeek = DateTime.Now.DayOfWeek.ToString();
+                if (dayOfWeek == "Saturday" && dayOfWeek == "Sunday")
+                {
+                    totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day - 2);
+                }
                 totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day);
                 totalFine = Math.Abs(Convert.ToDecimal(totalDays * configHelper.GetActualFine()));
 
