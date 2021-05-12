@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace libsys_desktop_ui.ViewModels
@@ -17,14 +18,11 @@ namespace libsys_desktop_ui.ViewModels
         private readonly IStudentService studentService;
         private readonly IExcelReportService excelReportService;
         private readonly IDataTableConverterHelper dataTableConverterHelper;
+        private readonly IUserLoggedInModel userLoggedInModel;
         private string studentId;
         private string firstName;
         private string lastName;
-        private string gender;
-        private string yearLevel;
-        private string course;
-        private string department;
-        private string phoneNumber;
+        private int phoneNumber;
         private string emailAddress;
 
         private string search;
@@ -35,11 +33,13 @@ namespace libsys_desktop_ui.ViewModels
 
         private StudentModel selectedStudent;
 
-        public StudentViewModel(IStudentService studentService, IExcelReportService excelReportService, IDataTableConverterHelper dataTableConverterHelper)
+        public StudentViewModel(IStudentService studentService, IExcelReportService excelReportService,
+            IDataTableConverterHelper dataTableConverterHelper, IUserLoggedInModel userLoggedInModel)
         {
             this.studentService = studentService;
             this.excelReportService = excelReportService;
             this.dataTableConverterHelper = dataTableConverterHelper;
+            this.userLoggedInModel = userLoggedInModel;
         }
 
         public async Task LoadStudents()
@@ -81,8 +81,9 @@ namespace libsys_desktop_ui.ViewModels
         {
             get { return firstName; }
             set 
-            { 
-                firstName = value;
+            {
+                var result = Regex.Replace(value, @"\d+$", "");
+                firstName = result;
                 NotifyOfPropertyChange(() => FirstName);
                 NotifyOfPropertyChange(() => CanSave);
             }
@@ -92,64 +93,122 @@ namespace libsys_desktop_ui.ViewModels
         {
             get { return lastName; }
             set 
-            { 
-                lastName = value;
+            {
+                var result = Regex.Replace(value, @"\d+$", "");
+                lastName = result;
                 NotifyOfPropertyChange(() => LastName);
                 NotifyOfPropertyChange(() => CanSave);
             }
         }
 
-        public string Gender
-        {
-            get { return gender; }
-            set 
-            { 
-                gender = value;
-                NotifyOfPropertyChange(() => Gender);
-                NotifyOfPropertyChange(() => CanSave);
-            }
-        }
+        //public string Gender
+        //{
+        //    get { return gender; }
+        //    set 
+        //    {
+        //        var result = Regex.Replace(value, @"\d+$", "");
+        //        gender = result;
+        //        NotifyOfPropertyChange(() => Gender);
+        //        NotifyOfPropertyChange(() => CanSave);
+        //    }
+        //}
 
-        public string YearLevel
+        public BindingList<string> GenderTypes
         {
-            get { return yearLevel; }
-            set 
-            { 
-                yearLevel = value;
-                NotifyOfPropertyChange(() => YearLevel);
-                NotifyOfPropertyChange(() => CanSave);
-            }
-        }
-
-        public string Course
-        {
-            get { return course; }
-            set 
+            get
             {
-                course = value;
-                NotifyOfPropertyChange(() => Course);
-                NotifyOfPropertyChange(() => CanSave);
+                return new BindingList<string>(
+                  new string[] { "MALE", "FEMALE", "OTHERS" });
+
             }
         }
 
-
-        public string Department
+        private string selectedGenderType;
+        public string SelectedGenderType
         {
-            get { return department; }
-            set 
-            { 
-                department = value;
-                NotifyOfPropertyChange(() => Department);
+            get { return selectedGenderType; }
+            set
+            {
+                selectedGenderType = value;
+                NotifyOfPropertyChange(() => SelectedGenderType);
                 NotifyOfPropertyChange(() => CanSave);
             }
         }
 
 
-        public string PhoneNumber
+        //public string GradeLevel
+        //{
+        //    get { return gradeLevel; }
+        //    set 
+        //    {
+        //        var result = Regex.Replace(value, @"\d+$", "");
+        //        gradeLevel = result;
+        //        NotifyOfPropertyChange(() => GradeLevel);
+        //        NotifyOfPropertyChange(() => CanSave);
+        //    }
+        //}
+
+        public BindingList<string> GradeLevels
+        {
+            get
+            {
+                return new BindingList<string>(
+                  new string[] 
+                  { 
+                      "GRADE 7",
+                      "GRADE 8", 
+                      "GRADE 9",
+                      "GRADE 10",
+                      "GRADE 11",
+                      "GRADE 12"
+                  });
+
+            }
+        }
+
+        private string selectedGradeLevel;
+        public string SelectedGradeLevel
+        {
+            get { return selectedGradeLevel; }
+            set
+            {
+                selectedGradeLevel = value;
+                NotifyOfPropertyChange(() => SelectedGradeLevel);
+                NotifyOfPropertyChange(() => CanSave);
+            }
+        }
+
+        //public string Course
+        //{
+        //    get { return course; }
+        //    set 
+        //    {
+        //        var result = Regex.Replace(value, @"\d+$", "");
+        //        course = result;
+        //        NotifyOfPropertyChange(() => Course);
+        //        NotifyOfPropertyChange(() => CanSave);
+        //    }
+        //}
+
+
+        //public string Department
+        //{
+        //    get { return department; }
+        //    set 
+        //    {
+        //        var result = Regex.Replace(value, @"\d+$", "");
+        //        department = result;
+        //        NotifyOfPropertyChange(() => Department);
+        //        NotifyOfPropertyChange(() => CanSave);
+        //    }
+        //}
+
+
+        public int PhoneNumber
         {
             get { return phoneNumber; }
             set 
-            { 
+            {
                 phoneNumber = value;
                 NotifyOfPropertyChange(() => PhoneNumber);
                 NotifyOfPropertyChange(() => CanSave);
@@ -161,8 +220,9 @@ namespace libsys_desktop_ui.ViewModels
         {
             get { return emailAddress; }
             set 
-            { 
-                emailAddress = value;
+            {
+                var result = Regex.Replace(value, @"\d+$", "");
+                emailAddress = result;
                 NotifyOfPropertyChange(() => EmailAddress);
                 NotifyOfPropertyChange(() => CanSave);
             }
@@ -177,8 +237,6 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => Search);
             }
         }
-
-        //Datagridview
 
         public BindingList<StudentModel> Students
         {
@@ -201,7 +259,6 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanUpdate);
             }
         }
-
         public string ErrorMessage
         {
             get { return errorMessage; }
@@ -221,11 +278,9 @@ namespace libsys_desktop_ui.ViewModels
                     StudentId?.Length > 0 &&
                     FirstName?.Length > 0 &&
                     LastName?.Length > 0 &&
-                    Gender?.Length > 0 &&
-                    YearLevel?.Length > 0 &&
-                    Course?.Length > 0 &&
-                    Department?.Length > 0 &&
-                    PhoneNumber?.Length > 0 &&
+                    SelectedGenderType?.Length > 0 &&
+                    SelectedGradeLevel?.Length > 0 &&
+                    PhoneNumber > 0 &&
                     EmailAddress?.Length > 0)
                 {
                     return true;
@@ -258,14 +313,14 @@ namespace libsys_desktop_ui.ViewModels
         }
         public void FillStudentData()
         {
+            if (SelectedStudent == null)
+                return;
             StudentId = SelectedStudent?.StudentId;
             FirstName = SelectedStudent?.FirstName;
             LastName = SelectedStudent?.LastName;
-            Gender = SelectedStudent?.Gender;
-            YearLevel = SelectedStudent?.YearLevel;
-            Course = SelectedStudent?.Course;
-            Department = SelectedStudent?.Department;
-            PhoneNumber = SelectedStudent?.PhoneNumber;
+            SelectedGenderType = SelectedStudent?.Gender;
+            SelectedGradeLevel = SelectedStudent?.GradeLevel;
+            PhoneNumber = SelectedStudent.PhoneNumber;
             EmailAddress = SelectedStudent?.EmailAddress;
         }
 
@@ -279,13 +334,14 @@ namespace libsys_desktop_ui.ViewModels
                     StudentId = StudentId,
                     FirstName = FirstName,
                     LastName = LastName,
-                    Gender = Gender,
-                    YearLevel = YearLevel,
-                    Course = Course,
-                    Department = Department,
+                    Gender = SelectedGenderType,
+                    GradeLevel = SelectedGradeLevel,
                     PhoneNumber = PhoneNumber,
                     EmailAddress = EmailAddress,
-                    BorrowLimit = 2
+                    BorrowLimit = 2,
+                    ModifiedBy = userLoggedInModel.FirstName,
+                    LastModified = DateTime.Now
+                    
                 };
                 await studentService.Save(student);
                 await LoadStudents();
@@ -307,10 +363,8 @@ namespace libsys_desktop_ui.ViewModels
                     StudentId = StudentId,
                     FirstName = FirstName,
                     LastName = LastName,
-                    Gender = Gender,
-                    YearLevel = YearLevel,
-                    Course = Course,
-                    Department = Department,
+                    Gender = SelectedGenderType,
+                    GradeLevel = SelectedGradeLevel,
                     PhoneNumber = PhoneNumber,
                     EmailAddress = EmailAddress
                 };
@@ -331,11 +385,9 @@ namespace libsys_desktop_ui.ViewModels
             StudentId = "";
             FirstName = "";
             LastName = "";
-            Gender = "";
-            YearLevel = "";
-            Course = "";
-            Department = "";
-            PhoneNumber = "";
+            SelectedGenderType = null;
+            SelectedGradeLevel = null;
+            PhoneNumber = 0;
             EmailAddress = "";
             ErrorMessage = "";
             //excelReportService.GenerateExcel(dataTableConverterHelper.ConvertToDataTable(Students), "");

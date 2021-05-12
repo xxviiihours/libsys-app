@@ -58,15 +58,19 @@
             <StackPanel Orientation="Vertical" Margin="0 0 10 0" 
                             MinWidth="100" HorizontalAlignment="Left">
                 <TextBlock Text="Gender:"/>
-                <TextBox x:Name="Gender"/>
+                <ComboBox x:Name="GenderTypes" Margin="0 0 0 5"
+                                   SelectedItem="{Binding SelectedGenderType}">
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="10 0 0 0"
                             MinWidth="100">
-                <TextBlock Text="Year Level:"/>
-                <TextBox x:Name="YearLevel"/>
+                <TextBlock Text="Grade Level:"/>
+                <ComboBox x:Name="GradeLevels" Margin="0 0 0 5"
+                                   SelectedItem="{Binding SelectedGradeLevel}">
+                </ComboBox>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Vertical"
+        <!--<StackPanel Grid.Row="5" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
             <TextBlock Text="Course:" Margin="0"/>
             <TextBox x:Name="Course"/>
@@ -75,7 +79,7 @@
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
             <TextBlock Text="Department:" Margin="0"/>
             <TextBox x:Name="Department"/>
-        </StackPanel>
+        </StackPanel>-->
         <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Vertical"
                     Margin="0 0 0 0" MinWidth="150" MaxWidth="250">
             <TextBlock Text="PhoneNumber:" Margin="0"/>
@@ -93,6 +97,8 @@
                    Foreground="#FFF90000" TextWrapping="Wrap" Margin="0 0 0 0"
                    Text="Can't connect to the server." TextAlignment="Center">
             </TextBlock>
+            <Button x:Name="Generate" Content="Generate Library Card" Margin="0 20 0 0"/>
+
             <Button x:Name="Save" Content="Save" Margin="0 20 0 0"/>
             <Button x:Name="Update" Content="Update" Margin="0 5"/>
             <Button x:Name="Clear" Content="Clear"/>

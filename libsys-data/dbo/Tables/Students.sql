@@ -5,10 +5,10 @@
     [FirstName] NVARCHAR(50) NOT NULL, 
     [LastName] NVARCHAR(50) NOT NULL, 
     [Gender] NVARCHAR(50) NOT NULL, 
-    [Course] NVARCHAR(50) NOT NULL, 
-    [YearLevel] NVARCHAR(50) NOT NULL, 
-    [Department] NVARCHAR(50) NOT NULL, 
-    [PhoneNumber] NVARCHAR(MAX) NOT NULL, 
+    [GradeLevel] NVARCHAR(50) NOT NULL, 
+    [PhoneNumber] INT NOT NULL, 
     [EmailAddress] NVARCHAR(MAX) NOT NULL, 
-    [BorrowLimit] INT NOT NULL DEFAULT 2
+    [BorrowLimit] INT NOT NULL DEFAULT 2, 
+    [ModifiedBy] NVARCHAR(50) NULL, 
+    [LastModified] DATETIME2 NULL DEFAULT getutcdate()
 )

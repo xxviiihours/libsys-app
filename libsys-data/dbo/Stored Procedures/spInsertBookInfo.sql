@@ -33,7 +33,6 @@ BEGIN
 		INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], ModifiedBy, LastModified)
 		VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @ModifiedBy, @LastModified)
 
-		SELECT @Id = @@IDENTITY;
 	END
 	ELSE
 	BEGIN
@@ -41,7 +40,7 @@ BEGIN
 		INSERT INTO dbo.BookInformations(CallNumber, [Classification], Title, [Description], Edition, [Volumes], Pages, [Source], Price, Publisher, [Location], [Year], Author, [Status], ModifiedBy, LastModified)
 		VALUES (@CallNumber, @Classification, @Title, @Description, @Edition, @Volumes, @Pages, @Source, @Price, @Publisher, @Location, @Year, @Author, @Status, @ModifiedBy, @LastModified)
 
-		SELECT @Id = @@IDENTITY;
+		SELECT @Id = SCOPE_IDENTITY();
 	END
 
 	IF NOT EXISTS(
@@ -52,7 +51,7 @@ BEGIN
 		INSERT INTO dbo.Catalogue(CallNumber, Copies)
 		VALUES (@CallNumber, 1);
 
-		SELECT @Id = @@IDENTITY;
+		SELECT @Id = SCOPE_IDENTITY();
 	END
 	ELSE
 	BEGIN

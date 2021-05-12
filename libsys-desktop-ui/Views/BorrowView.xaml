@@ -51,6 +51,8 @@
                     Margin="0 10 0 30"/>
             <TextBlock Text="Full Name:" Margin="0 5"/>
             <TextBox x:Name="FullName" IsReadOnly="True"/>
+            <TextBlock Text="Grade Level:" Margin="0 5"/>
+            <TextBox x:Name="GradeLevel" IsReadOnly="True"/>
             <TextBlock Text="Department" Margin="0 5"/>
             <TextBox x:Name="Department" IsReadOnly="True"/>
             <TextBlock Text="Phone Number:" Margin="0 40 0 5"/>

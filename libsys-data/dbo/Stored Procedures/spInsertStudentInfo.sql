@@ -4,18 +4,18 @@
 	@FirstName NVARCHAR(50), 
 	@LastName NVARCHAR(50), 
 	@Gender NVARCHAR(50), 
-	@Course NVARCHAR(50), 
-	@YearLevel NVARCHAR(50), 
-	@Department NVARCHAR(50), 
-	@PhoneNumber NVARCHAR(MAX), 
+	@GradeLevel NVARCHAR(50), 
+	@PhoneNumber INT, 
 	@EmailAddress NVARCHAR(MAX),
-	@BorrowLimit INT
+	@BorrowLimit INT,
+	@ModifiedBy NVARCHAR(50), 
+	@LastModified DATETIME2
 
 AS
 BEGIN
 	SET NOCOUNT ON
-	INSERT INTO dbo.Students(StudentId, FirstName, LastName, Gender, Course, YearLevel, Department, PhoneNumber, EmailAddress, BorrowLimit)
-	VALUES(@StudentId, @FirstName, @LastName, @Gender, @Course, @YearLevel, @Department, @PhoneNumber, @EmailAddress, @BorrowLimit);
+	INSERT INTO dbo.Students(StudentId, FirstName, LastName, Gender, GradeLevel, PhoneNumber, EmailAddress, BorrowLimit, ModifiedBy, LastModified)
+	VALUES(@StudentId, @FirstName, @LastName, @Gender, @GradeLevel, @PhoneNumber, @EmailAddress, @BorrowLimit,  @ModifiedBy, @LastModified);
 
-	SELECT @Id = @@IDENTITY;
+	SELECT @Id = SCOPE_IDENTITY();
 END

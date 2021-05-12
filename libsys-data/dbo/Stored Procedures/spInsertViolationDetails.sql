@@ -15,5 +15,5 @@ BEGIN
     INSERT INTO dbo.ViolationDetails(ClassificationId, BookId, UserId, OrNumber, CashierName, TotalDays, TotalFine, ModifiedAt)
     VALUES(@ClassificationId, @BookId, @UserId, @OrNumber, @CashierName, @TotalDays, @TotalFine, @ModifiedAt);
 
-    SELECT @Id = @@IDENTITY;
+    --SELECT @Id = @@IDENTITY;
 END

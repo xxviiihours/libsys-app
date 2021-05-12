@@ -4,7 +4,7 @@ AS
 BEGIN
 	SET NOCOUNT ON
 
-	SELECT Id, StudentId, FirstName, LastName, Gender, Course, YearLevel, Department, PhoneNumber, EmailAddress, BorrowLimit
+	SELECT Id, StudentId, FirstName, LastName, Gender, GradeLevel, PhoneNumber, EmailAddress, BorrowLimit, ModifiedBy, LastModified
 	FROM dbo.Students
 	WHERE StudentId = @StudentId;
 END

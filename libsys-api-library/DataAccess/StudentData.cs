@@ -58,11 +58,11 @@ namespace libsys_api_library.DataAccess
                 FirstName = studentModel.FirstName,
                 LastName = studentModel.LastName,
                 Gender = studentModel.Gender,
-                Course = studentModel.Course,
-                YearLevel = studentModel.YearLevel,
-                Department = studentModel.Department,
+                GradeLevel = studentModel.GradeLevel,
                 PhoneNumber = studentModel.PhoneNumber,
                 EmailAddress = studentModel.EmailAddress,
+                ModifiedBy = studentModel.ModifiedBy,
+                LastModified = studentModel.LastModified,
 
                 Id = Id
             };

@@ -4,11 +4,11 @@
 	@FirstName NVARCHAR(50), 
 	@LastName NVARCHAR(50), 
 	@Gender NVARCHAR(50), 
-	@Course NVARCHAR(50), 
-	@YearLevel NVARCHAR(50), 
-	@Department NVARCHAR(50), 
-	@PhoneNumber NVARCHAR(MAX), 
-	@EmailAddress NVARCHAR(MAX)
+	@GradeLevel NVARCHAR(50), 
+	@PhoneNumber INT, 
+	@EmailAddress NVARCHAR(MAX),
+	@ModifiedBy NVARCHAR(50), 
+	@LastModified DATETIME2
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -20,11 +20,11 @@ BEGIN
 		FirstName = @FirstName, 
 		LastName = @LastName, 
 		Gender = @Gender, 
-		Course = @Course, 
-		YearLevel = @YearLevel, 
-		Department = @Department, 
+		GradeLevel = @GradeLevel, 
 		PhoneNumber = @PhoneNumber, 
 		EmailAddress = @EmailAddress,
-		BorrowLimit = @BorrowLimit
+		BorrowLimit = @BorrowLimit,
+		ModifiedBy = @ModifiedBy, 
+		LastModified = @LastModified
 	WHERE Id = @Id;
 END

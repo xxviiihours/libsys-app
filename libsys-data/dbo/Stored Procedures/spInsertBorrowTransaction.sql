@@ -16,7 +16,7 @@ BEGIN
 
     INSERT INTO dbo.TransactionDetails(BookId, CallNumber, BookTitle, UserId, ClassificationId, ClassificationType, [Status], DateBorrowed, DueDate, CreatedAt)
     VALUES(@BookId, @CallNumber, @BookTitle, @UserId, @ClassificationId, @ClassificationType, @Status, @DateBorrowed, @DueDate, @CreatedAt);
-    SELECT @Id = @@IDENTITY;
+    --SELECT @Id = @@IDENTITY;
 
     UPDATE dbo.BookInformations
     SET [Status] = 'UNAVAILABLE'

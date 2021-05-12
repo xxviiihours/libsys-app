@@ -54,9 +54,11 @@
             <StackPanel Grid.Row="4" Grid.Column="1"  MinWidth="250" MaxWidth="350"
                     Orientation="Vertical">
                 <TextBlock Text="Full Name:" />
-                <TextBox x:Name="FullName" Margin="0 0 20 0"/>
+                <TextBox x:Name="FullName" Margin="0 0 20 0" IsReadOnly="True"/>
+                <TextBlock Text="Grade Level:" />
+                <TextBox x:Name="GradeLevel" Margin="0 0 20 0" IsReadOnly="True"/>
                 <TextBlock Text="Department:" />
-                <TextBox x:Name="Department"  Margin="0 0 20 0"/>
+                <TextBox x:Name="Department"  Margin="0 0 20 0" IsReadOnly="True"/>
             </StackPanel>
         </StackPanel>
         

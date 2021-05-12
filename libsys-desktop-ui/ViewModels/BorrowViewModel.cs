@@ -20,6 +20,7 @@ namespace libsys_desktop_ui.ViewModels
         private string studentId;
         private string errorMessage;
         private string fullName;
+        private string gradeLevel;
         private string department;
         private int phoneNumber;
         private string emailAddress;
@@ -142,6 +143,17 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public string GradeLevel
+        {
+            get { return gradeLevel; }
+            set
+            {
+                gradeLevel = value;
+                NotifyOfPropertyChange(() => GradeLevel);
+                NotifyOfPropertyChange(() => IsBookListEnabled);
+            }
+        }
+
         public string Department
         {
             get { return department; }
@@ -220,7 +232,6 @@ namespace libsys_desktop_ui.ViewModels
                 if(IsErrorVisible == false &&
                    StudentId?.Length > 0 &&
                    FullName?.Length > 0 &&
-                   Department?.Length > 0 &&
                    PhoneNumber > 0 &&
                    EmailAddress?.Length > 0 &&
                    BorrowLimit > 0 )
@@ -324,7 +335,8 @@ namespace libsys_desktop_ui.ViewModels
                     }
                 }
                 FullName = $"{student.LastName}, {student.FirstName}";
-                Department = student.Department;
+                GradeLevel = student.GradeLevel;
+                Department = "";
                 PhoneNumber = student.PhoneNumber;
                 EmailAddress = student.EmailAddress;
                 BorrowLimit = student.BorrowLimit;
@@ -412,6 +424,7 @@ namespace libsys_desktop_ui.ViewModels
            
             StudentId = "";
             FullName = "";
+            GradeLevel = "";
             Department = "";
             PhoneNumber = 0;
             EmailAddress = "";

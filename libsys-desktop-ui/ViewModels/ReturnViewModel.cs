@@ -24,6 +24,7 @@ namespace libsys_desktop_ui.ViewModels
         private string selectedClassification;
         private string idNumber;
         private string fullName;
+        private string gradeLevel;
         private string department;
 
         private BindingList<TransactionModel> borrowedBooks;
@@ -103,7 +104,15 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => FullName);
             }
         }
-
+        public string GradeLevel
+        {
+            get { return gradeLevel; }
+            set
+            {
+                gradeLevel = value;
+                NotifyOfPropertyChange(() => GradeLevel);
+            }
+        }
         public string Department
         {
             get { return department; }
@@ -157,7 +166,10 @@ namespace libsys_desktop_ui.ViewModels
                 {
                     totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day - 2);
                 }
-                totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day);
+                else
+                {
+                    totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day);
+                }
                 totalFine = Math.Abs(Convert.ToDecimal(totalDays * configHelper.GetActualFine()));
 
             }
@@ -405,7 +417,8 @@ namespace libsys_desktop_ui.ViewModels
                     var result = await studentService.GetByStudentId(IdNumber);
 
                     FullName = $"{result.LastName}, {result.FirstName}";
-                    Department = result.Department;
+                    GradeLevel = result.GradeLevel;
+                    Department = "";
 
                     await LoadBorrowedBooks();
                 }
@@ -428,6 +441,7 @@ namespace libsys_desktop_ui.ViewModels
                     + "--------------------------------\n"
                     + $"Student ID: {IdNumber}\n"
                     + $"Fullname: {FullName}\n"
+                    + $"Grade Level: {GradeLevel}\n"
                     + $"Department: {Department}\n"
                     + "--------------------------------\n"
                     + "Book Information\n"
@@ -524,6 +538,7 @@ namespace libsys_desktop_ui.ViewModels
         {
             IdNumber = "";
             FullName = "";
+            GradeLevel = "";
             Department = "";
             Receipt = "";
             ViolationMessage = "";
