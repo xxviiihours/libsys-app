@@ -13,11 +13,11 @@ namespace libsys_api_library.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
-        public string Course { get; set; }
-        public string YearLevel { get; set; }
-        public string Department { get; set; }
-        public string PhoneNumber { get; set; }
+        public string GradeLevel { get; set; }
+        public int PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
         public int BorrowLimit { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime LastModified { get; set; } = DateTime.Now;
     }
 }
