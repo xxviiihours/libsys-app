@@ -71,43 +71,6 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        //private string message;
-        //public string Message
-        //{
-        //    get { return message; }
-        //    set
-        //    {
-        //        message = value;
-        //        NotifyOfPropertyChange(() => Message);
-        //        NotifyOfPropertyChange(() => IsMessageVisible);
-        //    }
-        //}
-
-        //private string messageColor;
-
-        //public string MessageColor
-        //{
-        //    get { return messageColor; }
-        //    set
-        //    {
-        //        messageColor = value;
-        //        NotifyOfPropertyChange(() => MessageColor);
-        //    }
-        //}
-
-        //public bool IsMessageVisible
-        //{
-        //    get
-        //    {
-        //        bool output = false;
-        //        if (Message?.Length > 0)
-        //        {
-        //            output = true;
-        //            return output;
-        //        }
-        //        return output;
-        //    }
-        //}
         public async Task GenerateBorrowedBooksReport()
         {
             try

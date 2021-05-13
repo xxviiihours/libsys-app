@@ -20,6 +20,7 @@ namespace libsys_desktop_ui.ViewModels
         private readonly IViolationService violationService;
         private readonly IPDFHelper pdfHelper;
         private readonly IConfigHelper configHelper;
+        private readonly IWindowManager window;
 
         private string selectedClassification;
         private string idNumber;
@@ -27,6 +28,7 @@ namespace libsys_desktop_ui.ViewModels
         private string gradeLevel;
         private string department;
 
+        private readonly MessageViewModel Message;
         private BindingList<TransactionModel> borrowedBooks;
         private TransactionModel selectedBorrowedBook = new TransactionModel();
 
@@ -51,8 +53,9 @@ namespace libsys_desktop_ui.ViewModels
 
 
         public ReturnViewModel(IStudentService studentService, ITransactionService transactionService,
-            IPDFHelper pdfHelper, IViolationService violationService, 
-            IConfigHelper configHelper, IUserLoggedInModel userLoggedInModel)
+            IPDFHelper pdfHelper, IViolationService violationService,
+            IConfigHelper configHelper, IUserLoggedInModel userLoggedInModel,
+            IWindowManager window, MessageViewModel message)
         {
             this.studentService = studentService;
             this.transactionService = transactionService;
@@ -60,6 +63,8 @@ namespace libsys_desktop_ui.ViewModels
             this.violationService = violationService;
             this.configHelper = configHelper;
             this.userLoggedInModel = userLoggedInModel;
+            this.window = window;
+            Message = message;
         }
 
         public BindingList<string> Classifications
@@ -472,16 +477,28 @@ namespace libsys_desktop_ui.ViewModels
 
         public async Task Return()
         {
-            TransactionModel transaction = new TransactionModel();
-            transaction.BookId = SelectedBorrowedBook.BookId;
-            transaction.CallNumber = SelectedBorrowedBook.CallNumber;
-            transaction.ClassificationId = SelectedBorrowedBook.ClassificationId;
-            transaction.UserId = userLoggedInModel.Id;
-            transaction.Status = "RETURNED";
-            await transactionService.Return(SelectedBorrowedBook.Id, transaction);
-            ClearBorrowedData();
-            await LoadBorrowedBooks();
-            NotifyOfPropertyChange(() => IsViolationFormVisible);
+            try
+            {
+                TransactionModel transaction = new TransactionModel
+                {
+                    BookId = SelectedBorrowedBook.BookId,
+                    CallNumber = SelectedBorrowedBook.CallNumber,
+                    ClassificationId = SelectedBorrowedBook.ClassificationId,
+                    UserId = userLoggedInModel.Id,
+                    Status = "RETURNED"
+                };
+                await transactionService.Return(SelectedBorrowedBook.Id, transaction);
+                ClearBorrowedData();
+                await LoadBorrowedBooks();
+                Message.UpdateMessage("Return a book", "Return success.", "#00c853");
+                await window.ShowDialogAsync(Message, null, null);
+                NotifyOfPropertyChange(() => IsViolationFormVisible);
+            }
+            catch (Exception ex)
+            {
+                Message.UpdateMessage("Return a book", $"Return failed. {ex.Message}.", "#ef5350");
+                await window.ShowDialogAsync(Message, null, null);
+            }
         }
 
         public async Task SaveViolation()
@@ -489,15 +506,17 @@ namespace libsys_desktop_ui.ViewModels
             try
             {
                 NotificationMessage = "";
-                ViolationModel violationModel = new ViolationModel();
-                violationModel.ClassificationId = IdNumber;
-                violationModel.BookId = SelectedBorrowedBook.BookId;
-                violationModel.UserId = userLoggedInModel.Id;
-                violationModel.OrNumber = OrNumber;
-                violationModel.CashierName = CashierName;
-                violationModel.TotalDays = totalDays;
-                violationModel.TotalFine = totalFine;
-                violationModel.ModifiedAt = DateTime.Now;
+                ViolationModel violationModel = new ViolationModel
+                {
+                    ClassificationId = IdNumber,
+                    BookId = SelectedBorrowedBook.BookId,
+                    UserId = userLoggedInModel.Id,
+                    OrNumber = OrNumber,
+                    CashierName = CashierName,
+                    TotalDays = totalDays,
+                    TotalFine = totalFine,
+                    ModifiedAt = DateTime.Now
+                };
 
                 await violationService.Save(violationModel);
                 NotificationMessage = "Violation has been successfully lifted.";
@@ -515,6 +534,8 @@ namespace libsys_desktop_ui.ViewModels
         public void Export()
         {
             pdfHelper.GenerateReport(Receipt);
+            Message.UpdateMessage("Generate receipt", "Generate success.", "#00c853");
+            window.ShowDialogAsync(Message, null, null);
             Receipt = "";
         }
 

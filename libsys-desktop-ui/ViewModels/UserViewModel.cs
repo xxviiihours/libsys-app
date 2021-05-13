@@ -54,7 +54,7 @@ namespace libsys_desktop_ui.ViewModels
             get
             {
                 return new BindingList<string>(
-                  new string[] { "ADMIN", "STAFF" });
+                  new string[] { "ADMIN", "LIBRARIAN" });
 
             }
         }
@@ -195,7 +195,7 @@ namespace libsys_desktop_ui.ViewModels
                 if( ex.Message == "Bad Request")
                 {
                     MessageColor = "#ef5350";
-                    Message = "We can't find the email address you've provided. Try again later.";
+                    Message = "We can't find the email address you've provided. Please try again later.";
                     IsLoading = false;
                 }
                 else

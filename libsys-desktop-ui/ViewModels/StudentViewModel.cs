@@ -19,6 +19,7 @@ namespace libsys_desktop_ui.ViewModels
         private readonly IExcelReportService excelReportService;
         private readonly IDataTableConverterHelper dataTableConverterHelper;
         private readonly IUserLoggedInModel userLoggedInModel;
+        private readonly IWindowManager window;
         private string studentId;
         private string firstName;
         private string lastName;
@@ -29,17 +30,20 @@ namespace libsys_desktop_ui.ViewModels
 
         private string errorMessage;
 
+        private readonly MessageViewModel Message;
         private BindingList<StudentModel> students;
-
         private StudentModel selectedStudent;
 
         public StudentViewModel(IStudentService studentService, IExcelReportService excelReportService,
-            IDataTableConverterHelper dataTableConverterHelper, IUserLoggedInModel userLoggedInModel)
+            IDataTableConverterHelper dataTableConverterHelper, IUserLoggedInModel userLoggedInModel,
+            IWindowManager window, MessageViewModel message)
         {
             this.studentService = studentService;
             this.excelReportService = excelReportService;
             this.dataTableConverterHelper = dataTableConverterHelper;
             this.userLoggedInModel = userLoggedInModel;
+            this.window = window;
+            Message = message;
         }
 
         public async Task LoadStudents()
@@ -101,18 +105,6 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        //public string Gender
-        //{
-        //    get { return gender; }
-        //    set 
-        //    {
-        //        var result = Regex.Replace(value, @"\d+$", "");
-        //        gender = result;
-        //        NotifyOfPropertyChange(() => Gender);
-        //        NotifyOfPropertyChange(() => CanSave);
-        //    }
-        //}
-
         public BindingList<string> GenderTypes
         {
             get
@@ -134,19 +126,6 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanSave);
             }
         }
-
-
-        //public string GradeLevel
-        //{
-        //    get { return gradeLevel; }
-        //    set 
-        //    {
-        //        var result = Regex.Replace(value, @"\d+$", "");
-        //        gradeLevel = result;
-        //        NotifyOfPropertyChange(() => GradeLevel);
-        //        NotifyOfPropertyChange(() => CanSave);
-        //    }
-        //}
 
         public BindingList<string> GradeLevels
         {
@@ -177,32 +156,6 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanSave);
             }
         }
-
-        //public string Course
-        //{
-        //    get { return course; }
-        //    set 
-        //    {
-        //        var result = Regex.Replace(value, @"\d+$", "");
-        //        course = result;
-        //        NotifyOfPropertyChange(() => Course);
-        //        NotifyOfPropertyChange(() => CanSave);
-        //    }
-        //}
-
-
-        //public string Department
-        //{
-        //    get { return department; }
-        //    set 
-        //    {
-        //        var result = Regex.Replace(value, @"\d+$", "");
-        //        department = result;
-        //        NotifyOfPropertyChange(() => Department);
-        //        NotifyOfPropertyChange(() => CanSave);
-        //    }
-        //}
-
 
         public int PhoneNumber
         {
@@ -345,11 +298,14 @@ namespace libsys_desktop_ui.ViewModels
                 };
                 await studentService.Save(student);
                 await LoadStudents();
+                Message.UpdateMessage("Save student information", "Save success.", "#00c853");
+                await window.ShowDialogAsync(Message, null, null);
                 Clear();
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                Message.UpdateMessage("Save student information", $"Save failed. {ex.Message}.", "#ef5350");
+                await window.ShowDialogAsync(Message, null, null);
             }
         }
 
@@ -366,16 +322,21 @@ namespace libsys_desktop_ui.ViewModels
                     Gender = SelectedGenderType,
                     GradeLevel = SelectedGradeLevel,
                     PhoneNumber = PhoneNumber,
-                    EmailAddress = EmailAddress
+                    EmailAddress = EmailAddress,
+                    ModifiedBy = userLoggedInModel.FirstName,
+                    LastModified = DateTime.Now
                 };
 
                 await studentService.Update(SelectedStudent.Id, studentModel);
                 await LoadStudents();
+                Message.UpdateMessage("Update student information", "Update success.", "#00c853");
+                await window.ShowDialogAsync(Message, null, null);
                 Clear();
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                Message.UpdateMessage("Update student information", $"Update failed. {ex.Message}.", "#ef5350");
+                await window.ShowDialogAsync(Message, null, null);
             }
         }
 

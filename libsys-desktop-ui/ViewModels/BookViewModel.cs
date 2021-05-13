@@ -16,8 +16,7 @@ namespace libsys_desktop_ui.ViewModels
         private readonly IUserLoggedInModel userLoggedIn;
         private readonly IBookService bookService;
         private readonly IBookClassificationService bookClassificationService;
-
-
+        private readonly IWindowManager window;
 
         private string classificationItem;
 
@@ -42,9 +41,9 @@ namespace libsys_desktop_ui.ViewModels
         private bool IsBookSelected;
         private bool IsClassificationSelected;
 
+        private readonly MessageViewModel Message;
         private BindingList<BookClassificationModel> classifications;
         private BindingList<BookModel> books;
-
 
         private BookClassificationModel selectedClassification;
         private BookModel selectedBookItem;
@@ -55,12 +54,15 @@ namespace libsys_desktop_ui.ViewModels
             await LoadBookClassification();
             await LoadBooks();
         }
-        public BookViewModel(IUserLoggedInModel userLoggedIn, IBookService bookService, 
-            IBookClassificationService bookClassificationService)
+        public BookViewModel(IUserLoggedInModel userLoggedIn, IBookService bookService,
+            IBookClassificationService bookClassificationService, IWindowManager window,
+            MessageViewModel message)
         {
             this.userLoggedIn = userLoggedIn;
             this.bookService = bookService;
             this.bookClassificationService = bookClassificationService;
+            this.window = window;
+            Message = message;
         }
 
         private async Task LoadBooks()
@@ -450,11 +452,14 @@ namespace libsys_desktop_ui.ViewModels
 
                 await bookService.Save(book);
                 await LoadBooks();
+                Message.UpdateMessage("Save Book Information", "Save successful.", "#00c853");
+                await window.ShowDialogAsync(Message, null, null);
                 Clear();
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                Message.UpdateMessage("Save Book Information", ex.Message, "#ef5350");
+                await window.ShowDialogAsync(Message, null, null);
             }
         }
 
@@ -463,29 +468,34 @@ namespace libsys_desktop_ui.ViewModels
             try
             {
                 ErrorMessage = "";
-                BookModel book = new BookModel();
-                book.Classification = ClassificationItem;
-                book.CallNumber = CallNumber;
-                book.Title = BookTitle;
-                book.Description = Description;
-                book.Edition = Edition;
-                book.Volumes = Volume;
-                book.Pages = Pages;
-                book.Source = Source;
-                book.Price = Price;
-                book.Publisher = Publisher;
-                book.Location = Location;
-                book.Year = Year;
-                book.Author = Author;
-                book.ModifiedBy = userLoggedIn.FirstName;
-                book.LastModified = DateTime.Now;
+                BookModel book = new BookModel
+                {
+                    Classification = ClassificationItem,
+                    CallNumber = CallNumber,
+                    Title = BookTitle,
+                    Description = Description,
+                    Edition = Edition,
+                    Volumes = Volume,
+                    Pages = Pages,
+                    Source = Source,
+                    Price = Price,
+                    Publisher = Publisher,
+                    Location = Location,
+                    Year = Year,
+                    Author = Author,
+                    ModifiedBy = userLoggedIn.FirstName,
+                    LastModified = DateTime.Now
+                };
                 await bookService.Update(SelectedBookItem.Id, book);
                 await LoadBooks();
+                Message.UpdateMessage("Update Book Information", "Update successful.", "#00c853");
+                await window.ShowDialogAsync(Message, null, null);
                 Clear();
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                Message.UpdateMessage("Update Book Information", ex.Message, "#ef5350");
+                await window.ShowDialogAsync(Message, null, null);
             }
         }
 

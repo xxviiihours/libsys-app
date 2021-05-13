@@ -16,6 +16,7 @@ namespace libsys_desktop_ui.ViewModels
         private readonly IStudentService studentService;
         private readonly IBookService bookService;
         private readonly ITransactionService transactionService;
+        private readonly IWindowManager window;
 
         private string studentId;
         private string errorMessage;
@@ -29,18 +30,22 @@ namespace libsys_desktop_ui.ViewModels
 
         private string bookTitle;
 
+        private readonly MessageViewModel Message;
         private BindingList<BookModel> books;
         private BindingList<BorrowBookModel> borrowBooks = new BindingList<BorrowBookModel>();
         private BookModel selectedBook;
         private BorrowBookModel _selectedAddedBook;
 
         public BorrowViewModel(IStudentService studentService, IBookService bookService,
-            IUserLoggedInModel userLoggedIn, ITransactionService transactionService)
+            IUserLoggedInModel userLoggedIn, ITransactionService transactionService,
+            IWindowManager window, MessageViewModel message)
         {
             this.studentService = studentService;
             this.bookService = bookService;
             this.userLoggedIn = userLoggedIn;
             this.transactionService = transactionService;
+            this.window = window;
+            Message = message;
         }
 
         private async Task LoadAvailableBooks()
@@ -389,25 +394,36 @@ namespace libsys_desktop_ui.ViewModels
         public async Task Checkout()
         {
             // TODO: Add save to api endpoint service
-            BorrowListModel addedBooks = new BorrowListModel();
-            foreach(var item in BorrowBooks)
+            try
             {
-                addedBooks.BorrowedBookDetails.Add(new TransactionModel
+                BorrowListModel addedBooks = new BorrowListModel();
+                foreach (var item in BorrowBooks)
                 {
-                    BookId = item.Book.Id,
-                    CallNumber = item.Book.CallNumber,
-                    BookTitle = item.Book.Title,
-                    UserId = userLoggedIn.Id,
-                    ClassificationId = StudentId,
-                    ClassificationType = "STUDENT",
-                    Status = item.Status,
-                    DateBorrowed = DateTime.Now,
-                    DueDate = DateTime.Now.AddDays(7),
-                    CreatedAt = DateTime.Now
-                });
+                    addedBooks.BorrowedBookDetails.Add(new TransactionModel
+                    {
+                        BookId = item.Book.Id,
+                        CallNumber = item.Book.CallNumber,
+                        BookTitle = item.Book.Title,
+                        UserId = userLoggedIn.Id,
+                        ClassificationId = StudentId,
+                        ClassificationType = "STUDENT",
+                        Status = item.Status,
+                        DateBorrowed = DateTime.Now,
+                        DueDate = DateTime.Now.AddDays(7),
+                        CreatedAt = DateTime.Now
+                    });
+                }
+                await transactionService.Borrow(addedBooks);
+                Message.UpdateMessage("Borrow a book", "Checked-out success.", "#00c853");
+                await window.ShowDialogAsync(Message, null, null);
+                await Clear();
             }
-            await transactionService.Borrow(addedBooks);
-            await Clear();
+            catch (Exception ex)
+            {
+
+                Message.UpdateMessage("Borrow a book", ex.Message, "#ef5350");
+                await window.ShowDialogAsync(Message, null, null);
+            }
         }
 
         public void Remove()
