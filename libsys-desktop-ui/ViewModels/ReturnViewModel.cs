@@ -155,6 +155,14 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => CanReturn);
             }
         }
+        public int GetWorkingDays(DateTime from, DateTime to)
+        {
+            var dayDifference = (int)to.Subtract(from).TotalDays;
+            return Enumerable
+                .Range(1, dayDifference)
+                .Select(x => from.AddDays(x))
+                .Count(x => x.DayOfWeek != DayOfWeek.Saturday && x.DayOfWeek != DayOfWeek.Sunday);
+        }
 
         public void FillDateTimeValue()
         {
@@ -166,16 +174,17 @@ namespace libsys_desktop_ui.ViewModels
             if (DueDate != DateTime.MinValue && DueDate < DateTime.Now)
             {
                 ViolationMessage = "This book is already past it's due date.";
-                var dayOfWeek = DateTime.Now.DayOfWeek.ToString();
-                if (dayOfWeek == "Saturday" && dayOfWeek == "Sunday")
-                {
-                    totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day - 2);
-                }
-                else
-                {
-                    totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day);
-                }
+                totalDays = GetWorkingDays(DueDate, DateTime.Now);
                 totalFine = Math.Abs(Convert.ToDecimal(totalDays * configHelper.GetActualFine()));
+                //if ()
+                //{
+                //    totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day - 2);
+                //}
+                //else
+                //{
+                //    totalDays = Math.Abs(DateTime.Now.Day - SelectedBorrowedBook.DueDate.Day);
+                //}
+                //totalFine = Math.Abs(Convert.ToDecimal(totalDays * configHelper.GetActualFine()));
 
             }
         }
