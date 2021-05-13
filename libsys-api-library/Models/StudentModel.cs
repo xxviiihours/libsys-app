@@ -14,7 +14,7 @@ namespace libsys_api_library.Models
         public string LastName { get; set; }
         public string Gender { get; set; }
         public string GradeLevel { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
         public int BorrowLimit { get; set; }
         public string ModifiedBy { get; set; }

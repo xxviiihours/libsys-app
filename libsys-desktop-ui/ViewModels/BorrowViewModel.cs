@@ -23,7 +23,7 @@ namespace libsys_desktop_ui.ViewModels
         private string fullName;
         private string gradeLevel;
         private string department;
-        private int phoneNumber;
+        private string phoneNumber;
         private string emailAddress;
 
         private int borrowLimit;
@@ -170,7 +170,7 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        public int PhoneNumber
+        public string PhoneNumber
         {
             get { return phoneNumber; }
             set
@@ -237,7 +237,7 @@ namespace libsys_desktop_ui.ViewModels
                 if(IsErrorVisible == false &&
                    StudentId?.Length > 0 &&
                    FullName?.Length > 0 &&
-                   PhoneNumber > 0 &&
+                   PhoneNumber?.Length > 0 &&
                    EmailAddress?.Length > 0 &&
                    BorrowLimit > 0 )
                 {
@@ -442,7 +442,7 @@ namespace libsys_desktop_ui.ViewModels
             FullName = "";
             GradeLevel = "";
             Department = "";
-            PhoneNumber = 0;
+            PhoneNumber = "";
             EmailAddress = "";
             BorrowLimit = 0;
             await LoadAvailableBooks();

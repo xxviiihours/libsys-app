@@ -532,7 +532,7 @@ namespace libsys_desktop_ui.ViewModels
 
         public void Export()
         {
-            pdfHelper.GenerateReport(Receipt);
+            pdfHelper.GenerateReport(Receipt, "Violation Receipt", "OCR A Extended");
             Message.UpdateMessage("Generate receipt", "Generate success.", "#00c853");
             window.ShowDialogAsync(Message, null, null);
             Receipt = "";

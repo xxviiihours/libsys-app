@@ -8,6 +8,6 @@ namespace libsys_desktop_ui.Interfaces
 {
     public interface IPDFHelper
     {
-        void GenerateReport(string content);
+        void GenerateReport(string content, string filename, string fontFamily);
     }
 }

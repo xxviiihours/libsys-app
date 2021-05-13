@@ -6,7 +6,7 @@
     [LastName] NVARCHAR(50) NOT NULL, 
     [Gender] NVARCHAR(50) NOT NULL, 
     [GradeLevel] NVARCHAR(50) NOT NULL, 
-    [PhoneNumber] INT NOT NULL, 
+    [PhoneNumber] NVARCHAR(MAX) NOT NULL, 
     [EmailAddress] NVARCHAR(MAX) NOT NULL, 
     [BorrowLimit] INT NOT NULL DEFAULT 2, 
     [ModifiedBy] NVARCHAR(50) NULL, 

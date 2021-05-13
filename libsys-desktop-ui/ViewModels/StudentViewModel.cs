@@ -16,14 +16,13 @@ namespace libsys_desktop_ui.ViewModels
     {
 
         private readonly IStudentService studentService;
-        private readonly IExcelReportService excelReportService;
-        private readonly IDataTableConverterHelper dataTableConverterHelper;
+        private readonly IPDFHelper pdfHelper;
         private readonly IUserLoggedInModel userLoggedInModel;
         private readonly IWindowManager window;
         private string studentId;
         private string firstName;
         private string lastName;
-        private int phoneNumber;
+        private string phoneNumber;
         private string emailAddress;
 
         private string search;
@@ -34,15 +33,13 @@ namespace libsys_desktop_ui.ViewModels
         private BindingList<StudentModel> students;
         private StudentModel selectedStudent;
 
-        public StudentViewModel(IStudentService studentService, IExcelReportService excelReportService,
-            IDataTableConverterHelper dataTableConverterHelper, IUserLoggedInModel userLoggedInModel,
-            IWindowManager window, MessageViewModel message)
+        public StudentViewModel(IStudentService studentService, IUserLoggedInModel userLoggedInModel,
+            IWindowManager window, MessageViewModel message, IPDFHelper pdfHelper)
         {
             this.studentService = studentService;
-            this.excelReportService = excelReportService;
-            this.dataTableConverterHelper = dataTableConverterHelper;
             this.userLoggedInModel = userLoggedInModel;
             this.window = window;
+            this.pdfHelper = pdfHelper;
             Message = message;
         }
 
@@ -157,12 +154,14 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
-        public int PhoneNumber
+        public string PhoneNumber
         {
             get { return phoneNumber; }
             set 
             {
-                phoneNumber = value;
+
+                var result = Regex.Replace(value, @"[a-zA-Z]+$", "");
+                phoneNumber = result;
                 NotifyOfPropertyChange(() => PhoneNumber);
                 NotifyOfPropertyChange(() => CanSave);
             }
@@ -174,8 +173,7 @@ namespace libsys_desktop_ui.ViewModels
             get { return emailAddress; }
             set 
             {
-                var result = Regex.Replace(value, @"\d+$", "");
-                emailAddress = result;
+                emailAddress = value;
                 NotifyOfPropertyChange(() => EmailAddress);
                 NotifyOfPropertyChange(() => CanSave);
             }
@@ -210,6 +208,7 @@ namespace libsys_desktop_ui.ViewModels
                 FillStudentData();
                 NotifyOfPropertyChange(() => SelectedStudent);
                 NotifyOfPropertyChange(() => CanUpdate);
+                NotifyOfPropertyChange(() => CanGenerateCard);
             }
         }
         public string ErrorMessage
@@ -222,7 +221,17 @@ namespace libsys_desktop_ui.ViewModels
                 NotifyOfPropertyChange(() => IsErrorVisible);
             }
         }
-
+        public bool CanGenerateCard 
+        {
+            get 
+            {
+                if(SelectedStudent == null)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
         public bool CanSave
         {
             get
@@ -233,7 +242,7 @@ namespace libsys_desktop_ui.ViewModels
                     LastName?.Length > 0 &&
                     SelectedGenderType?.Length > 0 &&
                     SelectedGradeLevel?.Length > 0 &&
-                    PhoneNumber > 0 &&
+                    PhoneNumber?.Length > 0 &&
                     EmailAddress?.Length > 0)
                 {
                     return true;
@@ -275,6 +284,23 @@ namespace libsys_desktop_ui.ViewModels
             SelectedGradeLevel = SelectedStudent?.GradeLevel;
             PhoneNumber = SelectedStudent.PhoneNumber;
             EmailAddress = SelectedStudent?.EmailAddress;
+        }
+
+        
+        public void GenerateCard()
+        {
+            string cardTemplate = $"Student ID: {SelectedStudent?.StudentId}\n" +
+                                  $"Full Name: {SelectedStudent?.FirstName} {SelectedStudent?.LastName}\n" +
+                                  $"Gender: {SelectedStudent?.Gender} \n" +
+                                  $"Grade Level: {SelectedStudent?.GradeLevel}\n\n" +
+                                  $"Phone Number: {SelectedStudent?.PhoneNumber}\n" +
+                                  $"Email Address: {SelectedStudent?.EmailAddress}\n\n" +
+                                  $"Issued By: {userLoggedInModel.FirstName}\n" +
+                                  $"Valid until: {DateTime.Now.AddYears(1)}";
+
+            pdfHelper.GenerateReport(cardTemplate, "Library Card", "Segoe UI");
+            Message.UpdateMessage("Generate Library Card", "Generate success.", "#00c853");
+            window.ShowDialogAsync(Message, null, null);
         }
 
         public async Task Save()
@@ -348,7 +374,7 @@ namespace libsys_desktop_ui.ViewModels
             LastName = "";
             SelectedGenderType = null;
             SelectedGradeLevel = null;
-            PhoneNumber = 0;
+            PhoneNumber = "";
             EmailAddress = "";
             ErrorMessage = "";
             //excelReportService.GenerateExcel(dataTableConverterHelper.ConvertToDataTable(Students), "");

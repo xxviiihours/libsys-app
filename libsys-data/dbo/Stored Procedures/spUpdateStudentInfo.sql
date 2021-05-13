@@ -5,7 +5,7 @@
 	@LastName NVARCHAR(50), 
 	@Gender NVARCHAR(50), 
 	@GradeLevel NVARCHAR(50), 
-	@PhoneNumber INT, 
+	@PhoneNumber NVARCHAR(MAX), 
 	@EmailAddress NVARCHAR(MAX),
 	@ModifiedBy NVARCHAR(50), 
 	@LastModified DATETIME2

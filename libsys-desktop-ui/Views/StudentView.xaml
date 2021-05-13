@@ -97,7 +97,7 @@
                    Foreground="#FFF90000" TextWrapping="Wrap" Margin="0 0 0 0"
                    Text="Can't connect to the server." TextAlignment="Center">
             </TextBlock>
-            <Button x:Name="Generate" Content="Generate Library Card" Margin="0 20 0 0"/>
+            <Button x:Name="GenerateCard" Content="Generate Library Card" Margin="0 20 0 0"/>
 
             <Button x:Name="Save" Content="Save" Margin="0 20 0 0"/>
             <Button x:Name="Update" Content="Update" Margin="0 5"/>
