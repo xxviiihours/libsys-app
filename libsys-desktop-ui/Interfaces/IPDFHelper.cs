@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iText.Kernel.Font;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace libsys_desktop_ui.Interfaces
 {
     public interface IPDFHelper
     {
-        void GenerateReport(string content, string filename, string fontFamily);
+        void GenerateReport(string content, string filename, PdfFont fontFamily);
     }
 }
