@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:libsys_desktop_ui.Views"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
         Title="ShellView" Height="720" Width="1240">
     <DockPanel>
         <Menu DockPanel.Dock="Top" FontSize="14">
