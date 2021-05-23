@@ -402,12 +402,12 @@ namespace libsys_desktop_ui.ViewModels
                     addedBooks.BorrowedBookDetails.Add(new TransactionModel
                     {
                         BookId = item.Book.Id,
-                        CallNumber = item.Book.CallNumber,
-                        BookTitle = item.Book.Title,
+                        CallNumber = item.Book.CallNumber.ToUpper(),
+                        BookTitle = item.Book.Title.ToUpper(),
                         UserId = userLoggedIn.Id,
                         ClassificationId = StudentId,
                         ClassificationType = "STUDENT",
-                        Status = item.Status,
+                        Status = item.Status.ToUpper(),
                         DateBorrowed = DateTime.Now,
                         DueDate = DateTime.Now.AddDays(7),
                         CreatedAt = DateTime.Now

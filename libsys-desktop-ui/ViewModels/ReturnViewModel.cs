@@ -511,7 +511,7 @@ namespace libsys_desktop_ui.ViewModels
                     BookId = SelectedBorrowedBook.BookId,
                     UserId = userLoggedInModel.Id,
                     OrNumber = OrNumber,
-                    CashierName = CashierName,
+                    CashierName = CashierName.ToUpper(),
                     TotalDays = totalDays,
                     TotalFine = totalFine,
                     ModifiedAt = DateTime.Now

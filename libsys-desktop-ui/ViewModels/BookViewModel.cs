@@ -432,20 +432,20 @@ namespace libsys_desktop_ui.ViewModels
                 ErrorMessage = "";
                 BookModel book = new BookModel
                 {
-                    Classification = ClassificationItem,
+                    Classification = ClassificationItem.ToUpper(),
                     CallNumber = CallNumber.ToUpper(),
-                    Title = BookTitle,
-                    Description = Description,
-                    Edition = Edition,
+                    Title = BookTitle.ToUpper(),
+                    Description = Description.ToUpper(),
+                    Edition = Edition.ToUpper(),
                     Volumes = Volume,
                     Pages = Pages,
-                    Source = Source,
+                    Source = Source.ToUpper(),
                     Price = Price,
-                    Publisher = Publisher,
-                    Location = Location,
+                    Publisher = Publisher.ToUpper(),
+                    Location = Location.ToUpper(),
                     Year = Year,
-                    Author = Author,
-                    ModifiedBy = userLoggedIn.FirstName,
+                    Author = Author.ToUpper(),
+                    ModifiedBy = userLoggedIn.FirstName.ToUpper(),
                     LastModified = DateTime.Now
                 };
 
@@ -470,20 +470,20 @@ namespace libsys_desktop_ui.ViewModels
                 ErrorMessage = "";
                 BookModel book = new BookModel
                 {
-                    Classification = ClassificationItem,
-                    CallNumber = CallNumber,
-                    Title = BookTitle,
-                    Description = Description,
-                    Edition = Edition,
+                    Classification = ClassificationItem.ToUpper(),
+                    CallNumber = CallNumber.ToUpper(),
+                    Title = BookTitle.ToUpper(),
+                    Description = Description.ToUpper(),
+                    Edition = Edition.ToUpper(),
                     Volumes = Volume,
                     Pages = Pages,
-                    Source = Source,
+                    Source = Source.ToUpper(),
                     Price = Price,
-                    Publisher = Publisher,
-                    Location = Location,
+                    Publisher = Publisher.ToUpper(),
+                    Location = Location.ToUpper(),
                     Year = Year,
-                    Author = Author,
-                    ModifiedBy = userLoggedIn.FirstName,
+                    Author = Author.ToUpper(),
+                    ModifiedBy = userLoggedIn.FirstName.ToUpper(),
                     LastModified = DateTime.Now
                 };
                 await bookService.Update(SelectedBookItem.Id, book);

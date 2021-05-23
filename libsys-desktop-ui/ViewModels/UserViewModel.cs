@@ -176,10 +176,10 @@ namespace libsys_desktop_ui.ViewModels
                 UserModel userModel = new UserModel
                 {
                     Id = result.Id,
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    UserType = SelectedUserType,
-                    EmailAddress = result.UserName,
+                    FirstName = FirstName.ToUpper(),
+                    LastName = LastName.ToUpper(),
+                    UserType = SelectedUserType.ToUpper(),
+                    EmailAddress = result.UserName.ToUpper(),
                     CreatedAt = DateTime.Now
 
                 };
