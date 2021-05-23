@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
 using libsys_desktop_ui.Helpers;
 using libsys_desktop_ui.Interfaces;
 using libsys_desktop_ui_library.Interfaces;
@@ -419,10 +421,12 @@ namespace libsys_desktop_ui.ViewModels
                 if (SelectedClassification == "STUDENT")
                 {
                     var result = await studentService.GetByStudentId(IdNumber);
-
-                    FullName = $"{result.LastName}, {result.FirstName}";
-                    GradeLevel = result.GradeLevel;
-                    Department = "";
+                    foreach(var item in result)
+                    {
+                        FullName = $"{item.LastName}, {item.FirstName}";
+                        GradeLevel = item.GradeLevel;
+                        Department = "";
+                    }
 
                     await LoadBorrowedBooks();
                 }
@@ -532,7 +536,8 @@ namespace libsys_desktop_ui.ViewModels
 
         public void Export()
         {
-            pdfHelper.GenerateReport(Receipt, "Violation Receipt", "OCR A Extended");
+            var font = PdfFontFactory.CreateFont(StandardFontFamilies.COURIER);
+            pdfHelper.GenerateReport(Receipt, "Violation Receipt", font);
             Message.UpdateMessage("Generate receipt", "Generate success.", "#00c853");
             window.ShowDialogAsync(Message, null, null);
             Receipt = "";

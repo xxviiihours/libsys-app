@@ -34,13 +34,13 @@ namespace libsys_desktop_ui_library.Services
             }
         }
 
-        public async Task<StudentModel> GetByStudentId(string studentId)
+        public async Task<List<StudentModel>> GetByStudentId(string studentId)
         {
             using (HttpResponseMessage responseMessage = await apiHelper.HttpClient.GetAsync($"/api/v2/students/student-id?studentId={studentId}"))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var result = await responseMessage.Content.ReadAsAsync<StudentModel>();
+                    var result = await responseMessage.Content.ReadAsAsync<List<StudentModel>>();
                     return result;
                 }
                 else

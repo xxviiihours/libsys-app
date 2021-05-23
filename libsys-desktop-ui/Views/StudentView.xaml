@@ -120,6 +120,9 @@
                   Margin="0 0 0 0" HorizontalAlignment="Right">
             <TextBlock Text="Search:" VerticalAlignment="Center" Margin="0 0 20 0"/>
             <TextBox x:Name="Search" MinWidth="250" Height="25"/>
+            <Button x:Name="GoSearch" Content="Go"
+                    Margin="10 0 0 0"
+                    Height="25" Width="70"/>
         </StackPanel>
         <DataGrid Grid.Row="2" Grid.RowSpan="10"
                   Grid.Column="2" Grid.ColumnSpan="4"

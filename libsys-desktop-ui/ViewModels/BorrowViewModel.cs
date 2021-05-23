@@ -339,12 +339,16 @@ namespace libsys_desktop_ui.ViewModels
                         return;
                     }
                 }
-                FullName = $"{student.LastName}, {student.FirstName}";
-                GradeLevel = student.GradeLevel;
-                Department = "";
-                PhoneNumber = student.PhoneNumber;
-                EmailAddress = student.EmailAddress;
-                BorrowLimit = student.BorrowLimit;
+                foreach(var item in student)
+                {
+                    FullName = $"{item.LastName}, {item.FirstName}";
+                    GradeLevel = item.GradeLevel;
+                    Department = "";
+                    PhoneNumber = item.PhoneNumber;
+                    EmailAddress = item.EmailAddress;
+                    BorrowLimit = item.BorrowLimit;
+                }
+                
                 await LoadAvailableBooks();
 
             }

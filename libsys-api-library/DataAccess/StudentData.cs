@@ -31,22 +31,26 @@ namespace libsys_api_library.DataAccess
             sql.SaveData("dbo.spInsertStudentInfo", studentModel, "libsys_data");
         }
 
-        public StudentModel GetStudentById(string studentId)
+        public List<StudentModel> GetStudentById(string studentId)
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);
-            StudentModel studentModel = new StudentModel();
+            var studentModel = new List<StudentModel>();
             var param = new { studentId = studentId };
 
             var output = sql.LoadData<StudentModel, dynamic>("dbo.spStudentInfoLookup", param, "libsys_data");
-            if (output.Count > 0)
-            {
-                foreach (var item in output)
-                {
-                    studentModel = item;
-                }
-                return studentModel;
-            }
-            return null;
+            //if (output.Count > 0)
+            //{
+            //    foreach (var item in output)
+            //    {
+            //        //studentModel = item;
+            //        foreach (var student in studentModel)
+            //        {
+            //            student = item;
+            //        }
+            //    }
+            //    return studentModel;
+            //}
+            return output;
         }
 
         public void UpdateStudentInfo(int Id, StudentModel studentModel)

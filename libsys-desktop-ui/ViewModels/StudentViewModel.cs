@@ -1,10 +1,15 @@
 ﻿using Caliburn.Micro;
+using iText.IO.Font;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
 using libsys_desktop_ui.Interfaces;
 using libsys_desktop_ui_library.Interfaces;
 using libsys_desktop_ui_library.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -159,15 +164,12 @@ namespace libsys_desktop_ui.ViewModels
             get { return phoneNumber; }
             set 
             {
-
-                var result = Regex.Replace(value, @"[a-zA-Z]+$", "");
+                var result = Regex.Replace(value, @"[^0-9]", "");
                 phoneNumber = result;
                 NotifyOfPropertyChange(() => PhoneNumber);
                 NotifyOfPropertyChange(() => CanSave);
             }
         }
-
-
         public string EmailAddress
         {
             get { return emailAddress; }
@@ -186,6 +188,7 @@ namespace libsys_desktop_ui.ViewModels
             { 
                 search = value;
                 NotifyOfPropertyChange(() => Search);
+                NotifyOfPropertyChange(() => CanGoSearch);
             }
         }
 
@@ -262,6 +265,19 @@ namespace libsys_desktop_ui.ViewModels
                 return false;
             }
         }
+
+        public bool CanGoSearch
+        {
+            get
+            {
+                if(Search?.Length > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public bool IsErrorVisible
         {
             get
@@ -296,29 +312,50 @@ namespace libsys_desktop_ui.ViewModels
                                   $"Phone Number: {SelectedStudent?.PhoneNumber}\n" +
                                   $"Email Address: {SelectedStudent?.EmailAddress}\n\n" +
                                   $"Issued By: {userLoggedInModel.FirstName}\n" +
-                                  $"Valid until: {DateTime.Now.AddYears(1)}";
-
-            pdfHelper.GenerateReport(cardTemplate, "Library Card", "Segoe UI");
+                                  $"Valid until: {DateTime.Now.AddYears(1):MM/dd/yyyy}";
+            var font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+            pdfHelper.GenerateReport(cardTemplate, $"{selectedStudent?.StudentId}_LibraryCard_{DateTime.Now:MM/dd/yyyy}", font);
             Message.UpdateMessage("Generate Library Card", "Generate success.", "#00c853");
             window.ShowDialogAsync(Message, null, null);
         }
 
+        public async Task GoSearch()
+        {
+            try
+            {
+                ErrorMessage = "";
+                var student = await studentService.GetByStudentId(Search);
+
+                Students = new BindingList<StudentModel>(student);
+            }
+            catch (Exception ex)
+            {
+                //Create error message if no student id found.
+                ErrorMessage = $"ID Number {ex.Message.ToLower()}.";
+                Clear();
+            }
+        }
         public async Task Save()
         {
             try
             {
                 ErrorMessage = "";
+                if(PhoneNumber?.Length > 11)
+                {
+                    ErrorMessage = "Phone number format is not recognized. Please check the number again.";
+                    return;
+                }
                 StudentModel student = new StudentModel
                 {
                     StudentId = StudentId,
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    Gender = SelectedGenderType,
-                    GradeLevel = SelectedGradeLevel,
+                    FirstName = FirstName.ToUpper(),
+                    LastName = LastName.ToUpper(),
+                    Gender = SelectedGenderType.ToUpper(),
+                    GradeLevel = SelectedGradeLevel.ToUpper(),
                     PhoneNumber = PhoneNumber,
-                    EmailAddress = EmailAddress,
+                    EmailAddress = EmailAddress.ToUpper(),
                     BorrowLimit = 2,
-                    ModifiedBy = userLoggedInModel.FirstName,
+                    ModifiedBy = userLoggedInModel.FirstName.ToUpper(),
                     LastModified = DateTime.Now
                     
                 };
@@ -343,13 +380,13 @@ namespace libsys_desktop_ui.ViewModels
                 StudentModel studentModel = new StudentModel
                 {
                     StudentId = StudentId,
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    Gender = SelectedGenderType,
-                    GradeLevel = SelectedGradeLevel,
+                    FirstName = FirstName.ToUpper(),
+                    LastName = LastName.ToUpper(),
+                    Gender = SelectedGenderType.ToUpper(),
+                    GradeLevel = SelectedGradeLevel.ToUpper(),
                     PhoneNumber = PhoneNumber,
-                    EmailAddress = EmailAddress,
-                    ModifiedBy = userLoggedInModel.FirstName,
+                    EmailAddress = EmailAddress.ToUpper(),
+                    ModifiedBy = userLoggedInModel.FirstName.ToUpper(),
                     LastModified = DateTime.Now
                 };
 

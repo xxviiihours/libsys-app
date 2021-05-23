@@ -10,7 +10,7 @@ namespace libsys_desktop_ui_library.Interfaces
     public interface IStudentService
     {
         Task<List<StudentModel>> GetAll();
-        Task<StudentModel> GetByStudentId(string studentId);
+        Task<List<StudentModel>> GetByStudentId(string studentId);
         Task Save(StudentModel studentModel);
         Task Update(int id, StudentModel studentModel);
 
