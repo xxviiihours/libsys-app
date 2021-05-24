@@ -291,8 +291,9 @@ namespace libsys_desktop_ui.ViewModels
             {
                 search = value;
                 NotifyOfPropertyChange(() => Search);
-                NotifyOfPropertyChange(() => CanSave);
-                NotifyOfPropertyChange(() => CanUpdate);
+                NotifyOfPropertyChange(() => CanGoSearch);
+                //NotifyOfPropertyChange(() => CanSave);
+                //NotifyOfPropertyChange(() => CanUpdate);
             }
         }
 
@@ -368,6 +369,18 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public bool CanGoSearch
+        {
+            get
+            {
+                if(Search?.Length > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public bool CanSave
         {
             get
@@ -425,6 +438,21 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public async Task GoSearch()
+        {
+            try
+            {
+                ErrorMessage = "";
+                var book = await bookService.GetAllBooksByTitle(Search);
+
+                Books = new BindingList<BookModel>(book);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"T{ex.Message.ToLower()}.";
+                Clear();
+            }
+        }
         public async Task Save()
         {
             try

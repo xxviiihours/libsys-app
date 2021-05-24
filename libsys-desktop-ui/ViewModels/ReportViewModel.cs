@@ -36,6 +36,9 @@ namespace libsys_desktop_ui.ViewModels
             base.OnViewLoaded(view);
             await LoadBorrowedBooks();
             await LoadOverduedBooks();
+
+            NotifyOfPropertyChange(() => CanGenerateBorrowedBooksReport);
+            NotifyOfPropertyChange(() => CanGenerateOverduedBooksReport);
         }
         public async Task LoadBorrowedBooks()
         {
@@ -71,11 +74,36 @@ namespace libsys_desktop_ui.ViewModels
             }
         }
 
+        public bool CanGenerateBorrowedBooksReport
+        {
+            get
+            {
+                if(BorrowedBooks?.Count > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool CanGenerateOverduedBooksReport
+        {
+            get
+            {
+                if (OverduedBooks?.Count > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public async Task GenerateBorrowedBooksReport()
         {
             try
             {
-                excelReportService.GenerateExcel(await dataTableConverterHelper.ConvertToDataTable(BorrowedBooks), "Borrowed Books Report");
+                var borrowedBooksToDataTable = await dataTableConverterHelper.ConvertToDataTable(BorrowedBooks);
+                excelReportService.GenerateExcel(borrowedBooksToDataTable, "Borrowed Books Report");
                 Message.UpdateMessage("Generate Borrowed Books", "Generate Report successful.", "#00c853");
                 await window.ShowDialogAsync(Message, null, null);
             }
@@ -92,7 +120,8 @@ namespace libsys_desktop_ui.ViewModels
             try
             {
                 //Message = "";
-                excelReportService.GenerateExcel(await dataTableConverterHelper.ConvertToDataTable(OverduedBooks), "Overdued Books Report");
+                var overduedBooksToDataTable = await dataTableConverterHelper.ConvertToDataTable(OverduedBooks);
+                excelReportService.GenerateExcel(overduedBooksToDataTable, "Overdued Books Report");
                 Message.UpdateMessage("Generate Overdued Books", "Generate Report successful.", "#00c853");
                 await window.ShowDialogAsync(Message, null, null);
             }

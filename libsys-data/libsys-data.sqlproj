@@ -92,6 +92,7 @@
     <Build Include="dbo\Stored Procedures\spInsertUserInfo.sql" />
     <Build Include="dbo\Stored Procedures\spReportGetAllBorrowedBooks.sql" />
     <Build Include="dbo\Stored Procedures\spReportGetAllOverduedBooks.sql" />
+    <Build Include="dbo\Stored Procedures\spGetAllBookByTitle.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="libsys-data.refactorlog" />

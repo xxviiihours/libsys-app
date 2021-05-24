@@ -11,6 +11,8 @@ namespace libsys_desktop_ui_library.Interfaces
     {
         Task<List<BookModel>> GetAllBooks();
         Task<List<BookModel>> GetAllAvailableBooks();
+
+        Task<List<BookModel>> GetAllBooksByTitle(string bookTitle);
         Task<BookModel> GetByBookId(string bookId);
         Task<List<BookModel>> GetAvailableBooksByTitle(string bookTitle);
         Task Save(BookModel bookModel);

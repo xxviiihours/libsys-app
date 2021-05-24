@@ -77,6 +77,19 @@ namespace libsys_core_api.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("books/title")]
+        public IActionResult GetAllBooksByTitle(string bookTitle)
+        {
+            BookData data = new BookData(configuration);
+            var result = data.GetAllBooksByTitle(bookTitle);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
         // POST: api/v2/books/save
         [Authorize]
         [HttpPost]

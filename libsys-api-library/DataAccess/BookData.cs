@@ -68,6 +68,15 @@ namespace libsys_api_library.DataAccess
             return output;
         }
 
+        public List<BookModel> GetAllBooksByTitle(string bookTitle)
+        {
+            SqlDataAccess sql = new SqlDataAccess(configuration);
+            var param = new { Title = bookTitle };
+
+            var output = sql.LoadData<BookModel, dynamic>("dbo.spGetAllBookByTitle", param, "libsys_data");
+            return output;
+        }
+
         public void UpdateBookInfo(int Id, BookModel bookModel)
         {
             SqlDataAccess sql = new SqlDataAccess(configuration);

@@ -96,6 +96,9 @@
                     Orientation="Horizontal" Margin="0 30 0 10">
             <TextBlock Text="Search:" Margin="0 0 10 0"></TextBlock>
             <TextBox x:Name="Search" MinWidth="190"></TextBox>
+            <Button x:Name="GoSearch" Content="Go"
+                    Margin="10 0 0 0"
+                    Width="70"/>
         </StackPanel>
         <DataGrid x:Name="Books" SelectedItem="{Binding SelectedBookItem}"
                   Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4"
