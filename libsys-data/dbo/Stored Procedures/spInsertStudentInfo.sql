@@ -17,5 +17,5 @@ BEGIN
 	INSERT INTO dbo.Students(StudentId, FirstName, LastName, Gender, GradeLevel, PhoneNumber, EmailAddress, BorrowLimit, ModifiedBy, LastModified)
 	VALUES(@StudentId, @FirstName, @LastName, @Gender, @GradeLevel, @PhoneNumber, @EmailAddress, @BorrowLimit,  @ModifiedBy, @LastModified);
 
-	SELECT @Id = SCOPE_IDENTITY();
+	SELECT @Id = @@IDENTITY;
 END
